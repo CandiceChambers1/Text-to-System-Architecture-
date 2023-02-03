@@ -68,7 +68,6 @@ guide_list = ['guide', 'translate', 'rotate','direct', 'shift', 'steer', 'straig
 couple_list = ['couple', 'join', 'link', 'associate', 'assemble', 'fasten', 'attach', 'attaches']
 
 
-
 mix_list = ['mix', 'mixes', 'add', 'blend', 'coalesce', 'combine', 'pack']
 
 actuate_list = ['actuate', 'enable', 'initiate', 'start', 'turn on']
@@ -100,12 +99,19 @@ process_list = ['process', 'processes', 'calculate', 'check']
 
 energize_list = ['energize', 'deenergize']
 
+# consist_list = ['consist', 'include']
+
 # Different adjectives to be used as a Fuzzy system
-temperature = ['Cryogenic', 'Frozen', 'Chilled', 'Freezing', 'Cold', 'Cool', 'Nomral Temperature', 'Room Temperature',
+temperature = ['Cryogenic', 'Frozen', 'Chilled', 'Freezing', 'Cold', 'Cool', 'Normal Temperature', 'Room Temperature',
                'Lukewarm', 'Toasty', 'Mild', 'Warm',
                'Heated', 'Hot', 'Cooked', 'Toasted', 'Boiling', 'Burning', 'Steaming']
 velocity = ['Static', 'Still', 'Creeping', 'Sluggish', 'Slow', 'Flowing', 'Moving', 'Fast', 'Rapid']
 material = ['Solid', 'Liquid', 'Gas', 'Mixture']
+
+#Specific Keywords for BBD and IBD generation
+internal_component = ['internal_components', 'internally','internal']
+port_component = ['port_component','port', 'ports']
+
 
 
 # In[5]:
@@ -116,7 +122,7 @@ all_lists = [separate_list, distribute_list, import_list, export_list,
             transfer_list, guide_list, couple_list, mix_list, actuate_list, 
             regulate_list, change_list, stop_list, convert_list, store_list, 
             supply_list, sense_list, indicate_list, process_list, 
-            energize_list]
+            energize_list, port_component]
 
 allPreserveList = [temperature, functional_verbs, velocity, stopwords_remove, 
                   energy_list, material]
@@ -174,13 +180,6 @@ def editLists(all_lists):
 
 # In[8]:
 
-
-def perserveWords(allPreserveList):
-    for j in allPerserveList: 
-        if i.lower() in stop_words:
-            stop_words.remove(i.lower())
-
-#stop_words.add('The','A')
 # Adding some words to the stop words list that we do not require and removing words we need 
 stopwords_add = ['The', 'A']
 for i in stopwords_add:
@@ -224,11 +223,17 @@ def remove_stopwords_from_tokenized_text(words):
 
 # Consists can be used in the same way as before
 # Converting words not in nltk synonym list to the ones that are accepted
+# Consists can be used in the same way as before
+# Converting words not in nltk synonym list to the ones that are accepted
 def changeSynonyms(final_list, new_all_list):
-    lemmatizer = WordNetLemmatizer()
     index = 0
     one_list = []
-    
+
+    if all(a in final_list for a in ("internal", ":")):
+        index_internal = final_list.index("internal")
+        final_list.remove(final_list[index_internal + 1])
+        final_list[index_internal] = internal_component[0]
+
     for i in final_list:
         for j in new_all_list:
             one_list = j
@@ -241,7 +246,7 @@ def changeSynonyms(final_list, new_all_list):
                             final_list[index] = one_list[0][:-1] + 'ies'
                         else:
                             final_list[index] = one_list[0]
-                    break       
+                    break
         index = index + 1
     return final_list
 
@@ -268,7 +273,8 @@ def formatNouns(new_para):
         if "consists" in i:
             within_words = i.split()
             for words in within_words:
-                if (words == "and" or words == "consists" or words == ","):
+                if (words == "and" or words == "consists" or words == "," or words == "port_components"
+                        or words == "internal_components" or words == ":"):
                     new_para_latest = new_para_latest[:-1] + " " + words + " "
                 else:
                     new_para_latest = new_para_latest + words.upper() + "_"
@@ -276,10 +282,18 @@ def formatNouns(new_para):
         elif "connected" in i:
             within_words = i.split()
             for words in within_words:
-                if (words == "connected" or words == "and" or words == ','):
+                if (words == "connected" or words == "and" or words == ',' or words == "port_components"):
                     new_para_latest = new_para_latest[:-1] + " " + words + " "
                 elif (words == "to"):
                     new_para_latest = new_para_latest + " " + words + " "
+                else:
+                    new_para_latest = new_para_latest + words.upper() + "_"
+            new_para_latest = new_para_latest[:-1] + ".\n"
+        elif "instantiates" in i:
+            within_words = i.split()
+            for words in within_words:
+                if (words == "instantiates"):
+                    new_para_latest = new_para_latest[:-1] + " " + words + " "
                 else:
                     new_para_latest = new_para_latest + words.upper() + "_"
             new_para_latest = new_para_latest[:-1] + ".\n"
@@ -287,7 +301,7 @@ def formatNouns(new_para):
             within_words = i.split()
             index_func = 0
             index_from = 0
-            index_to = 0            
+            index_to = 0
             for m in range(len(within_words)):
                 words = ['imports', 'exports', 'transfers', 'guides', 'supplies']
                 for i in words:
@@ -319,7 +333,7 @@ def formatNouns(new_para):
                         new_para_latest = new_para_latest + within_words[m].upper() + "_"
                         m = m + 1
                     new_para_latest = new_para_latest[:-1]
-                                        
+
                 elif (index_from > 0 and m == index_from):
                     new_para_latest = new_para_latest + " from "
                     m = m + 1
@@ -338,11 +352,12 @@ def formatNouns(new_para):
                     new_para_latest = new_para_latest + " " + within_words[m]
                     m += 1
             new_para_latest = new_para_latest + ".\n"
-        
+
         elif (("converts" in i) or ("mixes" in i) or ("couples" in i) or ("separates" in i) or ("energizes" in i) or (
                 "deenergizes" in i) or ("stores" in i) or ("stops" in i) or ("changes" in i) or ("regulates" in i)):
             within_words = i.split()
-            words = ['converts', 'mixes', 'couples', 'separates', 'energizes', 'deenergizes', 'stores', 'stops', 'changes',
+            words = ['converts', 'mixes', 'couples', 'separates', 'energizes', 'deenergizes', 'stores', 'stops',
+                     'changes',
                      'regulates']
             for i in words:
                 if i in within_words:
@@ -378,9 +393,7 @@ def formatNouns(new_para):
             new_para_latest = new_para_latest[:-1] + ".\n"
         else:
             continue
-
     return new_para_latest
-
 
 # In[13]:
 
@@ -469,7 +482,7 @@ def finalVersion(new_final_list):
             str = str + " " + element
 
     send_to_grammar = ""
-    additional_reserved_words = [',', 'consists', 'connected']
+    additional_reserved_words = [',', 'consists', 'connected', 'internal_components']
     for i in str.split("."):
         indexes = []
         within_words = i.split()
@@ -494,10 +507,9 @@ def finalVersion(new_final_list):
 # ### Input Text
 
 # In[16]:
-
-
-# input_paragraph = "The FGS System consists of the Left Side FGS, the Right Side FGS, a LR Bus, and a RL Bus. LR Bus is connected to Left Side FGS and Right Side FGS. RL Bus is connected to Left Side FGS and Right Side FGS. The Left Side FGS imports boolean Input from the Left Transfer Switch. The Left Side FGS imports boolean Input from the Left Primary Side. The Right Side FGS imports boolean Input from the Right Transfer Switch. The Right Side FGS imports boolean Input from the Right Primary Side. CLK_ONE supplies synchronous value to Left Side FGS. CLK_TWO supplies synchronous value to LR_Bus. CLK_THREE supplies synchronous value to Right Side FGS. CLK_FOUR supplies synchronous value to RL_Bus."
-input_paragraph = "The coffeemaker consists of a cooking unit and a pot. The pot is connected to the cooking unit. The cooking unit consists of a tank, a heating unit, and a brewing unit. The tank is connected to the heating unit. The heating unit is connected to the brewing unit. The pot consists of a glassware, a lid, and a handle. The lid is connected to the glassware. The handle is connected to the glassware. The tank imports water and transfers it to the heating unit. The heating unit consists of a heating coil and a hot water pipe. The heating coil is connected to the hot water pipe. The heating coil imports electricity and converts it to heat. The heating coil transfers heat to the hot water pipe. The hot water pipe receives water from the tank. The hot water pipe imports heat from the heating coil. The hot water pipe imports water and heat and energizes it to hot water. The brewing unit consists of a vertical pipe, a water valve, a shower head, a filter, and a filter holder. The lower end of the vertical pipe is connected to the hot water pipe. The water valve is connected to the vertical pipe. The shower head is connected to the upper end of the vertical pipe. The filer holder consists of a filter. The vertical pipe receives hot water from the hot water pipe. The vertical pipe transfers hot water to the shower head. The shower head receives hot water from the vertical pipe. The shower head distributes it to filter. The filter imports ground coffee. The filter receives hot water from the shower head. The filter couples ground coffee and hot water. The pot stores the liquid coffee."
+# input_paragraph = "The FGS System consists of the Left Side FGS, the Right Side FGS, a LR Bus, and a RL Bus. LR Bus is connected to Left Side FGS and Right Side FGS. RL Bus is connected to Left Side FGS and Right Side FGS. The Left Side FGS imports boolean input from the Left Transfer Switch. The Left Side FGS imports boolean input from the Left Primary Side. The Right Side FGS imports boolean input from the Right Transfer Switch. The Right Side FGS imports boolean input from the Right Primary Side. CLK_ONE supplies synchronous value to Left Side FGS. CLK_TWO supplies synchronous value to LR_Bus. CLK_THREE supplies synchronous value to Right Side FGS. CLK_FOUR supplies synchronous value to RL_Bus."
+# input_paragraph = "The coffeemaker consists of a cooking unit and a pot. The pot is connected to the cooking unit. The cooking unit consists of a tank, a heating unit, and a brewing unit. The tank is connected to the heating unit. The heating unit is connected to the brewing unit. The pot consists of a glassware, a lid, and a handle. The lid is connected to the glassware. The handle is connected to the glassware. The tank imports water and transfers it to the heating unit. The heating unit consists of a heating coil and a hot water pipe. The heating coil is connected to the hot water pipe. The heating coil imports electricity and converts it to heat. The heating coil transfers heat to the hot water pipe. The hot water pipe receives water from the tank. The hot water pipe imports heat from the heating coil. The hot water pipe imports water and heat and energizes it to hot water. The brewing unit consists of a vertical pipe, a water valve, a shower head, a filter, and a filter holder. The lower end of the vertical pipe is connected to the hot water pipe. The water valve is connected to the vertical pipe. The shower head is connected to the upper end of the vertical pipe. The filer holder consists of a filter. The vertical pipe receives hot water from the hot water pipe. The vertical pipe transfers hot water to the shower head. The shower head receives hot water from the vertical pipe. The shower head distributes it to filter. The filter imports ground coffee. The filter receives hot water from the shower head. The filter couples ground coffee and hot water. The pot stores the liquid coffee."
+input_paragraph = "The Flight Guided System consists of a FGS System, a Side, and a Bus. The FGS System consists of internal components: Left FGS, Right FGS, LR Bus, and RL Bus. The Side consists of ports Transfer Switch, Primary Side, Pilot Flying, Bus In and CLK. The Bus has ports Left, Right, and CLK. The Left FGS instantiates a Side. Right FGS instantiates a Side. The LR instantiates a Bus. The RL instantiates a Bus. The Pilot Flying exports a boolean value. The Bus In imports a boolean input. The Left FGS is connected to LR by the ports Pilot Flying and Left. The RL is connected to Left FGS by the ports Left and Bus In. The LR is connected to Right FGS by the ports Right and Bus In. The Right FGS is connected to RL by the ports Pilot Flying and Right."
 
 
 # ## Driver Code
@@ -505,6 +517,7 @@ input_paragraph = "The coffeemaker consists of a cooking unit and a pot. The pot
 # In[17]:
 
 
+# Driver Code
 # Driver Code
 if __name__ == "__main__":
     functional_verbs = []
@@ -514,25 +527,25 @@ if __name__ == "__main__":
     new_final_list = []
     send_to_grammar = ''
     new_all_list = []
-    
+
     # Edit all individual list and update the all_lists
     new_all_list = editLists(all_lists)
-    
-    # Remove stopwords from raw text 
+
+    # Remove stopwords from raw text
     final_list = remove_stopwords_from_raw_text(input_paragraph)
-    
+
     # Change synonyms to our preferred  words
     changeSynonyms(final_list, new_all_list)
-    
-    # Convert the list to a paragraph 
+
+    # Convert the list to a paragraph
     new_para = createParagraphs(final_list)
-    
-    # Reformat the nouns for ANTLR standards 
+
+    # Reformat the nouns for ANTLR standards
     new_para_latest = formatNouns(new_para)
-    
-    # 
+
+    #
     new_final_list = convert_if_in_NLTK(new_para_latest)
     send_to_grammar = finalVersion(new_final_list)
-    
+
     print(send_to_grammar)
 
