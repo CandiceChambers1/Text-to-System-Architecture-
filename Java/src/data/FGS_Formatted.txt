@@ -1,0 +1,11 @@
+FGS_SYSTEM consists LEFT_SIDE_FGS , RIGHT_SIDE_FGS , LR_BUS and RL_BUS.
+LR_BUS connected to LEFT_SIDE_FGS and RIGHT_SIDE_FGS.
+RL_BUS connected to LEFT_SIDE_FGS and RIGHT_SIDE_FGS.
+LEFT_SIDE_FGS imports Boolean input from LEFT_TRANSFER_SWITCH.
+LEFT_SIDE_FGS imports Boolean input from LEFT_PRIMARY_SIDE.
+RIGHT_SIDE_FGS imports Boolean input from RIGHT_TRANSFER_SWITCH.
+RIGHT_SIDE_FGS imports Boolean input from RIGHT_PRIMARY_SIDE.
+CLK_ONE supplies Synchronous value to LEFT_SIDE_FGS.
+CLK_TWO supplies Synchronous value to LR_BUS.
+CLK_THREE supplies Synchronous value to RIGHT_SIDE_FGS.
+CLK_FOUR supplies Synchronous value to RL_BUS.
