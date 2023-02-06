@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String inputFile = readInputFile("./src/data/FGS_Formatted.txt");
+            String inputFile = readInputFile("./src/data/FGS_NLP.txt");
             String input = cleanText(inputFile);
 //            System.out.println(input);
             ANTLRInputStream inputStream = new ANTLRInputStream(input);
@@ -25,11 +25,6 @@ public class Main {
             Visitor visitor = new Visitor();
             visitor.visit(sysmlParser.nlparch());
 
-//            New_grammarLexer textToAADLLexer = new New_grammarLexer(inputStream);
-//            CommonTokenStream tokens = new CommonTokenStream(textToAADLLexer);
-//            New_grammarParser parser = new New_grammarParser(tokens);
-//            Visitor visitor1= new Visitor();
-//            visitor1.visit(parser.nlparch());
 //            for(int i =0; i<)
 //            for(int i=0;i<=visitor.-1;i++){
 //                System.out.println(visitor.system_declaration[i][0]);
