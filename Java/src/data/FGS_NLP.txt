@@ -1,7 +1,7 @@
-FGS consists FGS_SYSTEM , SIDE , and BUS.
-FGS_SYSTEM consists internal_components : LEFT_FGS , RIGHT_FGS , LR_BUS , and RL_BUS.
+FGS consists FGS_SYSTEM , SIDE and BUS.
+FGS_SYSTEM consists internal_components : LEFT_FGS , RIGHT_FGS , LR_BUS and RL_BUS.
 SIDE consists port_components TRANSFER_SWITCH , PRIMARY_SIDE , PILOT_FLYING , BUS_IN and CLK.
-BUS consists port_components LEFT , RIGHT , and CLK.
+BUS consists port_components LEFT , RIGHT and CLK.
 LEFT_FGS instantiates SIDE.
 RIGHT_FGS instantiates SIDE.
 LR instantiates BUS.
@@ -12,4 +12,3 @@ LEFT_FGS connected to LR port_components PILOT_FLYING and LEFT.
 RL connected to LEFT_FGS port_components LEFT and BUS_IN.
 LR connected to RIGHT_FGS port_components RIGHT and BUS_IN.
 RIGHT_FGS connected to RL port_components PILOT_FLYING and RIGHT.
-

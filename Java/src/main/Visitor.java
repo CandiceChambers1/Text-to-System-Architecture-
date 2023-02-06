@@ -84,7 +84,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
             </UML:ModelElement.taggedValue>
         </UML:Class> */
 
-
+        System.out.println(ctx.getText());
 //        for(int i = 0;i< ctx.depth();i++){
 //            System.out.println(ctx.children.get(i));
 //        }

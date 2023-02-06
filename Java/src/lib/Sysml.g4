@@ -7,9 +7,10 @@ nlparch : sentences+;
 sentences: sentence+;
 sentence : ((structural_stmts)| (functional_stmts) | (test_stmts));
 test_stmts: End;
-structural_stmts : (((structural_stmt)|(connection_stmt)) End);
-structural_stmt : Struct_noun Struct_verb struct_multinoun;
-connection_stmt : Struct_noun Connect_verb To struct_multinoun;
+structural_stmts : (((structural_stmt)|(connection_stmt)|(instantitation_stmt)) End);
+structural_stmt : Struct_noun Struct_verb ((Internal|Port)Colon*)* struct_multinoun;
+connection_stmt : Struct_noun Connect_verb To struct_multinoun (Port Struct_noun And Struct_noun);
+instantitation_stmt:Struct_noun Instantiates Struct_noun;
 functional_stmts: ((functional_stmt) End);
 functional_stmt: ((Struct_noun Func_verb multi_flow)
                  ((From Struct_noun To Struct_noun)|((To|From) struct_multinoun)|(To multi_flow))?)
@@ -25,13 +26,16 @@ Comma : ',';
 And: 'and';
 Form: 'form';
 End: '.';
+Colon: ':';
 It: 'it';
 To: 'to';
 Them: 'them';
 From: 'from';
 Struct_verb: 'consists';
 Connect_verb : 'connected';
+Instantiates: 'instantiates';
 Internal: 'internal_components';
+Port: 'port_components';
 Func_verb: 'imports'|'exports'|'transfers'|'guides'|'supplies'|'converts'|'mixes'|'couples'|'separates'
             | 'energizes' | 'deenergizes' | 'stores' | 'stops' | 'changes' | 'regulates' | 'distributes';
 Energy : 'energy';
