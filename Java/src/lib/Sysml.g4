@@ -41,7 +41,7 @@ Func_verb: 'imports'|'exports'|'transfers'|'guides'|'supplies'|'converts'|'mixes
 Energy : 'energy';
 
 Adj_value: [A-Z][a-z]+;
-Struct_noun : [A-Z]+[_A-Z]*;
+Struct_noun : [A-Z]+[_A-Z0-9]*;
 State : [a-z]+;
 Signal : [a-zA-Z0-9_]+;
 WS: [ \t\u000C\r\n]+ -> skip;

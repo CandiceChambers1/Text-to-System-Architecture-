@@ -3,10 +3,9 @@ import lib.SysmlParser;
 import lib.SysmlVisitor;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
+import java.util.StringTokenizer;
 public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implements SysmlVisitor<Object> {
     public int index =0;
-    Sentence currentSentence;
-    String currentContext="";
     /**
      * Visit a parse tree produced by {@link SysmlParser#nlparch}.
      *
@@ -84,11 +83,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
                 <UML:TaggedValue tag="stereotype" value="block"/>
             </UML:ModelElement.taggedValue>
         </UML:Class> */
-        System.out.println(ctx.getText());
-        String sentence = ctx.getText();
-//        currentSentence.sentenceType = sentence;
-//        String structN = ctx.Struct_noun().getText();
-//        currentSentence.addStructNoun(structN);
+
 
 //        for(int i = 0;i< ctx.depth();i++){
 //            System.out.println(ctx.children.get(i));
