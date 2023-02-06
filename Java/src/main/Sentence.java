@@ -8,7 +8,7 @@ public class Sentence {
     ArrayList <String> structNouns;
     HashMap<String, String> contextMap;
 
-    public Sentence(String type ){
+    public Sentence(String type){
         this.sentenceType = type;
         this.structNouns = new ArrayList<String>();
     }

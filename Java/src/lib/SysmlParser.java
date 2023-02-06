@@ -535,9 +535,6 @@ public class SysmlParser extends Parser {
 		}
 		public TerminalNode Connect_verb() { return getToken(SysmlParser.Connect_verb, 0); }
 		public TerminalNode To() { return getToken(SysmlParser.To, 0); }
-		public Struct_multinounContext struct_multinoun() {
-			return getRuleContext(Struct_multinounContext.class,0);
-		}
 		public TerminalNode Port() { return getToken(SysmlParser.Port, 0); }
 		public TerminalNode And() { return getToken(SysmlParser.And, 0); }
 		public Connection_stmtContext(ParserRuleContext parent, int invokingState) {
@@ -572,7 +569,7 @@ public class SysmlParser extends Parser {
 			setState(70);
 			match(To);
 			setState(71);
-			struct_multinoun();
+			match(Struct_noun);
 			{
 			setState(72);
 			match(Port);
@@ -1194,7 +1191,7 @@ public class SysmlParser extends Parser {
 		"\7\25\2\2\67A\7\r\2\28<\t\2\2\29;\7\b\2\2:9\3\2\2\2;>\3\2\2\2<:\3\2\2"+
 		"\2<=\3\2\2\2=@\3\2\2\2><\3\2\2\2?8\3\2\2\2@C\3\2\2\2A?\3\2\2\2AB\3\2\2"+
 		"\2BD\3\2\2\2CA\3\2\2\2DE\5\26\f\2E\r\3\2\2\2FG\7\25\2\2GH\7\16\2\2HI\7"+
-		"\n\2\2IJ\5\26\f\2JK\7\21\2\2KL\7\25\2\2LM\7\5\2\2MN\7\25\2\2N\17\3\2\2"+
+		"\n\2\2IJ\7\25\2\2JK\7\21\2\2KL\7\25\2\2LM\7\5\2\2MN\7\25\2\2N\17\3\2\2"+
 		"\2OP\7\25\2\2PQ\7\17\2\2QR\7\25\2\2R\21\3\2\2\2ST\5\24\13\2TU\7\7\2\2"+
 		"U\23\3\2\2\2VW\7\25\2\2WX\7\22\2\2XY\5\30\r\2Yb\3\2\2\2Z[\7\f\2\2[\\\7"+
 		"\25\2\2\\]\7\n\2\2]c\7\25\2\2^_\t\3\2\2_c\5\26\f\2`a\7\n\2\2ac\5\30\r"+

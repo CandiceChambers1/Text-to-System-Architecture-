@@ -9,7 +9,7 @@ sentence : ((structural_stmts)| (functional_stmts) | (test_stmts));
 test_stmts: End;
 structural_stmts : (((structural_stmt)|(connection_stmt)|(instantitation_stmt)) End);
 structural_stmt : Struct_noun Struct_verb ((Internal|Port)Colon*)* struct_multinoun;
-connection_stmt : Struct_noun Connect_verb To struct_multinoun (Port Struct_noun And Struct_noun);
+connection_stmt : Struct_noun Connect_verb To Struct_noun (Port Struct_noun And Struct_noun);
 instantitation_stmt:Struct_noun Instantiates Struct_noun;
 functional_stmts: ((functional_stmt) End);
 functional_stmt: ((Struct_noun Func_verb multi_flow)
