@@ -1,18 +1,14 @@
-FGS consists FGS_SYSTEM, SIDE and BUS.
-FGS_SYSTEM internal_components LEFT_FGS, RIGHT_FGS, LR and RL.
-SIDE port_component TRANSFER_SWITCH, PRIMARY_SIDE, PILOT_FLYING, BUS_IN and CLK.
-BUS port_component LEFT, RIGHT, CLK.
-LEFT_FGS is SIDE
-RIGHT_FGS is SIDE
-LR is BUS
-RL is BUS
-PILOT_FLYING exports Boolean input.
-BUS_IN imports Boolean input.
-LEFT imports Boolean input.
-LEFT exports Boolean input.
-RIGHT imports Boolean input.
-RIGHT exports Boolean input.
-LR connected from PILOT_FLYING to LEFT.
-LR connected to BUS_IN from RIGHT.
-RL connected from PILOT_FLYING to RIGHT.
-RL connected to BUS_IN from LEFT.
+The FGS consists of a FGS System, a Side, and a Bus.
+The FGS System consists of internal components: Left FGS, Right FGS, LR Bus, and RL Bus.
+The Side consists of ports Transfer Switch, Primary Side, Pilot Flying, Bus In and CLK.
+The Bus consists of ports Left, Right, and CLK.
+The Left FGS instantiates a Side.
+Right FGS instantiates a Side.
+The LR instantiates a Bus.
+The RL instantiates a Bus.
+The Pilot Flying exports a boolean value.
+The Bus In imports a boolean input.
+The Left FGS is connected to LR by the ports Pilot Flying and Left.
+The RL is connected to Left FGS by the ports Left and Bus In.
+The LR is connected to Right FGS by the ports Right and Bus In.
+The Right FGS is connected to RL by the ports Pilot Flying and Right.

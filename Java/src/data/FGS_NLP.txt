@@ -1,13 +1,15 @@
-The FGS_System consists of four components: the Left Side FGS, the Right Side FGS, an LR Bus, and an RL Bus.
-LR Bus establishes connection between Left Side FGS and Right Side FGS.
-The LR Bus takes input from CLK2.
-RL Bus establishes connection between Left Side FGS and Right Side FGS.
-The RL Bus takes input from CLK4.
-The Left Side FGS accepts as input a boolean value of Left Transfer Switch and Left Primary Side.
-The Left Side FGS takes input from a synchronous clock CLK1.
-The Right Side FGS accepts as input a boolean value of Right Transfer Switch and Right Primary Side.
-The Right Side FGS accepts input from a synchronous clock CLK3.
+FGS consists FGS_SYSTEM , SIDE , and BUS.
+FGS_SYSTEM consists internal_components : LEFT_FGS , RIGHT_FGS , LR_BUS , and RL_BUS.
+SIDE consists port_components TRANSFER_SWITCH , PRIMARY_SIDE , PILOT_FLYING , BUS_IN and CLK.
+BUS consists port_components LEFT , RIGHT , and CLK.
+LEFT_FGS instantiates SIDE.
+RIGHT_FGS instantiates SIDE.
+LR instantiates BUS.
+RL instantiates BUS.
+PILOT_FLYING exports Boolean value.
+BUS_IN imports Boolean input.
+LEFT_FGS connected to LR port_components PILOT_FLYING and LEFT.
+RL connected to LEFT_FGS port_components LEFT and BUS_IN.
+LR connected to RIGHT_FGS port_components RIGHT and BUS_IN.
+RIGHT_FGS connected to RL port_components PILOT_FLYING and RIGHT.
 
-
-
-The FGS System consists of the Left Side FGS, the Right Side FGS, a LR Bus, and a RL Bus. LR Bus is connected to Left Side FGS and Right Side FGS. RL Bus is connected to Left Side FGS and Right Side FGS. The Left Side FGS allows a boolean input from the Left Transfer Switch and Left Primary Side. The Right Side FGS allows a boolean input from the Right Transfer Switch and Right Primary Side. CLK_ONE supplies synchronous value to L_FGS. CLK_TWO supplies synchronous value to LR_Bus. CLK_THREE supplies synchronous value to R_FGS. CLK_FOUR supplies synchronous value to RL_Bus.
