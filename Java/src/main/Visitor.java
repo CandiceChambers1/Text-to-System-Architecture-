@@ -104,6 +104,17 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     }
 
     /**
+     * Visit a parse tree produced by {@link SysmlParser#instantitation_stmt}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    @Override
+    public Object visitInstantitation_stmt(SysmlParser.Instantitation_stmtContext ctx) {
+        return null;
+    }
+
+    /**
      * Visit a parse tree produced by {@link SysmlParser#functional_stmts}.
      *
      * @param ctx the parse tree

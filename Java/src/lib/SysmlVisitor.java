@@ -55,6 +55,12 @@ public interface SysmlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConnection_stmt(SysmlParser.Connection_stmtContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SysmlParser#instantitation_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstantitation_stmt(SysmlParser.Instantitation_stmtContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SysmlParser#functional_stmts}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
