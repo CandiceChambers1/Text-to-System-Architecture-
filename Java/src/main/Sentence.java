@@ -11,6 +11,8 @@ public class Sentence {
     boolean isInternal = false;
     boolean isPort = false;
 
+    boolean isInstantitation = false;
+
     public Sentence(String type, String structNoun){
         this.sentenceType = type;
         this.structNoun = structNoun;
