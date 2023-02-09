@@ -90,7 +90,6 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     @Override
     public Object visitConnection_stmt(SysmlParser.Connection_stmtContext ctx) {
         String sentence = ctx.getText();
-        System.out.println(sentence);
         List structN = ctx.Struct_noun();
         sentences.createNewSentence("Connection", String.valueOf(structN.get(0)));
         currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
@@ -125,7 +124,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitFunctional_stmts(SysmlParser.Functional_stmtsContext ctx) {
-        return null;
+        return visitChildren(ctx);
     }
 
     /**
@@ -136,6 +135,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitFunctional_stmt(SysmlParser.Functional_stmtContext ctx) {
+        System.out.println(ctx.getText());
         return null;
     }
 
