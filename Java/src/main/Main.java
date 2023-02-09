@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +24,15 @@ public class Main {
             CommonTokenStream tokenStream = new CommonTokenStream(sysmlLexer);
             SysmlParser sysmlParser = new SysmlParser(tokenStream);
             Visitor visitor = new Visitor();
+            visitor.sentences = new Sentences();
             visitor.visit(sysmlParser.nlparch());
+            Output outputFormatter = new Output(visitor.sentences);
+            String outputText = outputFormatter.generateOutput();
+            System.out.println(outputText);
+            PrintWriter printWriter = new PrintWriter(new File("CPSS.xml"));
+            printWriter.println(outputText);
+            printWriter.flush();
+            printWriter.close();
 
 //            for(int i =0; i<)
 //            for(int i=0;i<=visitor.-1;i++){
@@ -51,6 +60,11 @@ public class Main {
         return text;
     }
     public static String cleanText(String s){
+        String keywordBlackList[] = {};
+        for(int i=0; i< keywordBlackList.length; i++){
+            s = s.replaceAll(keywordBlackList[i], "");
+        }
+
         return s;
     }
 }
