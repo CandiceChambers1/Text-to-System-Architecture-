@@ -31,12 +31,6 @@ public interface SysmlVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSentence(SysmlParser.SentenceContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SysmlParser#test_stmts}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTest_stmts(SysmlParser.Test_stmtsContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SysmlParser#structural_stmts}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

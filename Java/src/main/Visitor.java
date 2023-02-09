@@ -42,17 +42,6 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     }
 
     /**
-     * Visit a parse tree produced by {@link SysmlParser#test_stmts}.
-     *
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    @Override
-    public Object visitTest_stmts(SysmlParser.Test_stmtsContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    /**
      * Visit a parse tree produced by {@link SysmlParser#structural_stmts}.
      *
      * @param ctx the parse tree
@@ -72,19 +61,6 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     @Override
     public Object visitStructural_stmt(SysmlParser.Structural_stmtContext ctx) {
 
-        // Input: name, xmi.id
-
-        /* <UML:Class name="Side" xmi.id="EAID_32000000_0000_0000_0000_000000000000" namespace="EAPK_FEA10000_0000_0000_0000_000000000000">
-            <UML:ModelElement.stereotype>
-                <UML:Stereotype name="block"/>
-            </UML:ModelElement.stereotype>
-            <UML:ModelElement.taggedValue>
-                <UML:TaggedValue tag="ea_stype" value="Class"/>
-                <UML:TaggedValue tag="package" value="EAPK_FEA10000_0000_0000_0000_000000000000"/>
-                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
-                <UML:TaggedValue tag="stereotype" value="block"/>
-            </UML:ModelElement.taggedValue>
-        </UML:Class> */
         String sentence = ctx.getText();
         boolean internal = false, port=false;
         if(sentence.contains("internal_components")) {

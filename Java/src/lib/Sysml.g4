@@ -5,8 +5,7 @@ grammar Sysml;
 }
 nlparch : sentences+;
 sentences: sentence+;
-sentence : ((structural_stmts)| (functional_stmts) | (test_stmts));
-test_stmts: End;
+sentence : ((structural_stmts)| (functional_stmts));
 structural_stmts : (((structural_stmt)|(connection_stmt)|(instantitation_stmt)) End);
 structural_stmt : Struct_noun Struct_verb ((Internal|Port)Colon*)* struct_multinoun;
 connection_stmt : Struct_noun Connect_verb To Struct_noun (Port Struct_noun And Struct_noun);

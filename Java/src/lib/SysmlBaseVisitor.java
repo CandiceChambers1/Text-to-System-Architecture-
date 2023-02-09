@@ -40,13 +40,6 @@ public class SysmlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTest_stmts(SysmlParser.Test_stmtsContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitStructural_stmts(SysmlParser.Structural_stmtsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

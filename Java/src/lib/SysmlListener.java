@@ -40,16 +40,6 @@ public interface SysmlListener extends ParseTreeListener {
 	 */
 	void exitSentence(SysmlParser.SentenceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SysmlParser#test_stmts}.
-	 * @param ctx the parse tree
-	 */
-	void enterTest_stmts(SysmlParser.Test_stmtsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SysmlParser#test_stmts}.
-	 * @param ctx the parse tree
-	 */
-	void exitTest_stmts(SysmlParser.Test_stmtsContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SysmlParser#structural_stmts}.
 	 * @param ctx the parse tree
 	 */

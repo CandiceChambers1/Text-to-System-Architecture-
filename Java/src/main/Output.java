@@ -20,7 +20,7 @@ public class Output {
         return output;
     }
     public String generateFooter(){
-        String output = "\t<XMI.extensions xmi.extender=\"Enterprise Architect 2.5\"/>\n" +
+        String output = "\n\t<XMI.extensions xmi.extender=\"Enterprise Architect 2.5\"/>\n" +
                 "</XMI>";
         return output;
     }

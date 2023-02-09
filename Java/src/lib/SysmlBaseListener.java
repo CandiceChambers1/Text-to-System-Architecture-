@@ -54,18 +54,6 @@ public class SysmlBaseListener implements SysmlListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTest_stmts(SysmlParser.Test_stmtsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTest_stmts(SysmlParser.Test_stmtsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterStructural_stmts(SysmlParser.Structural_stmtsContext ctx) { }
 	/**
 	 * {@inheritDoc}
