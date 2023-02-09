@@ -89,8 +89,13 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitConnection_stmt(SysmlParser.Connection_stmtContext ctx) {
-        String sentence = ctx.Struct_noun().toString();
-//        System.out.println(sentence);
+        String sentence = ctx.getText();
+        System.out.println(sentence);
+        List structN = ctx.Struct_noun();
+        sentences.createNewSentence("Connection", String.valueOf(structN.get(0)));
+        currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
+        currentSentence.structNoun = String.valueOf(structN.get(0));
+        currentSentence.structNouns.addAll(structN);
         return null;
     }
 
@@ -143,6 +148,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     @Override
     public Object visitStruct_multinoun(SysmlParser.Struct_multinounContext ctx) {
 //        System.out.println(ctx.getText());
+        String sentence = ctx.getText();
         return null;
     }
 
