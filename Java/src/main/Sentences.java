@@ -26,5 +26,13 @@ public class Sentences {
         }
         return null;
     }
+    public Sentence getSentenceByType(String type){
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(type)){
+                return sentence;
+            }
+        }
+        return null;
+    }
 
 }

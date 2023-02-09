@@ -86,7 +86,8 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitConnection_stmt(SysmlParser.Connection_stmtContext ctx) {
-        String sentence = ctx.getText();
+        String sentence = ctx.Struct_noun().toString();
+        System.out.println(sentence);
         return null;
     }
 

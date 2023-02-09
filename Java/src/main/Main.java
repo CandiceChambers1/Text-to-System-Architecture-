@@ -28,22 +28,12 @@ public class Main {
             visitor.visit(sysmlParser.nlparch());
             Output outputFormatter = new Output(visitor.sentences);
             String outputText = outputFormatter.generateOutput();
-            System.out.println(outputText);
-            PrintWriter printWriter = new PrintWriter(new File("src/xml/CPSS.xml"));
-            printWriter.println(outputText);
-            printWriter.flush();
-            printWriter.close();
+//            System.out.println(outputText);
+//            PrintWriter printWriter = new PrintWriter(new File("src/xml/CPSS.xml"));
+//            printWriter.println(outputText);
+//            printWriter.flush();
+//            printWriter.close();
 
-//            for(int i =0; i<)
-//            for(int i=0;i<=visitor.-1;i++){
-//                System.out.println(visitor.system_declaration[i][0]);
-//                System.out.println(visitor.system_declaration[i][1]);
-//            }
-//
-//            for(int i=0;i<=visitor1.ind_system_in_features-1;i++)
-//            {
-//                System.out.println(visitor1.system_in_features[i]);
-//            }
 
         } catch (Exception e) {
             e.printStackTrace();
