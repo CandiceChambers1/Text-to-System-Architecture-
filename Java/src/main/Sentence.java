@@ -5,11 +5,15 @@ import java.util.HashMap;
 
 public class Sentence {
     String sentenceType;
+    String structNoun;
     ArrayList <String> structNouns;
     HashMap<String, String> contextMap;
+    boolean isInternal = false;
+    boolean isPort = false;
 
-    public Sentence(String type){
+    public Sentence(String type, String structNoun){
         this.sentenceType = type;
+        this.structNoun = structNoun;
         this.structNouns = new ArrayList<String>();
     }
 
