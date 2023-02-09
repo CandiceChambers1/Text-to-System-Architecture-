@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implements SysmlVisitor<Object> {
     public int index =0;
     Sentence currentSentence;
+    public Sentences sentences;
     String currentContext="";
     /**
      * Visit a parse tree produced by {@link SysmlParser#nlparch}.
@@ -84,16 +85,20 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
                 <UML:TaggedValue tag="stereotype" value="block"/>
             </UML:ModelElement.taggedValue>
         </UML:Class> */
-        System.out.println(ctx.getText());
         String sentence = ctx.getText();
-//        currentSentence.sentenceType = sentence;
-//        String structN = ctx.Struct_noun().getText();
-//        currentSentence.addStructNoun(structN);
+        boolean internal = false, port=false;
+        if(sentence.contains("internal_components")) {
+            internal = true;
+        } if (sentence.contains("port_components")) {
+            port=true;
+        }
+        String structN = ctx.Struct_noun().getText();
+        sentences.createNewSentence("Structural", structN );
+        currentSentence = sentences.getSentenceByStructNoun(structN);
+        currentSentence.isInternal = internal;
+        currentSentence.isPort = port;
 
-//        for(int i = 0;i< ctx.depth();i++){
-//            System.out.println(ctx.children.get(i));
-//        }
-//        System.out.println(ctx.Struct_noun());
+        visit(ctx.struct_multinoun());
         return null;
     }
 
