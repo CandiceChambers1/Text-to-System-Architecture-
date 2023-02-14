@@ -77,6 +77,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         currentSentence.isPort = port;
         currentSentence.structNoun = structN;
 
+
         visit(ctx.struct_multinoun());
         return null;
     }
@@ -135,7 +136,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitFunctional_stmt(SysmlParser.Functional_stmtContext ctx) {
-        System.out.println(ctx.getText());
+//        System.out.println(ctx.getText());
         return null;
     }
 
@@ -147,7 +148,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitStruct_multinoun(SysmlParser.Struct_multinounContext ctx) {
-//        System.out.println(ctx.getText());
+        System.out.println(ctx.getText());
         String sentence = ctx.getText();
         return null;
     }

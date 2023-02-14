@@ -28,33 +28,36 @@ public class Output {
     }
 
     public String generateContent(){
-        String noun="",xmiId="", xmiRootId="",xmiPackageId="", ownerXmiId="";
+        String xmiId="", xmiRootId="",xmiPackageId="";
+        String noun = sentences.getSentenceByType("Structural").structNoun;
+
         String output = "\t<XMI.content>\n"+
                 "\t\t<UML:Model name=\"EA Model\" xmi.id=\"" + xmiId + "\">\n"+
 			    "\t\t\t<UML:Namespace.ownedElement>\n"+
 				"\t\t\t\t<UML:Class name=\"EARootClass\" xmi.id=\"" + xmiRootId + "\"/>"+
                 "\t\t\t\t<UML:Package name=\"One Level Block Hierarchy\" xmi.id=\"" + xmiPackageId + "\">\n" +
                 "\t\t\t\t\t<UML:Namespace.ownedElement>";
-                output += generateBlock();
-                output += generatePort(noun, xmiId, xmiPackageId,ownerXmiId);
-                output += generateAssociation();
-                output += generateIBD();
+//                output += generateBlock();
+//                output += generatePort();
+//                output += generateAssociation();
+//                output += generateIBD();
 
                 output += "\t\t\t\t\t</UML:Namespace.ownedElement>"+
                         "\t\t\t\t</UML:Package>\n"+
                         "\t\t\t</UML:Namespace.ownedElement>\n"+
                         "\t\t</UML:Model>\n";
 
-                output += generateDirection();
-                output += generateEncapsulation();
-                output += generateDiagram();
+//                output += generateDirection();
+//                output += generateEncapsulation();
+//                output += generateDiagram();
                 output += "\t</XMI.content>\n";
 
         return output;
     }
 
 
-    public String generatePort(String noun, String xmiId, String xmiPackageId, String ownerXmiId){
+    public String generatePort(){
+        String noun="",xmiId="", xmiRootId="",xmiPackageId="",ownerXmiId="";
         String output = "\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiId + "\" namespace = \"" + xmiPackageId + "\" >\n" +
                 "\t\t<UML:ModelElement.taggedValue>\n" +
                 "\t\t\t<UML:TaggedValue tag = \"ea_stype\" value = \"Port\"/>\n" +
@@ -67,7 +70,9 @@ public class Output {
         return output;
     }
 
-    public String generateBlock(String noun, String xmiId, String xmiPackageId){
+    public String generateBlock(){
+        String noun="",xmiId="", xmiRootId="",xmiPackageId="",ownerXmiId="";
+//        String noun = sentences.getSentenceByType("Structural").structNoun;
         String output = "\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiId + "\" namespace = \"" + xmiPackageId + "\" >\n" +
                 "\t\t<UML:ModelElement.stereotype>\n" +
                 "\t\t\t<UML:Stereotype name = \"block\"/\n>" +
@@ -168,27 +173,27 @@ public class Output {
     }
     public String generateDiagram(){
         String output = generateDiagramBDD();
-        if (internal==TRUE) {
-            output += generateDiagramIBD();
-        }
+//        if (internal==TRUE) {
+//            output += generateDiagramIBD();
+//        }
         return output;
     }
 
-    public generateDiagramBDD(String xmiId, String xmiPackage){
-
+    public String generateDiagramBDD(){
+        String noun="",xmiId="", xmiRootId="",xmiPackageId="",ownerXmiId="", xmiPackage="";
         String output = "\t<UML:Diagram name = \"One Level Block Hierarchy\" xmi.id=\"" + xmiId + "\" diagramType = \"ClassDiagram\" owner=\"" + xmiId + "\" toolName = \"Enterprise Architect 2.5\">\n" +
                 "\t\t<UML:ModelElement.taggedValue>\n" +
                 "\t\t\t<UML:TaggedValue tag=\"package\" value=\"" + xmiPackage + "\">\n"+
                 "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::BlockDefinition;SF=1;\"/>\n"+
                 "\t\t</UML:ModelElement.taggedValue>\n"+
                 "\t\t<UML:Diagram.element>\n";
-                for(amountOfFiguresToBeDrawn){
-                    if (block) {
-                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=500;Top=150;Right=690;Bottom=190;\" subject=\"" + xmiId + "\"/>\n";
-                    }if (port) {
-                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + xmiId + "\"/>\n";
-                    }
-                }
+//                for(amountOfFiguresToBeDrawn){
+//                    if (block) {
+//                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=500;Top=150;Right=690;Bottom=190;\" subject=\"" + xmiId + "\"/>\n";
+//                    }if (port) {
+//                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + xmiId + "\"/>\n";
+//                    }
+//                }
                 output += "\t\t</UML:Diagram.element>\n"+
                         "\t</UML:Diagram>\n";
 
@@ -196,7 +201,7 @@ public class Output {
 
     }
 
-    public generateDiagramIBD(String noun, String xmiId, String xmiPackage){
+    public String generateDiagramIBD(String noun, String xmiId, String xmiPackage){
         String output = "\t<UML:Diagram name=\"" + noun +"\" xmi.id=\"" + xmiId+ "\" diagramType=\"CompositeStructureDiagram\" owner=\"" + xmiPackage + "\" toolName=\"Enterprise Architect 2.5\">\n"+
                 "\t\tUML:ModelElement.taggedValue>\n"+
                 "\t\t\t<UML:TaggedValue tag=\"package\" value=\"" + xmiPackage + "\"/>\n"+
@@ -206,15 +211,15 @@ public class Output {
 				"\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::InternalBlock;SF=1;\"/>"+
                 "\t\t</UML:ModelElement.taggedValue>\n"+
                 "\t\t<UML:Diagram.element>\n";
-                for(amountOfFiguresToBeDrawn) {
-                    if (port) {
-                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=543;Top=202;Right=558;Bottom=217;\" subject=\"" + xmiId + "\"/>\n";
-                    }if (property) {
-                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + xmiId + "\"/>\n";
-                    }if (connection){
-                        output += "\t\t\t<UML:DiagramElement geometry=\"SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;\" subject=\"" + xmiId + "\"/>\n";
-                    }
-                }
+//                for(amountOfFiguresToBeDrawn) {
+//                    if (port) {
+//                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=543;Top=202;Right=558;Bottom=217;\" subject=\"" + xmiId + "\"/>\n";
+//                    }if (property) {
+//                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + xmiId + "\"/>\n";
+//                    }if (connection){
+//                        output += "\t\t\t<UML:DiagramElement geometry=\"SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;\" subject=\"" + xmiId + "\"/>\n";
+//                    }
+//                }
                 output += "\t\t</UML:Diagram.element>\n"+
                         "\t</UML:Diagram>\n";
         return output;
