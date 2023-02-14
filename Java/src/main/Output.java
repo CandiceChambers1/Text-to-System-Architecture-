@@ -181,13 +181,13 @@ public class Output {
                 "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::BlockDefinition;SF=1;\"/>\n"+
                 "\t\t</UML:ModelElement.taggedValue>\n"+
                 "\t\t<UML:Diagram.element>\n";
-                for(amount of figures to be drawn)
-                    if block():
+                for(amountOfFiguresToBeDrawn){
+                    if (block) {
                         output += "\t\t\t<UML:DiagramElement geometry=\"Left=500;Top=150;Right=690;Bottom=190;\" subject=\"" + xmiId + "\"/>\n";
-                    if port():
+                    }if (port) {
                         output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + xmiId + "\"/>\n";
-
-
+                    }
+                }
                 output += "\t\t</UML:Diagram.element>\n"+
                         "\t</UML:Diagram>\n";
 
@@ -205,14 +205,15 @@ public class Output {
 				"\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::InternalBlock;SF=1;\"/>"+
                 "\t\t</UML:ModelElement.taggedValue>\n"+
                 "\t\t<UML:Diagram.element>\n";
-                for(amount of figures to be drawn):
-                    if port()
+                for(amountOfFiguresToBeDrawn) {
+                    if (port) {
                         output += "\t\t\t<UML:DiagramElement geometry=\"Left=543;Top=202;Right=558;Bottom=217;\" subject=\"" + xmiId + "\"/>\n";
-                    if property():
+                    }if (property) {
                         output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + xmiId + "\"/>\n";
-                    if connection():
+                    }if (connection){
                         output += "\t\t\t<UML:DiagramElement geometry=\"SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;\" subject=\"" + xmiId + "\"/>\n";
-
+                    }
+                }
                 output += "\t\t</UML:Diagram.element>\n"+
                         "\t</UML:Diagram>\n";
         return output;
