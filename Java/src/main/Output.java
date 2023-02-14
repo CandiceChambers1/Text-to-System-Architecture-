@@ -27,7 +27,8 @@ public class Output {
         return output;
     }
 
-    public String generateContent(String noun, String xmiId, String xmiRootId, String xmiPackageId, String ownerXmiId){
+    public String generateContent(){
+        String noun="",xmiId="", xmiRootId="",xmiPackageId="", ownerXmiId="";
         String output = "\t<XMI.content>\n"+
                 "\t\t<UML:Model name=\"EA Model\" xmi.id=\"" + xmiId + "\">\n"+
 			    "\t\t\t<UML:Namespace.ownedElement>\n"+
