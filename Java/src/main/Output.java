@@ -29,6 +29,7 @@ public class Output {
 
     public String generateContent(){
         String xmiId="", xmiRootId="",xmiPackageId="";
+//        System.err.println(sentences.getSentenceByType("Structural").structNoun);
         String noun = sentences.getSentenceByType("Structural").structNoun;
 
         String output = "\t<XMI.content>\n"+

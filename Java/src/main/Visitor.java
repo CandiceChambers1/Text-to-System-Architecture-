@@ -71,13 +71,13 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
             port=true;
         }
         String structN = ctx.Struct_noun().getText();
-        sentences.createNewSentence("Structural", structN );
+        System.err.println(structN);
+        sentences.createNewSentence("Structural", structN);
         currentSentence = sentences.getSentenceByStructNoun(structN);
+        System.out.println(currentSentence.structNouns);
         currentSentence.isInternal = internal;
         currentSentence.isPort = port;
         currentSentence.structNoun = structN;
-
-
         visit(ctx.struct_multinoun());
         return null;
     }
@@ -148,7 +148,8 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitStruct_multinoun(SysmlParser.Struct_multinounContext ctx) {
-        System.out.println(ctx.getText());
+        System.out.println(ctx.Struct_noun());
+        System.out.println(ctx.struct_multinoun().Struct_noun());
         String sentence = ctx.getText();
         return null;
     }
