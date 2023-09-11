@@ -71,10 +71,9 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
             port=true;
         }
         String structN = ctx.Struct_noun().getText();
-        System.err.println(structN);
+//        System.err.println(structN);
         sentences.createNewSentence("Structural", structN);
         currentSentence = sentences.getSentenceByStructNoun(structN);
-        System.out.println(currentSentence.structNouns);
         currentSentence.isInternal = internal;
         currentSentence.isPort = port;
         currentSentence.structNoun = structN;
@@ -136,7 +135,12 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitFunctional_stmt(SysmlParser.Functional_stmtContext ctx) {
-//        System.out.println(ctx.getText());
+        String sentence = ctx.getText();
+        List structN = ctx.Struct_noun();
+        sentences.createNewSentence("Functional", String.valueOf(structN.get(0)));
+        currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
+        currentSentence.structNoun = String.valueOf(structN.get(0));
+        currentSentence.structNouns.addAll(structN);
         return null;
     }
 
@@ -148,9 +152,10 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitStruct_multinoun(SysmlParser.Struct_multinounContext ctx) {
-        System.out.println(ctx.Struct_noun());
-        System.out.println(ctx.struct_multinoun().Struct_noun());
-        String sentence = ctx.getText();
+
+        if(ctx.struct_multinoun()!= null){
+            visitStruct_multinoun(ctx.struct_multinoun());}
+        currentSentence.addStructNoun(ctx.Struct_noun().toString());
         return null;
     }
 

@@ -1,7 +1,7 @@
 package main;
 
-import lib.SysmlLexer;
 import lib.SysmlParser;
+import lib.SysmlLexer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
