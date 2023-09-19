@@ -2,8 +2,11 @@ package main;
 import lib.SysmlParser;
 import lib.SysmlVisitor;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implements SysmlVisitor<Object> {
     public int index =0;
@@ -152,10 +155,18 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitStruct_multinoun(SysmlParser.Struct_multinounContext ctx) {
+        if (ctx.struct_multinoun() != null) {
+            visitStruct_multinoun(ctx.struct_multinoun());
+        }
+        if(ctx.Struct_noun().size() > 1) {
+            for (TerminalNode a : ctx.Struct_noun()){
+                currentSentence.addStructNoun(a.getText());
+            }
 
-        if(ctx.struct_multinoun()!= null){
-            visitStruct_multinoun(ctx.struct_multinoun());}
-        currentSentence.addStructNoun(ctx.Struct_noun().toString());
+        }
+        else {
+            currentSentence.addStructNoun(ctx.Struct_noun().stream().map(TerminalNode::toString).collect(Collectors.joining(",")));
+        }
         return null;
     }
 

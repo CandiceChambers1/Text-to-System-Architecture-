@@ -2,12 +2,16 @@ package main;
 
 import org.stringtemplate.v4.ST;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class Output {
     Sentences sentences;
-    public Output(Sentences sentences){this.sentences = sentences;}
+
+    Blocks blocks;
+    public Output(Sentences sentences){
+        this.sentences = sentences;
+    }
 
     public String generateOutput() {
 
@@ -37,6 +41,10 @@ public class Output {
                     output += generatePort(s.structNouns, xmiOwnerID, xmiPackageID);
 
                 }
+                else{
+                    System.out.println(s.structNouns);
+
+                }
             } else if(Objects.equals(s.sentenceType,"Functional")){
 //                System.out.println(s.structNoun);
 //                System.out.println(s.structNouns);
@@ -44,8 +52,8 @@ public class Output {
 //                System.out.println(s.structNoun);
 //                System.out.println(s.structNouns);
             }else if(Objects.equals(s.sentenceType,"Connection")){
-                System.out.println(s.structNoun);
-                System.out.println(s.structNouns);
+//                System.out.println(s.structNoun);
+//                System.out.println(s.structNouns);
             }
 
         }
@@ -262,7 +270,7 @@ public class Output {
 
             return append_output;
         }
-        public String generateClassifier_Property(ArrayList arrayNoun, String xmiPackageID, String xmiOwnerID) {
+        public String generateClassifier_Property(ArrayList<String> arrayNoun, String xmiPackageID, String xmiOwnerID) {
             String xmiID, xmiID_Collboration;
 
             xmiID = generateXMI_ID("other");
@@ -272,7 +280,14 @@ public class Output {
 
             // Need to call a function that get the ID for the propertyType ID
 //            String xmiIdConvertUnderscoresToDashes = FUNCTION;
-            for(Object noun : arrayNoun) {
+//            System.out.println(arrayNoun.stream().flatMap(String -> String.lines()));
+//            List<String> arrayNouns = arrayNoun.stream();
+            for(String noun : arrayNoun) {
+//                System.out.println(noun);
+//                if(sentences.getSentenceByStructNoun(noun).isInstantitation)
+//                {
+//                    System.out.println(sentences.getSentenceByStructNoun(noun).structNouns);
+//                }
                 output += "\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiPackageID + "\">\n" +
                         "\t\t\t\t<UML:ModelElement.taggedValue>\n" +
                         "\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
