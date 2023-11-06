@@ -29,10 +29,11 @@ public class Main {
             Output outputFormatter = new Output(visitor.sentences);
             String outputText = outputFormatter.generateOutput();
 //            System.out.println(outputText);
-//            PrintWriter printWriter = new PrintWriter(new File("src/xml/CPSS.xml"));
-//            printWriter.println(outputText);
-//            printWriter.flush();
-//            printWriter.close();
+            String fileName = outputFormatter.getRoot();
+            PrintWriter printWriter = new PrintWriter(new File("src/xml/" + fileName +".xml"));
+            printWriter.println(outputText);
+            printWriter.flush();
+            printWriter.close();
 
 
         } catch (Exception e) {

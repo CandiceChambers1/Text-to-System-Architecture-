@@ -5,6 +5,8 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +80,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         currentSentence = sentences.getSentenceByStructNoun(structN);
         currentSentence.isInternal = internal;
         currentSentence.isPort = port;
+        currentSentence.isInstantiation = false;
         currentSentence.structNoun = structN;
         visit(ctx.struct_multinoun());
         return null;
@@ -94,7 +97,9 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         String sentence = ctx.getText();
         List structN = ctx.Struct_noun();
         sentences.createNewSentence("Connection", String.valueOf(structN.get(0)));
-        currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
+        currentSentence = sentences.getSentenceByTypeName("Connection", String.valueOf(structN.get(0)));
+        currentSentence.isInstantiation = false;
+        currentSentence.isConnection = true;
         currentSentence.structNoun = String.valueOf(structN.get(0));
         currentSentence.structNouns.addAll(structN);
         return null;
@@ -110,11 +115,15 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     public Object visitInstantitation_stmt(SysmlParser.Instantitation_stmtContext ctx) {
         String sentence = ctx.getText();
         List structN = ctx.Struct_noun();
-        sentences.createNewSentence("Instantitation", String.valueOf(structN.get(0)));
+        sentences.createNewSentence("Instantiation", String.valueOf(structN.get(0)));
         currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
-        currentSentence.structNoun = String.valueOf(structN.get(0));
-        currentSentence.structNouns.add(String.valueOf(structN.get(1)));
-        currentSentence.isInstantiation =true;
+        if(currentSentence.sentenceType=="Instantiation") {
+            currentSentence.isInstantiation = true;
+            currentSentence.isConnection = false;
+            currentSentence.structNoun = String.valueOf(structN.get(0));
+            currentSentence.structNouns.add(String.valueOf(structN.get(1)));
+        }
+
         return null;
     }
 

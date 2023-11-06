@@ -14,8 +14,9 @@ public class Sentence {
     HashMap<String, String> contextMap;
     boolean isInternal = false;
     boolean isPort = false;
-
     boolean isInstantiation = false;
+
+    boolean isConnection = false;
 
     public Sentence(String type, String structNoun){
         this.sentenceType = type;

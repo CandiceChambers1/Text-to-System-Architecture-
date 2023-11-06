@@ -1,16 +1,43 @@
 package main;
 
-import org.stringtemplate.v4.ST;
-
 import java.util.*;
-import java.util.stream.Collectors;
+import java.lang.String.*;
 
 public class Output {
     Sentences sentences;
 
-    Blocks blocks;
+    Blocks blocks = new Blocks();
     public Output(Sentences sentences){
         this.sentences = sentences;
+    }
+    public String getRoot(){
+        return blocks.getBlockByType("root").name;
+    }
+    public void generateTree(){
+        for(Sentence s : sentences.sentences){
+            if (Objects.equals(s.sentenceType, "Structural")) {
+                if (s.isInternal) {
+
+                    for (String sub: s.structNouns) {
+                        blocks.createBlockWithOwner("internal", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
+                    }
+
+
+                } else if (s.isPort) {
+                    for (String sub: s.structNouns) {
+                        blocks.createBlockWithOwner("ports", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
+                    }
+
+
+                } else {
+//                    System.out.println(s.structNoun);
+                    blocks.createBlock("root", s.structNoun, generateXMI_ID("other"));
+                    for (String sub: s.structNouns) {
+                        blocks.createBlock("sub", sub, generateXMI_ID("other"));
+                    }
+                }
+            }
+        }
     }
 
     public String generateOutput() {
@@ -26,37 +53,76 @@ public class Output {
         String output = "<XMI xmi.version=\"1.1\" xmlns:UML=\"omg.org/UML1.3\">\n";
         output += generateHeader();
         output += generateStartContent(xmiPackageID);
-
-        for (Sentence s : sentences.sentences) {
-            if (Objects.equals(s.sentenceType, "Structural")) {
-                if(s.isInternal){
-//                    System.out.println(s.structNoun);
-                    xmiOwnerID = generateXMI_ID("other");
-                    output += generateBlock(s.structNoun,xmiPackageID,xmiOwnerID);
-                    output += generateClassifier_Property(s.structNouns,xmiPackageID,xmiOwnerID);
-                }else if (s.isPort) {
-//                    System.out.println(s.structNoun);
-                    xmiOwnerID = generateXMI_ID("other");
-                    output += generateBlock(s.structNoun, xmiPackageID, xmiOwnerID);
-                    output += generatePort(s.structNouns, xmiOwnerID, xmiPackageID);
-
-                }
-                else{
-//                    System.out.println(s.structNouns);
-
-                }
-            } else if(Objects.equals(s.sentenceType,"Functional")){
-//                System.out.println(s.structNoun);
-//                System.out.println(s.structNouns);
-            } else if (Objects.equals(s.sentenceType,"Instantitation")) {
-//                System.out.println(s.structNoun);
-//                System.out.println(s.structNouns);
-            }else if(Objects.equals(s.sentenceType,"Connection")){
-//                System.out.println(s.structNoun);
-//                System.out.println(s.structNouns);
+        generateTree();
+        for (Block b : blocks.blocks) {
+            if(b.getBlockName("sub")!=null){
+                output += generateBlock(b.name,xmiPackageID,b.XmiID);
             }
-
+            if(b.getBlockName("internal")!=null){
+                String propertyTypeName="";
+                propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+                String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                output += generateClassifier_Property(b.name,b.XmiID,xmiPackageID,b.ownerXMI,propertyTypeId);
+            }
+            if(b.getBlockName("ports")!= null){
+                output += generatePort(b.name,b.XmiID, b.ownerXMI,xmiPackageID);
+            }
         }
+        for(Sentence s: sentences.sentences){
+            if(s.sentenceType=="Connection"){
+                String nouns = s.structNouns.toString();
+                String noun[] = nouns.split(", ");
+                output += generateAssociation(
+                        noun[2],
+                        noun[3].replace("]",""),
+                        blocks.getBlockByName(noun[2]).XmiID,
+                        blocks.getBlockByName(noun[3].replace("]","")).XmiID);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        for (Sentence s : sentences.sentences) {
+//            if (Objects.equals(s.sentenceType, "Structural")) {
+//                if(s.isInternal){
+////                    System.err.println(s.structNoun);
+//                    xmiOwnerID = generateXMI_ID("other");
+//                    output += generateBlock(s.structNoun,xmiPackageID,xmiOwnerID);
+//                    output += generateClassifier_Property(s.structNouns,xmiPackageID,xmiOwnerID);
+//                }else if (s.isPort) {
+////                    System.err.println(s.structNoun);
+//                    xmiOwnerID = generateXMI_ID("other");
+//                    output += generateBlock(s.structNoun, xmiPackageID, xmiOwnerID);
+//                    output += generatePort(s.structNouns, xmiOwnerID, xmiPackageID);
+//
+//                }
+//                else{
+//                    System.out.println(s.structNoun);
+//
+//                }
+//            } else if(Objects.equals(s.sentenceType,"Functional")){
+//                System.out.println(s.structNoun);
+//            } else if (Objects.equals(s.sentenceType,"Instantiation")) {
+//                System.out.println(s.structNoun);
+//            }else if(Objects.equals(s.sentenceType,"Connection")){
+//                System.out.println(s.structNoun);
+//            }
+//
+//        }
 
 //        for(java.lang.String sen : s.structNouns) {
 //                    if(s.isInternal){
@@ -113,7 +179,16 @@ public class Output {
         return output;
     }
 
-        public String generateXMI_ID(String type){
+    private String generatePropertyTypeID(String xmiID) {
+        String ID = "";
+
+        String tokens[] = xmiID.split("_");
+
+        ID = tokens[1]+"-"+tokens[2]+"-"+tokens[3]+"-"+tokens[4]+"-"+tokens[5];
+        return ID;
+    }
+
+    public String generateXMI_ID(String type){
             String ID;
             Random rand = new Random();
             if(Objects.equals(type, "package")) {
@@ -204,12 +279,9 @@ public class Output {
 //        }
 
 
-        public String generatePort(ArrayList arrayNouns,String xmiOwnerID, String xmiPackageID){
+        public String generatePort(String noun,String xmiID,String xmiOwnerID, String xmiPackageID){
             String output = "";
 
-            String xmiID = generateXMI_ID("other");
-
-            for(Object noun : arrayNouns ) {
                 output += "\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
                         "\t\t<UML:ModelElement.taggedValue>\n" +
                         "\t\t\t<UML:TaggedValue tag = \"ea_stype\" value = \"Port\"/>\n" +
@@ -218,7 +290,7 @@ public class Output {
                         "\t\t\t<UML:TaggedValue tag = \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
                         "\t\t</UML:ModelElement.taggedValue>\n" +
                         "\t</UML:Class>\n";
-            }
+
 
             return output;
         }
@@ -231,7 +303,7 @@ public class Output {
                     "\t\t\t<UML:Stereotype name = \"block\"/>\n" +
                     "\t\t</UML:ModelElement.stereotype>\n" +
                     "\t\t<UML:ModelElement.taggedValue>\n" +
-                    "\t\t\t<UML:TaggedValue tag= \"ea_stype\"' value = \"Class\"/>\n" +
+                    "\t\t\t<UML:TaggedValue tag= \"ea_stype\" value = \"Class\"/>\n" +
                     "\t\t\t<UML:TaggedValue tag= \"package\" value = \"" + xmiPackageID  + "\"/>\n" +
                     "\t\t\t<UML:TaggedValue tag= \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
                     "\t\t\t<UML:TaggedValue tag= \"stereotype\" value = \"block\"/>\n" +
@@ -241,22 +313,22 @@ public class Output {
             return output;
         }
 
-        public String generateAssociation(String noun, String xmiId){
-
+        public String generateAssociation(String srcNoun,String destNoun, String srcXmiId, String destXmiId){
+            String xmiId = generateXMI_ID("other");
             String output = "<UML:Association xmi.id=\"" + xmiId + "\">\n"+
                 "\t\t<UML:ModelElement.taggedValue>\n"+
                 "\t\t\t<UML:TaggedValue tag=\"ea_type\" value=\"Connector\"/>\n"+
                 "\t\t\t<UML:TaggedValue tag=\"direction\" value=\"Source -&gt; Destination\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_sourceName\" value=\"" + noun +"\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_targetName\" value=\"" + noun +"\"/>\n"+
+                "\t\t\t<UML:TaggedValue tag=\"ea_sourceName\" value=\"" + srcNoun +"\"/>\n"+
+                "\t\t\t<UML:TaggedValue tag=\"ea_targetName\" value=\"" + destNoun +"\"/>\n"+
                 "\t\t\t<UML:TaggedValue tag=\"ea_sourceType\" value=\"Port\"/>\n" +
                 "\t\t\t<UML:TaggedValue tag=\"ea_targetType\" value=\"Port\"/>\n"+
                 "\t\t</UML:ModelElement.taggedValue>\n"+
                 "\t\t<UML:Association.connection>\n" +
-                "\t\t\t<UML:AssociationEnd type=\"" + xmiId + "\">\n" +
+                "\t\t\t<UML:AssociationEnd type=\"" + srcXmiId + "\">\n" +
                 "\t\t\t</UML:AssociationEnd>\n" +
-                "\t\t\t<UML:AssociationEnd type=\""+ xmiId + "\">\n"+
-                "\t\t</UML:AssociationEnd>";
+                "\t\t\t<UML:AssociationEnd type=\""+ destXmiId + "\">\n"+
+                "\t\t</UML:AssociationEnd>"+ "\">\n";
 
             return output;
         }
@@ -270,34 +342,29 @@ public class Output {
 
             return append_output;
         }
-        public String generateClassifier_Property(ArrayList<String> arrayNoun, String xmiPackageID, String xmiOwnerID) {
-            String xmiID, xmiID_Collboration;
-
-            xmiID = generateXMI_ID("other");
-            xmiID_Collboration = generateXMI_ID("other");
-            String output = "\t<UML:Collaboration xmi.id =\"" + xmiID_Collboration + "\" name =\"Collaborations\">\n";
-            output += "\t\t<UML:Namespace.ownedElement>\n";
+        public String generateClassifier_Property(String noun, String xmiID, String xmiPackageID, String xmiOwnerID, String xmiPropertyTypeID) {
+//            String xmiID_Collboration;
+//
+//
+//            xmiID_Collboration = generateXMI_ID("other");
+//            String output = "\t<UML:Collaboration xmi.id =\"" + xmiID_Collboration + "\" name =\"Collaborations\">\n";
+//            output += "\t\t<UML:Namespace.ownedElement>\n";
 
             // Need to call a function that get the ID for the propertyType ID
 //            String xmiIdConvertUnderscoresToDashes = FUNCTION;
 //            System.out.println(arrayNoun.stream().flatMap(String -> String.lines()));
 //            List<String> arrayNouns = arrayNoun.stream();
-            for(String noun : arrayNoun) {
-//                System.out.println(noun);
-//                if(sentences.getSentenceByStructNoun(noun).isInstantitation)
-//                {
-//                    System.out.println(sentences.getSentenceByStructNoun(noun).structNouns);
-//                }
-                output += "\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiPackageID + "\">\n" +
-                        "\t\t\t\t<UML:ModelElement.taggedValue>\n" +
-                        "\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
-                        "\t\t\t\t\t<UML:TaggedValue tag= \"package\" value=\"" + xmiPackageID + "/>\n" +
-                        "\t\t\t\t\t<UML:TaggedValue tag=\"owner\" value = \"" + xmiOwnerID + "\">\n" +
-                        "\t\t\t\t\t<UML:TaggedValue tag=\"package_name\" value=\"One Level Block Hierarchy\"/>\n" +
-                        "\t\t\t\t\t<UML:TaggedValue tag=\"propertyType\" value=\"{" + "DONT KNOW HOW TO GET YET" + "}\"/>\n" +
-                        "\t\t\t\t</UML:ModelElement.taggedValue>\n" +
-                        "\t\t\t</UML:ClassifierRole>\n";
-            }
+
+            String output = "\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiPackageID + "\">\n" +
+                    "\t\t\t\t<UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
+                    "\t\t\t\t\t<UML:TaggedValue tag= \"package\" value=\"" + xmiPackageID + "\"/>\n" +
+                    "\t\t\t\t\t<UML:TaggedValue tag=\"owner\" value = \"" + xmiOwnerID + "\"/>\n" +
+                    "\t\t\t\t\t<UML:TaggedValue tag=\"package_name\" value=\"One Level Block Hierarchy\"/>\n" +
+                    "\t\t\t\t\t<UML:TaggedValue tag=\"propertyType\" value=\"{" + xmiPropertyTypeID + "}\"/>\n" +
+                    "\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t</UML:ClassifierRole>\n";
+
             output += "\t\t</UML:Namespace.ownedElement>\n";
             output += "\t\t<UML:Collaboration.interaction/>\n";
             output += "\t</UML:Collaboration>\n";

@@ -34,5 +34,13 @@ public class Sentences {
         }
         return null;
     }
+    public Sentence getSentenceByTypeName(String type, String name){
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(type) && sentence.structNoun.equals(name)){
+                return sentence;
+            }
+        }
+        return null;
+    }
 
 }
