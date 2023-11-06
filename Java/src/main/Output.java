@@ -78,6 +78,9 @@ public class Output {
                         blocks.getBlockByName(noun[2]).XmiID,
                         blocks.getBlockByName(noun[3].replace("]","")).XmiID);
             }
+            if(s.sentenceType=="Functional"){
+                System.out.println(s.structNoun);
+            }
         }
 
 
