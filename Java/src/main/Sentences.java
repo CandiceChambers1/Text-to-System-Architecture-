@@ -11,8 +11,8 @@ public class Sentences {
         sentences = new ArrayList<Sentence>();
         functions = new LinkedHashMap<String, Function>();
     }
-    public void addFunctionFlow(String functionVerb, String functionFlow){
-        Function f = new Function(functionVerb);
+    public void addFunctionFlow(String functionVerb, String adjv, String functionFlow){
+        Function f = new Function(functionVerb, adjv);
         f.addFlows(functionFlow);
         functions.put(functionVerb, f);
     }

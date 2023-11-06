@@ -42,7 +42,7 @@ public class Output {
 
                 }
                 else{
-                    System.out.println(s.structNouns);
+//                    System.out.println(s.structNouns);
 
                 }
             } else if(Objects.equals(s.sentenceType,"Functional")){

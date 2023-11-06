@@ -2,9 +2,9 @@ package main;
 import lib.SysmlParser;
 import lib.SysmlVisitor;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,7 +74,6 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
             port=true;
         }
         String structN = ctx.Struct_noun().getText();
-//        System.err.println(structN);
         sentences.createNewSentence("Structural", structN);
         currentSentence = sentences.getSentenceByStructNoun(structN);
         currentSentence.isInternal = internal;
@@ -115,7 +114,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
         currentSentence.structNoun = String.valueOf(structN.get(0));
         currentSentence.structNouns.add(String.valueOf(structN.get(1)));
-        currentSentence.isInstantitation=true;
+        currentSentence.isInstantiation =true;
         return null;
     }
 
@@ -144,6 +143,8 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
         currentSentence.structNoun = String.valueOf(structN.get(0));
         currentSentence.structNouns.addAll(structN);
+        currentSentence.addFunctionVerb(ctx.Func_verb().getText());
+        visit(ctx.multi_flow(0));
         return null;
     }
 
@@ -178,6 +179,12 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
      */
     @Override
     public Object visitMulti_flow(SysmlParser.Multi_flowContext ctx) {
+//        return(ctx.flow(0).states().Adj_value(0).getText(), ctx.flow(0).states().State().getText());
+        currentSentence.addFunctionAdjv(ctx.flow(0).states().Adj_value(0).getText());
+        currentSentence.addFunctionFlowState(ctx.flow(0).states().State().getText());
+//        System.out.println(ctx.flow(0).states().Adj_value(0).getText());
+//        System.out.println(ctx.flow(0).states().State().getText());
+//        currentSentence.addFunction();
         return null;
     }
 
