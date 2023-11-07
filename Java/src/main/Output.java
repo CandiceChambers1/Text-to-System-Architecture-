@@ -65,7 +65,6 @@ public class Output {
                     propertyCounter=1;
 
                     String propertyTypeName = "";
-                    System.out.print(b.name +" ");
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
 
@@ -74,7 +73,6 @@ public class Output {
                 else {
 
                     String propertyTypeName = "";
-                    System.out.print(b.name +" ");
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
 
@@ -103,23 +101,6 @@ public class Output {
                 System.out.println("");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //        for (Sentence s : sentences.sentences) {
 //            if (Objects.equals(s.sentenceType, "Structural")) {
 //                if(s.isInternal){

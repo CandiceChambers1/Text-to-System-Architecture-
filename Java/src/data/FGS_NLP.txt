@@ -1,5 +1,6 @@
 FCS_SYSTEM consists FCS , FGS and BUS.
 FCS consists internal_components : LEFT_SIDE , RIGHT_SIDE , LR and RL.
+FCS consists port_components PRIMARY_SIDE and TRANSFER_SWITCH.
 FGS consists port_components TRANSFER_SWITCH , PRIMARY_SIDE , PILOT_FLYING , BUS_IN and CLK.
 BUS consists port_components LEFT , RIGHT and CLK.
 LEFT_SIDE instantiates FGS.
