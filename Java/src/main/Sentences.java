@@ -17,6 +17,8 @@ public class Sentences {
         functions.put(functionVerb, f);
     }
     public void createNewSentence(String type, String noun){sentences.add(new Sentence(type,noun));}
+    public void createNewSentencePortInternal(String type, String noun, boolean isPort, boolean isInternal){
+        sentences.add(new Sentence(type,noun,isPort,isInternal));}
 
     public Sentence getSentenceByStructNoun(String noun){
         for(Sentence sentence: sentences){
@@ -37,6 +39,14 @@ public class Sentences {
     public Sentence getSentenceByTypeName(String type, String name){
         for(Sentence sentence: sentences){
             if(sentence.sentenceType.equals(type) && sentence.structNoun.equals(name)){
+                return sentence;
+            }
+        }
+        return null;
+    }
+    public Sentence getSentenceByTypePort(String type, String name, boolean isport){
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(type) && sentence.structNoun.equals(name) && sentence.isPort==isport){
                 return sentence;
             }
         }

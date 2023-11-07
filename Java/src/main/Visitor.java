@@ -76,14 +76,14 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
             port=true;
         }
         String structN = ctx.Struct_noun().getText();
-        sentences.createNewSentence("Structural", structN);
-        currentSentence = sentences.getSentenceByTypeName("Structural", structN);
+        sentences.createNewSentencePortInternal("Structural", structN, port, internal);
+        currentSentence = sentences.getSentenceByTypePort("Structural",structN, port);
         currentSentence.isInternal = internal;
         currentSentence.isPort = port;
         currentSentence.isInstantiation = false;
         currentSentence.structNoun = structN;
         visit(ctx.struct_multinoun());
-        System.out.println(currentSentence.isPort + " "+ structN + " " + currentSentence.structNouns);
+        System.out.println( structN+ " " +currentSentence.structNouns );
         return null;
     }
 
@@ -117,13 +117,12 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         String sentence = ctx.getText();
         List structN = ctx.Struct_noun();
         sentences.createNewSentence("Instantiation", String.valueOf(structN.get(0)));
-        currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
-        if(currentSentence.sentenceType=="Instantiation") {
-            currentSentence.isInstantiation = true;
-            currentSentence.isConnection = false;
-            currentSentence.structNoun = String.valueOf(structN.get(0));
-            currentSentence.structNouns.add(String.valueOf(structN.get(1)));
-        }
+        currentSentence = sentences.getSentenceByTypeName("Instantiation" , String.valueOf(structN.get(0)));
+        currentSentence.isInstantiation = true;
+        currentSentence.isConnection = false;
+        currentSentence.structNoun = String.valueOf(structN.get(0));
+        currentSentence.structNouns.add(String.valueOf(structN.get(1)));
+
 
         return null;
     }
@@ -150,7 +149,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         String sentence = ctx.getText();
         List structN = ctx.Struct_noun();
         sentences.createNewSentence("Functional", String.valueOf(structN.get(0)));
-        currentSentence = sentences.getSentenceByStructNoun(String.valueOf(structN.get(0)));
+        currentSentence = sentences.getSentenceByTypeName("Functional",String.valueOf(structN.get(0)));
         currentSentence.structNoun = String.valueOf(structN.get(0));
         currentSentence.structNouns.addAll(structN);
         currentSentence.addFunctionVerb(ctx.Func_verb().getText());

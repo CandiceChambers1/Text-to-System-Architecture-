@@ -71,7 +71,6 @@ public class Output {
                     output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
                 }
                 else {
-
                     String propertyTypeName = "";
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);

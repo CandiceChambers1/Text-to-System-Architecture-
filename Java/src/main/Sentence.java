@@ -24,6 +24,14 @@ public class Sentence {
         this.structNouns = new ArrayList<String>();
     }
 
+    public Sentence(String type, String noun, boolean isPort, boolean isInternal) {
+        this.sentenceType = type;
+        this.structNoun = noun;
+        this.structNouns = new ArrayList<String>();
+        this.isPort=isPort;
+        this.isInternal=isInternal;
+    }
+
     public void populateDuplicate(Sentence newSentence) {
         for (String key : this.contextMap.keySet()) {
             newSentence.addContext(key, this.contextMap.get(key));
