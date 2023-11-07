@@ -63,6 +63,13 @@ public class Output {
                 if (propertyCounter == 0){
                     output += generateStartCollaboration();
                     propertyCounter=1;
+
+                    String propertyTypeName = "";
+                    System.out.print(b.name +" ");
+                    propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+
+                    output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
                 }
                 else {
 
