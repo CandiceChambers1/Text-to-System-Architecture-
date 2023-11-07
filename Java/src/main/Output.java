@@ -47,6 +47,7 @@ public class Output {
          */
 
         String xmiPackageID, xmiOwnerID;
+        int propertyCounter =0;
         xmiPackageID = generateXMI_ID("package");
 //        System.out.println(xmiPackageID);
 
@@ -59,12 +60,25 @@ public class Output {
                 output += generateBlock(b.name,xmiPackageID,b.XmiID);
             }
             if(b.getBlockName("internal")!=null){
-                String propertyTypeName="";
-                propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
-                String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
-                output += generateClassifier_Property(b.name,b.XmiID,xmiPackageID,b.ownerXMI,propertyTypeId);
+                if (propertyCounter == 0){
+                    output += generateStartCollaboration();
+                    propertyCounter=1;
+                }
+                else {
+
+                    String propertyTypeName = "";
+                    System.out.print(b.name +" ");
+                    propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+
+                    output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+                }
             }
             if(b.getBlockName("ports")!= null){
+                if(propertyCounter ==1){
+                    output+=generateEndCollaboration();
+                    propertyCounter=0;
+                }
                 output += generatePort(b.name,b.XmiID, b.ownerXMI,xmiPackageID);
             }
         }
@@ -79,7 +93,7 @@ public class Output {
                         blocks.getBlockByName(noun[3].replace("]","")).XmiID);
             }
             if(s.sentenceType=="Functional"){
-                System.out.println(s.structNoun);
+                System.out.println("");
             }
         }
 
@@ -198,8 +212,13 @@ public class Output {
                 ID = "EAPK_" + (rand.nextInt(99999999-10000000) + 10000000) + "_" + (rand.nextInt(9999-1000)
                         +1000)+ "_" + (rand.nextInt(9999-1000) +1000) + "_" + (rand.nextInt(9999-1000) +1000)
                         + "_" + (rand.nextInt(999999-100000) + 100000) + (rand.nextInt(999999-100000) + 100000);
-            ;
-            }else {
+
+            }else if (Objects.equals(type,"collab")){
+                ID = "EAPK_" + (rand.nextInt(99999999-10000000) + 10000000) + "_" + (rand.nextInt(9999-1000)
+                        +1000)+ "_" + (rand.nextInt(9999-1000) +1000) + "_" + (rand.nextInt(9999-1000) +1000)
+                        + "_" + (rand.nextInt(999999-100000) + 100000) + (rand.nextInt(999999-100000) + 100000)+ "_Collaboration";
+            } else{
+
                 ID = "EAID_"+ (rand.nextInt(99999999-10000000) + 10000000) + "_" + (rand.nextInt(9999-1000)
                         +1000)+ "_" + (rand.nextInt(9999-1000) +1000) + "_" + (rand.nextInt(9999-1000) +1000)
                         + "_" + (rand.nextInt(999999-100000) + 100000) + (rand.nextInt(999999-100000) + 100000);
@@ -285,14 +304,14 @@ public class Output {
         public String generatePort(String noun,String xmiID,String xmiOwnerID, String xmiPackageID){
             String output = "";
 
-                output += "\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
-                        "\t\t<UML:ModelElement.taggedValue>\n" +
-                        "\t\t\t<UML:TaggedValue tag = \"ea_stype\" value = \"Port\"/>\n" +
-                        "\t\t\t<UML:TaggedValue tag = \"package\" value = \"" + xmiPackageID + "\" />\n" +
-                        "\t\t\t<UML:TaggedValue tag = \"owner\" value = \"" + xmiOwnerID + "\" />\n" +
-                        "\t\t\t<UML:TaggedValue tag = \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
-                        "\t\t</UML:ModelElement.taggedValue>\n" +
-                        "\t</UML:Class>\n";
+                output += "\t\t\t\t\t\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
+                        "\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n" +
+                        "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"ea_stype\" value = \"Port\"/>\n" +
+                        "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"package\" value = \"" + xmiPackageID + "\" />\n" +
+                        "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"owner\" value = \"" + xmiOwnerID + "\" />\n" +
+                        "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
+                        "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                        "\t\t\t\t\t\t</UML:Class>\n";
 
 
             return output;
@@ -301,37 +320,40 @@ public class Output {
         public String generateBlock(String noun, String xmiPackageID, String xmiID ){
 
 
-            String output = "\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
-                    "\t\t<UML:ModelElement.stereotype>\n" +
-                    "\t\t\t<UML:Stereotype name = \"block\"/>\n" +
-                    "\t\t</UML:ModelElement.stereotype>\n" +
-                    "\t\t<UML:ModelElement.taggedValue>\n" +
-                    "\t\t\t<UML:TaggedValue tag= \"ea_stype\" value = \"Class\"/>\n" +
-                    "\t\t\t<UML:TaggedValue tag= \"package\" value = \"" + xmiPackageID  + "\"/>\n" +
-                    "\t\t\t<UML:TaggedValue tag= \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
-                    "\t\t\t<UML:TaggedValue tag= \"stereotype\" value = \"block\"/>\n" +
-                    "\t\t</UML:ModelElement.taggedValue>\n" +
-                    "\t</UML:Class>\n";
+            String output = "\t\t\t\t\t\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
+                    "\t\t\t\t\t\t\t<UML:ModelElement.stereotype>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:Stereotype name = \"block\"/>\n" +
+                    "\t\t\t\t\t\t\t</UML:ModelElement.stereotype>\n" +
+                    "\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"ea_stype\" value = \"Class\"/>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"package\" value = \"" + xmiPackageID  + "\"/>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"stereotype\" value = \"block\"/>\n" +
+                    "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t</UML:Class>\n";
 
             return output;
         }
 
         public String generateAssociation(String srcNoun,String destNoun, String srcXmiId, String destXmiId){
             String xmiId = generateXMI_ID("other");
-            String output = "<UML:Association xmi.id=\"" + xmiId + "\">\n"+
-                "\t\t<UML:ModelElement.taggedValue>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_type\" value=\"Connector\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"direction\" value=\"Source -&gt; Destination\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_sourceName\" value=\"" + srcNoun +"\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_targetName\" value=\"" + destNoun +"\"/>\n"+
-                "\t\t\t<UML:TaggedValue tag=\"ea_sourceType\" value=\"Port\"/>\n" +
-                "\t\t\t<UML:TaggedValue tag=\"ea_targetType\" value=\"Port\"/>\n"+
-                "\t\t</UML:ModelElement.taggedValue>\n"+
-                "\t\t<UML:Association.connection>\n" +
-                "\t\t\t<UML:AssociationEnd type=\"" + srcXmiId + "\">\n" +
-                "\t\t\t</UML:AssociationEnd>\n" +
-                "\t\t\t<UML:AssociationEnd type=\""+ destXmiId + "\">\n"+
-                "\t\t</UML:AssociationEnd>"+ "\">\n";
+            String output = "\t\t\t\t\t\t<UML:Association xmi.id=\"" + xmiId + "\">\n"+
+                "\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n"+
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_type\" value=\"Connector\"/>\n"+
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"direction\" value=\"Source -&gt; Destination\"/>\n"+
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_sourceName\" value=\"" + srcNoun +"\"/>\n"+
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_targetName\" value=\"" + destNoun +"\"/>\n"+
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_sourceType\" value=\"Port\"/>\n" +
+                "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_targetType\" value=\"Port\"/>\n"+
+                "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n"+
+                "\t\t\t\t\t\t\t<UML:Association.connection>\n" +
+                "\t\t\t\t\t\t\t\t<UML:AssociationEnd type=\"" + srcXmiId + "\">\n" +
+                "\t\t\t\t\t\t\t\t</UML:AssociationEnd>\n" +
+                "\t\t\t\t\t\t\t\t<UML:AssociationEnd type=\""+ destXmiId + "\">\n"+
+                "\t\t\t\t\t\t\t\t</UML:AssociationEnd>"+ "\">\n"+
+                "\t\t\t\t\t\t\t</UML:Association.connection>\n"+
+                "\t\t\t\t\t\t</UML:Association>\n";
+
 
             return output;
         }
@@ -345,32 +367,38 @@ public class Output {
 
             return append_output;
         }
+        public String generateStartCollaboration(){
+            String xmiID_Collboration;
+
+            xmiID_Collboration = generateXMI_ID("collab");
+            String output = "\t\t\t\t\t\t<UML:Collaboration xmi.id =\"" + xmiID_Collboration + "\" name =\"Collaborations\">\n";
+            output += "\t\t\t\t\t\t\t<UML:Namespace.ownedElement>\n";
+
+
+            return output;
+         }
+
+        public String generateEndCollaboration(){
+            String output = "";
+            output += "\t\t\t\t\t\t\t</UML:Namespace.ownedElement>\n";
+            output += "\t\t\t\t\t\t\t<UML:Collaboration.interaction/>\n";
+            output += "\t\t\t\t\t\t</UML:Collaboration>\n";
+
+            return output;
+        }
         public String generateClassifier_Property(String noun, String xmiID, String xmiPackageID, String xmiOwnerID, String xmiPropertyTypeID) {
-//            String xmiID_Collboration;
 //
-//
-//            xmiID_Collboration = generateXMI_ID("other");
-//            String output = "\t<UML:Collaboration xmi.id =\"" + xmiID_Collboration + "\" name =\"Collaborations\">\n";
-//            output += "\t\t<UML:Namespace.ownedElement>\n";
+            String output = "\t\t\t\t\t\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiPackageID + "\">\n" +
+                    "\t\t\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"package\" value=\"" + xmiPackageID + "\"/>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"owner\" value = \"" + xmiOwnerID + "\"/>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"package_name\" value=\"One Level Block Hierarchy\"/>\n" +
+                    "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"propertyType\" value=\"{" + xmiPropertyTypeID + "}\"/>\n" +
+                    "\t\t\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t\t\t</UML:ClassifierRole>\n";
 
-            // Need to call a function that get the ID for the propertyType ID
-//            String xmiIdConvertUnderscoresToDashes = FUNCTION;
-//            System.out.println(arrayNoun.stream().flatMap(String -> String.lines()));
-//            List<String> arrayNouns = arrayNoun.stream();
 
-            String output = "\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiPackageID + "\">\n" +
-                    "\t\t\t\t<UML:ModelElement.taggedValue>\n" +
-                    "\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
-                    "\t\t\t\t\t<UML:TaggedValue tag= \"package\" value=\"" + xmiPackageID + "\"/>\n" +
-                    "\t\t\t\t\t<UML:TaggedValue tag=\"owner\" value = \"" + xmiOwnerID + "\"/>\n" +
-                    "\t\t\t\t\t<UML:TaggedValue tag=\"package_name\" value=\"One Level Block Hierarchy\"/>\n" +
-                    "\t\t\t\t\t<UML:TaggedValue tag=\"propertyType\" value=\"{" + xmiPropertyTypeID + "}\"/>\n" +
-                    "\t\t\t\t</UML:ModelElement.taggedValue>\n" +
-                    "\t\t\t</UML:ClassifierRole>\n";
-
-            output += "\t\t</UML:Namespace.ownedElement>\n";
-            output += "\t\t<UML:Collaboration.interaction/>\n";
-            output += "\t</UML:Collaboration>\n";
             return output;
         }
         public String generateClassifier_Flow(String noun, String xmiId, String xmiPackageId, String xmiOwnerId, String xmiIdBoolean) {
