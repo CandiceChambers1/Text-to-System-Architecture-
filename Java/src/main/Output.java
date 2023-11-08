@@ -87,6 +87,23 @@ public class Output {
             }
         }
         for(Sentence s: sentences.sentences){
+            if(s.sentenceType=="Instantiation"){
+                String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
+                String noun = s.structNoun;
+                ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", nouns, true).structNouns;
+                for (String port: ports){
+                    String reuseProperty = blocks.getBlockByName(port).XmiID;
+                  blocks.setPortProperty(port, generateXMI_ID("other"),blocks.getBlockByName(noun).XmiID, generatePropertyTypeID(reuseProperty));
+                  PortProperty p = blocks.getPortProperty(port);
+                  output += generatePortProperty(p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
+                }
+            }
+            if(s.sentenceType=="Functional"){
+                System.err.println("Ignored Flow Properties");
+            }
+
+        }
+        for(Sentence s: sentences.sentences){
             if(s.sentenceType=="Connection"){
                 String nouns = s.structNouns.toString();
                 String noun[] = nouns.split(", ");
@@ -95,18 +112,6 @@ public class Output {
                         noun[3].replace("]",""),
                         blocks.getBlockByName(noun[2]).XmiID,
                         blocks.getBlockByName(noun[3].replace("]","")).XmiID);
-            }
-            if(s.sentenceType=="Instantiation"){
-                String nouns = s.structNouns.toString();
-                String noun = s.structNoun;
-                String ownerXMI = blocks.getBlockByName(noun).XmiID;
-                ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", nouns.replace("[", "").replace("]", ""), true).structNouns;
-                for(String port: ports){
-                    output+=generatePort(port, generateXMI_ID("other"),ownerXMI,xmiPackageID);
-                }
-            }
-            if(s.sentenceType=="Functional"){
-                System.out.println("");
             }
         }
 //        for (Sentence s : sentences.sentences) {
@@ -315,7 +320,22 @@ public class Output {
 
             return output;
         }
+        public String generatePortProperty(String noun,String xmiID,String xmiOwnerID, String xmiPackageID, String reuseProperty){
+            String output = "";
 
+            output += "\t\t\t\t\t\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
+                    "\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"ea_stype\" value = \"Port\"/>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"package\" value = \"" + xmiPackageID + "\" />\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"owner\" value = \"" + xmiOwnerID + "\" />\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag = \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"reusesProperty\" value=\"{" + reuseProperty +"}\"/>\n" +
+                    "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t</UML:Class>\n";
+
+
+            return output;
+        }
         public String generateBlock(String noun, String xmiPackageID, String xmiID ){
 
 

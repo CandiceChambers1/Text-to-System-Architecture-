@@ -1,7 +1,6 @@
 package main;
 
 public class Block {
-    Property property;
     String type;
     String name;
     String XmiID;
@@ -24,7 +23,5 @@ public class Block {
             }
         return null;
     }
-    public Property getProperty() {
-        return property;
-    }
+
 }
