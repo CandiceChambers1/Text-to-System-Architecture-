@@ -83,7 +83,6 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         currentSentence.isInstantiation = false;
         currentSentence.structNoun = structN;
         visit(ctx.struct_multinoun());
-        System.out.println( structN+ " " +currentSentence.structNouns );
         return null;
     }
 

@@ -67,7 +67,6 @@ public class Output {
                     String propertyTypeName = "";
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
-
                     output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
                 }
                 else {
@@ -95,6 +94,15 @@ public class Output {
                         noun[3].replace("]",""),
                         blocks.getBlockByName(noun[2]).XmiID,
                         blocks.getBlockByName(noun[3].replace("]","")).XmiID);
+            }
+            if(s.sentenceType=="Instantiation"){
+                String nouns = s.structNouns.toString();
+                String noun = s.structNoun;
+                String ownerXMI = blocks.getBlockByName(noun).XmiID;
+                ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", nouns.replace("[", "").replace("]", ""), true).structNouns;
+                for(String port: ports){
+                    output+=generatePort(port, generateXMI_ID("other"),ownerXMI,xmiPackageID);
+                }
             }
             if(s.sentenceType=="Functional"){
                 System.out.println("");
