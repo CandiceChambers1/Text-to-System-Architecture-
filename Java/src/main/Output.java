@@ -68,6 +68,7 @@ public class Output {
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
                     output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+
                 }
                 else {
                     String propertyTypeName = "";
@@ -176,10 +177,13 @@ public class Output {
         output += generateFinalContent();
 
 //        output += generateDirection();
-//        output += generateEncapsulation();
+        for (Block b : blocks.blocks) {
+            if (b.getBlockName("sub") != null) {
+//                output += generateBlock(b.name, xmiPackageID, b.XmiID);
+                output += generateEncapsulation(generateXMI_ID("other"),b.XmiID);
+            }
+        }
 //        output += generateDiagram();
-
-
         output += generateFooter();
 
 //        System.out.println(sentences.getSentenceByType("Structural").structNoun);
@@ -433,33 +437,33 @@ public class Output {
             return output;
         }
 
-        public String generateEncapsulation(String xmiId){
-            String output = "\t<UML:TaggedValue tag=\"isEncapsulated\" xmi.id=\"" + xmiId + "\" value=\"#NOTES#Values: true,false&#xA;\" modelElement=\"" + xmiId + "\"/>\n";
+        public String generateEncapsulation(String xmiId, String modelXMI_ID){
+            String output = "\t<UML:TaggedValue tag=\"isEncapsulated\" xmi.id=\"" + xmiId + "\" value=\"#NOTES#Values: true,false&#xA;\" modelElement=\"" + modelXMI_ID + "\"/>\n";
             return output;
         }
-        public String generateDiagram(){
-            String output = generateDiagramBDD();
-    //        if (internal==TRUE) {
-    //            output += generateDiagramIBD();
-    //        }
-            return output;
-        }
+//        public String generateDiagram(){
+//            String output = generateDiagramBDD();
+//    //        if (internal==TRUE) {
+//    //            output += generateDiagramIBD();
+//    //        }
+//            return output;
 
-        public String generateDiagramBDD(){
-            String noun="",xmiId="", xmiRootId="",xmiPackageId="",ownerXmiId="", xmiPackage="";
-            String output = "\t<UML:Diagram name = \"One Level Block Hierarchy\" xmi.id=\"" + xmiId + "\" diagramType = \"ClassDiagram\" owner=\"" + xmiId + "\" toolName = \"Enterprise Architect 2.5\">\n" +
+
+        public String generateDiagramBDD(String xmiID, String xmiPackage){
+
+            String output = "\t<UML:Diagram name = \"One Level Block Hierarchy\" xmi.id=\"" + xmiID + "\" diagramType = \"ClassDiagram\" owner=\"" + xmiPackage + "\" toolName = \"Enterprise Architect 2.5\">\n" +
                     "\t\t<UML:ModelElement.taggedValue>\n" +
                     "\t\t\t<UML:TaggedValue tag=\"package\" value=\"" + xmiPackage + "\">\n"+
                     "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::BlockDefinition;SF=1;\"/>\n"+
                     "\t\t</UML:ModelElement.taggedValue>\n"+
                     "\t\t<UML:Diagram.element>\n";
-    //                for(amountOfFiguresToBeDrawn){
-    //                    if (block) {
-    //                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=500;Top=150;Right=690;Bottom=190;\" subject=\"" + xmiId + "\"/>\n";
-    //                    }if (port) {
-    //                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + xmiId + "\"/>\n";
-    //                    }
-    //                }
+//                    for(amountOfFiguresToBeDrawn){
+//                        if (block) {
+//                            output += "\t\t\t<UML:DiagramElement geometry=\"Left=500;Top=150;Right=690;Bottom=190;\" subject=\"" + xmiId + "\"/>\n";
+//                        }if (port) {
+//                            output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + xmiId + "\"/>\n";
+//                        }
+//                    }
                     output += "\t\t</UML:Diagram.element>\n"+
                             "\t</UML:Diagram>\n";
 
