@@ -96,12 +96,14 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
     public Object visitConnection_stmt(SysmlParser.Connection_stmtContext ctx) {
         String sentence = ctx.getText();
         List structN = ctx.Struct_noun();
-        sentences.createNewSentence("Connection", String.valueOf(structN.get(0)));
-        currentSentence = sentences.getSentenceByTypeName("Connection", String.valueOf(structN.get(0)));
+        sentences.createNewSentence("Connection", String.valueOf(structN.get(0)),String.valueOf(structN.get(1)));
+        currentSentence = sentences.getSentenceByConnection("Connection", String.valueOf(structN.get(0)),String.valueOf(structN.get(1)));
         currentSentence.isInstantiation = false;
         currentSentence.isConnection = true;
         currentSentence.structNoun = String.valueOf(structN.get(0));
-        currentSentence.structNouns.addAll(structN);
+        currentSentence.connectionNoun = String.valueOf(structN.get(1));
+        currentSentence.structNouns.add(String.valueOf(structN.get(2)));
+        currentSentence.structNouns.add(String.valueOf(structN.get(3)));
         return null;
     }
 

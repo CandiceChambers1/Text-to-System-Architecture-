@@ -17,6 +17,7 @@ public class Sentences {
         functions.put(functionVerb, f);
     }
     public void createNewSentence(String type, String noun){sentences.add(new Sentence(type,noun));}
+    public void createNewSentence(String type, String src, String dest){sentences.add(new Sentence(type,src,dest));}
     public void createNewSentencePortInternal(String type, String noun, boolean isPort, boolean isInternal){
         sentences.add(new Sentence(type,noun,isPort,isInternal));}
 
@@ -53,4 +54,12 @@ public class Sentences {
         return null;
     }
 
+    public Sentence getSentenceByConnection(String connection, String noun, String src) {
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(connection) && sentence.structNoun.equals(noun) && sentence.connectionNoun.equals(src)){
+                return sentence;
+            }
+        }
+        return null;
+    }
 }

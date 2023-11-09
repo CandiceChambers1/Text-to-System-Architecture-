@@ -1,6 +1,5 @@
 package main;
 
-import javax.sound.sampled.Port;
 import java.util.ArrayList;
 
 public class Blocks {
@@ -68,5 +67,21 @@ public class Blocks {
         }
         return null;
     }
+    public PortProperty getPortProperty(String port, String XMI) {
+        for(PortProperty portProperty: portProperties){
+            if(portProperty.name.equals(port) && portProperty.ownerXMI.equals(XMI)){
+                return portProperty;
+            }
+        }
+        return null;
+    }
 
+    public String getXMIbyType(String type, String structNoun) {
+        for (Block block : blocks) {
+            if (block.name.equals(structNoun) && block.type.equals(type)) {
+                return block.XmiID;
+            }
+        }
+        return null;
+    }
 }

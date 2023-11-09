@@ -6,6 +6,7 @@ import java.util.HashMap;
 public class Sentence {
     String sentenceType;
     String structNoun;
+    String connectionNoun;
     ArrayList <String> structNouns;
 
     String funcVerb;
@@ -30,6 +31,13 @@ public class Sentence {
         this.structNouns = new ArrayList<String>();
         this.isPort=isPort;
         this.isInternal=isInternal;
+    }
+
+    public Sentence(String type, String src, String dest) {
+        this.sentenceType= type;
+        this.structNoun = src;
+        this.connectionNoun = dest;
+        this.structNouns = new ArrayList<String>();
     }
 
     public void populateDuplicate(Sentence newSentence) {

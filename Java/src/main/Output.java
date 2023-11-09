@@ -106,12 +106,24 @@ public class Output {
         for(Sentence s: sentences.sentences){
             if(s.sentenceType=="Connection"){
                 String nouns = s.structNouns.toString();
-                String noun[] = nouns.split(", ");
-                output += generateAssociation(
-                        noun[2],
-                        noun[3].replace("]",""),
-                        blocks.getBlockByName(noun[2]).XmiID,
-                        blocks.getBlockByName(noun[3].replace("]","")).XmiID);
+                String[] noun = nouns.split(", ");
+                String src = noun[0].replace("[", "").replace("]", "");
+                String dest = noun[1].replace("[", "").replace("]", "");
+//                System.out.println(src + " "+ s.structNoun+ "    " +dest+ " " +s.connectionNoun);
+                PortProperty p1;
+                String s1;
+                if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null) {
+                    p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
+                    s1 = blocks.getXMI(s.connectionNoun);
+                    output+=generateAssociation(src,dest,p1.XmiID,s1);
+                }
+                else {
+                    s1 = blocks.getXMI(s.structNoun);
+                    PortProperty p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
+                    output+=generateAssociation(src,dest,s1,p2.XmiID);
+                }
+
+
             }
         }
 //        for (Sentence s : sentences.sentences) {
