@@ -13,3 +13,7 @@ LEFT_SIDE connected to LR port_components PILOT_FLYING and LEFT.
 RL connected to LEFT_SIDE port_components LEFT and BUS_IN.
 LR connected to RIGHT_SIDE port_components RIGHT and BUS_IN.
 RIGHT_SIDE connected to RL port_components PILOT_FLYING and RIGHT.
+FCS connected to LEFT_SIDE port_components TRANSFER_SWITCH and TRANSFER_SWITCH.
+FCS connected to RIGHT_SIDE port_components TRANSFER_SWITCH and TRANSFER_SWITCH.
+RIGHT_SIDE connected to FCS port_components PRIMARY_SIDE and PRIMARY_SIDE.
+LEFT_SIDE connected to FCS port_components PRIMARY_SIDE and PRIMARY_SIDE.
