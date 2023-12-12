@@ -26,9 +26,18 @@ public class Blocks {
         }
         return null;
     }
+
     public Block getBlockByName(String name){
         for(Block block: blocks){
             if(block.name.equals(name)){
+                return block;
+            }
+        }
+        return null;
+    }
+    public Block getBlockByNameType(String name, String type){
+        for(Block block: blocks){
+            if(block.name.equals(name)&& block.type.equals(type)){
                 return block;
             }
         }
@@ -42,10 +51,25 @@ public class Blocks {
         }
         return null;
     }
-
+    public String getXMIByType(String owner, String type){
+        for(Block block: blocks){
+            if(block.name.equals(owner) && block.type.equals(type)){
+                return block.XmiID;
+            }
+        }
+        return null;
+    }
     public String getNameByXMI(String XMI){
         for(Block block: blocks){
             if(block.XmiID.equals(XMI)){
+                return block.name;
+            }
+        }
+        return null;
+    }
+    public String getOwnerByOwnerXMI(String XMI){
+        for(Block block: blocks){
+            if(block.ownerXMI.equals(XMI)){
                 return block.name;
             }
         }
@@ -70,6 +94,14 @@ public class Blocks {
     public PortProperty getPortProperty(String port, String XMI) {
         for(PortProperty portProperty: portProperties){
             if(portProperty.name.equals(port) && portProperty.ownerXMI.equals(XMI)){
+                return portProperty;
+            }
+        }
+        return null;
+    }
+    public PortProperty getPortPropertyByOwnerXMI(String XMI) {
+        for(PortProperty portProperty: portProperties){
+            if(portProperty.ownerXMI.equals(XMI)){
                 return portProperty;
             }
         }

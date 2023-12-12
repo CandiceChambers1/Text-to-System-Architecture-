@@ -7,6 +7,7 @@ public class Output {
     Sentences sentences;
     String modelxmiID;
     String xmiRootID;
+    String diagramID;
     Blocks blocks = new Blocks();
     public Output(Sentences sentences){
         this.sentences = sentences;
@@ -58,7 +59,7 @@ public class Output {
         generateTree();
         for (Block b : blocks.blocks) {
             if(b.getBlockName("sub")!=null){
-                output += generateBlock(b.name,xmiPackageID,b.XmiID);
+                output += generateBlock(b.name,xmiPackageID,b.XmiID,sentences.getSentenceByStructNoun(b.name).isInternal);
             }
             if(b.getBlockName("internal")!=null){
                 if (propertyCounter == 0){
@@ -70,6 +71,7 @@ public class Output {
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
                     output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
 
+
                 }
                 else {
                     String propertyTypeName = "";
@@ -77,6 +79,7 @@ public class Output {
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
 
                     output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+
                 }
             }
             if(b.getBlockName("ports")!= null){
@@ -85,6 +88,8 @@ public class Output {
                     propertyCounter=0;
                 }
                 output += generatePort(b.name,b.XmiID, b.ownerXMI,xmiPackageID);
+
+
             }
         }
         for(Sentence s: sentences.sentences){
@@ -95,8 +100,8 @@ public class Output {
                 for (String port: ports){
                     String reuseProperty = blocks.getBlockByName(port).XmiID;
                   blocks.setPortProperty(port, generateXMI_ID("other"),blocks.getBlockByName(noun).XmiID, generatePropertyTypeID(reuseProperty));
-                  PortProperty p = blocks.getPortProperty(port);
-//                  output += generatePortProperty(p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
+                  PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(noun).XmiID);
+                  output += generatePortProperty(p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
                 }
             }
             if(s.sentenceType=="Functional"){
@@ -106,24 +111,36 @@ public class Output {
         }
         for(Sentence s: sentences.sentences){
             if(s.sentenceType=="Connection"){
-                String nouns = s.structNouns.toString();
-                String[] noun = nouns.split(", ");
-                String src = noun[0].replace("[", "").replace("]", "");
-                String dest = noun[1].replace("[", "").replace("]", "");
-//                System.out.println(src + " "+ s.structNoun+ "    " +dest+ " " +s.connectionNoun);
-                PortProperty p1;
-                String s1;
-                if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null) {
-                    p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
-                    s1 = blocks.getXMI(s.connectionNoun);
-                    output+=generateAssociation(src,dest,p1.XmiID,s1);
-                }
-                else {
-                    s1 = blocks.getXMI(s.structNoun);
-                    PortProperty p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
-                    output+=generateAssociation(src,dest,s1,p2.XmiID);
-                }
+                String src,dest;
+                ArrayList<String> nouns = s.structNouns;
+                for (int i = 0; i < nouns.size(); i += 2) {
+                    src = nouns.get(i);
 
+                    if (i + 1 < nouns.size()) {
+                        dest = nouns.get(i + 1);
+
+                        PortProperty p1,p2;
+                        String s1;
+                        if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) !=null) {
+                            p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
+                            p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
+                            output+=generateAssociation(src,dest,p1.XmiID,p2.XmiID);
+                        }
+                        else if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) ==null){
+                            p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
+                            s1 = blocks.getXMI(dest);
+                            output+=generateAssociation(src,dest,p1.XmiID,s1);
+                        }
+                        else if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))==null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) !=null){
+                            s1 = blocks.getXMI(src);
+                            p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
+                            output+=generateAssociation(src,dest,s1, p2.XmiID);
+                        }
+                    } else {
+                        continue;
+
+                    }
+                }
 
             }
         }
@@ -247,7 +264,7 @@ public class Output {
 
             return output;
         }
-        public String generateBlock(String noun, String xmiPackageID, String xmiID ){
+        public String generateBlock(String noun, String xmiPackageID, String xmiID, boolean isInternal ){
 
 
             String output = "\t\t\t\t\t\t<UML:Class name = \"" + noun + "\" xmi.id = \"" + xmiID + "\" namespace = \"" + xmiPackageID + "\" >\n" +
@@ -258,8 +275,12 @@ public class Output {
                     "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"ea_stype\" value = \"Class\"/>\n" +
                     "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"package\" value = \"" + xmiPackageID  + "\"/>\n" +
                     "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"package_name\" value = \"One Level Block Hierarchy\"/>\n" +
-                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"stereotype\" value = \"block\"/>\n" +
-                    "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
+                    "\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"stereotype\" value = \"block\"/>\n";
+            if(isInternal){
+                diagramID = generateXMI_ID("other");
+                output+="\t\t\t\t\t\t\t\t<UML:TaggedValue tag= \"diagram\" value = \""+diagramID+"\"/>\n";
+            }
+            output+=        "\t\t\t\t\t\t\t</UML:ModelElement.taggedValue>\n" +
                     "\t\t\t\t\t\t</UML:Class>\n";
 
             return output;
@@ -369,14 +390,14 @@ public class Output {
         }
 
         public String generateEncapsulation(String xmiId, String modelXMI_ID){
-            String output = "\t<UML:TaggedValue tag=\"isEncapsulated\" xmi.id=\"" + xmiId + "\" value=\"#NOTES#Values: true,false&#xA;\" modelElement=\"" + modelXMI_ID + "\"/>\n";
+            String output = "\t<UML:TaggedValue tag=\"isEncapsulated\" xmi.id=\"" + xmiId + "\" value=\"#NOTES#Values: true,false&#10;\" modelElement=\"" + modelXMI_ID + "\"/>\n";
             return output;
         }
         public String generateDiagram(String xmiID, String xmiPackage) {
             String output = generateDiagramBDD(xmiID,xmiPackage);
             for(Sentence s: sentences.sentences){
                 if(s.isInternal){
-                    output += generateDiagramIBD(s.structNoun, generateXMI_ID("other"),xmiPackage);
+                    output += generateDiagramIBD(s.structNoun,diagramID,xmiPackage,blocks.getBlockByName(s.structNoun).XmiID);
                 }
 
             }
@@ -409,14 +430,14 @@ public class Output {
 
         }
 
-        public String generateDiagramIBD(String noun, String xmiId, String xmiPackage){
+        public String generateDiagramIBD(String noun, String xmiId, String xmiPackage,String parentXmi){
             String nounsIndv[] = new String[0];
             String output = "\t<UML:Diagram name=\"" + noun +"\" xmi.id=\"" + xmiId+ "\" diagramType=\"CompositeStructureDiagram\" owner=\"" + xmiPackage + "\" toolName=\"Enterprise Architect 2.5\">\n"+
                     "\t\t<UML:ModelElement.taggedValue>\n"+
                     "\t\t\t<UML:TaggedValue tag=\"package\" value=\"" + xmiPackage + "\"/>\n"+
                     "\t\t\t<UML:TaggedValue tag=\"type\" value=\"CompositeStructure\"/>\n"+
                     "\t\t\t<UML:TaggedValue tag=\"ea_localid\" value=\"4\"/>\n" +
-                    "\t\t\t<UML:TaggedValue tag=\"parent\" value=\"" + xmiId + "\"/>\n" +
+                    "\t\t\t<UML:TaggedValue tag=\"parent\" value=\"" + parentXmi + "\"/>\n" +
                     "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::InternalBlock;SF=1;\"/>\n"+
                     "\t\t</UML:ModelElement.taggedValue>\n"+
                     "\t\t<UML:Diagram.element>\n";
@@ -426,7 +447,7 @@ public class Output {
                     nounsIndv = nouns.split(", ");
                 }
             }
-            for(String nounIndv: nounsIndv){
+            for(String nounIndv: nounsIndv) {
                 output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
             }
     //                for(amountOfFiguresToBeDrawn) {
