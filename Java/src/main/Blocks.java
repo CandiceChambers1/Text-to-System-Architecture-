@@ -35,6 +35,14 @@ public class Blocks {
         }
         return null;
     }
+    public Block getBlockByNameOwner(String name, String ownerXMI){
+        for(Block block: blocks){
+            if(block.name.equals(name) && block.ownerXMI.equals(ownerXMI)){
+                return block;
+            }
+        }
+        return null;
+    }
     public Block getBlockByNameType(String name, String type){
         for(Block block: blocks){
             if(block.name.equals(name)&& block.type.equals(type)){
