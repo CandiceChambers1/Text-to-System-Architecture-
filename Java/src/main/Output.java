@@ -441,9 +441,11 @@ public class Output {
                     "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::InternalBlock;SF=1;\"/>\n"+
                     "\t\t</UML:ModelElement.taggedValue>\n"+
                     "\t\t<UML:Diagram.element>\n";
-            ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
-            for (String port: BDDports){
-                output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + blocks.getBlockByName(port).XmiID + "\"/>\n";
+            if (sentences.getSentenceByStructNoun(noun).isPort) {
+                ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
+                for (String port : BDDports) {
+                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + blocks.getBlockByName(port).XmiID + "\"/>\n";
+                }
             }
             for(Sentence s: sentences.sentences){
                 if(s.isInternal && s.structNoun.equals(noun)){
@@ -451,15 +453,22 @@ public class Output {
                     nounsIndv = nouns.split(", ");
                 }
             }
+            int bLeft=60, bTop=60, bRight=160, bBottom=160;
+
             for(String nounIndv: nounsIndv) {
-                output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
+                int pLeft=bLeft, pTop=bTop, pRight=bRight-55, pBottom=bBottom-45;
+                output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
 //                System.err.println(nounIndv);
                 ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(nounIndv).structNouns.get(0), true).structNouns;
                 for (String port: ports){
 //                    System.out.println(port);
                     PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID);
-                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=699;Top=129;Right=714;Bottom=144;\" subject=\"" + p.XmiID + "\"/>\n";
+                    output += "\t\t\t<UML:DiagramElement geometry=\"Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";\" subject=\"" + p.XmiID + "\"/>\n";
+                    pTop+=20;
+                    pBottom+=20;
                 }
+                bLeft+=200;
+                bRight+=200;
             }
     //                for(amountOfFiguresToBeDrawn) {
     //                    if (port) {
