@@ -416,12 +416,50 @@ public class Output {
                     "\t\t\t<UML:TaggedValue tag=\"styleex\" value=\"MDGDgm=SysML1.4::BlockDefinition;SF=1;\"/>\n"+
                     "\t\t</UML:ModelElement.taggedValue>\n"+
                     "\t\t<UML:Diagram.element>\n";
+            int b_left, b_right, b_top, b_bottom;
+            b_left = 60;
+            b_right = 180;
+            b_top = 60;
+            b_bottom = 180;
+
+            int p_left, p_right, p_top, p_bottom;
+            int max_bLeft = 0;
+            p_left = 60;
+            p_right = 160;
+            p_top = 60;
+            p_bottom  = 160;
+            String currentXMI = " ";
+
             for(Block b: blocks.blocks){
                 if (b.getBlockName("sub") != null) {
-                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=700;Top=150;Right=690;Bottom=190;\" subject=\"" + b.XmiID + "\"/>\n";
+//                    System.out.println(b.name);
+                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=" + b_left+ ";Top=" + b_top+ ";Right=" + b_right+";Bottom=" + b_bottom +";\" subject=\"" + b.XmiID + "\"/>\n";
+                    b_left = b_left +200;
+                    b_right  = b_right +200;
+                    max_bLeft = b_left - 200;
+                    currentXMI += b.XmiID;
+                    System.out.println(b.name + " " + b.XmiID);
                 }if (b.getBlockName("ports") !=null) {
-                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=300;Top=400;Right=400;Bottom=300;\" subject=\"" + b.XmiID + "\"/>\n";
+                    //                    System.out.println(b.name);
+                    System.out.println(b.name + " " + b.ownerXMI);
+                    p_left = max_bLeft;
+                    if (!b.ownerXMI.equals(currentXMI)){
+                        b_left = b_left - 200;
+                        p_left = b_left;
+                        currentXMI = " ";
+                        currentXMI += b.ownerXMI;
+                    }
+
+//                    p_right = b_right;
+//                    String currentXMI = b.XmiID;
+
+                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=" + p_left + ";Top=" + p_top + ";Right=" + p_right + ";Bottom=" + p_bottom + ";\" subject=\"" + b.XmiID + "\"/>\n";
+//                    output += "\t\t\t<UML:DiagramElement geometry=\"Left=200;Top=200;Right=50;Bottom=50;\" subject=\"" + b.XmiID + "\"/>\n";
+//                    p_left = p_left +200;
+                    p_bottom = p_bottom + 20;
+                    p_top = p_top + 20;
                 }
+
             }
                     output += "\t\t</UML:Diagram.element>\n"+
                             "\t</UML:Diagram>\n";
