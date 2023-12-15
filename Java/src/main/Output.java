@@ -438,10 +438,10 @@ public class Output {
                     b_right  = b_right +200;
                     max_bLeft = b_left - 200;
                     currentXMI += b.XmiID;
-                    System.out.println(b.name + " " + b.XmiID);
+//                    System.out.println(b.name + " " + b.XmiID);
                 }if (b.getBlockName("ports") !=null) {
                     //                    System.out.println(b.name);
-                    System.out.println(b.name + " " + b.ownerXMI);
+//                    System.out.println(b.name + " " + b.ownerXMI);
                     p_left = max_bLeft;
                     if (!b.ownerXMI.equals(currentXMI)){
                         b_left = b_left - 200;
@@ -508,17 +508,9 @@ public class Output {
                 bLeft+=200;
                 bRight+=200;
             }
-    //                for(amountOfFiguresToBeDrawn) {
-    //                    if (port) {
-    //                        output += "\t\t\t<UML:DiagramElement geometry=\"Left=543;Top=202;Right=558;Bottom=217;\" subject=\"" + xmiId + "\"/>\n";
-    //                    }if (property) {
-    //
-    //                    }if (connection){
-    //                        output += "\t\t\t<UML:DiagramElement geometry=\"SX=0;SY=0;EX=0;EY=0;EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;\" subject=\"" + xmiId + "\"/>\n";
-    //                    }
-    //                }
-                    output += "\t\t</UML:Diagram.element>\n"+
-                            "\t</UML:Diagram>\n";
+
+            output += "\t\t</UML:Diagram.element>\n"+
+                    "\t</UML:Diagram>\n";
             return output;
         }
 
