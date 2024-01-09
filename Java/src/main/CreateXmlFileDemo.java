@@ -106,7 +106,7 @@ public class CreateXmlFileDemo {
                     propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
 
-                    output += generateClassifier_Property(b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
 
                 }
             }
@@ -636,8 +636,27 @@ public class CreateXmlFileDemo {
         Element collaborationInter = doc.createElement("UML:Collaboration.interaction");
         collaboration.appendChild(collaborationInter);
     }
-    public String generateClassifier_Property(String noun, String xmiID, String xmiPackageID, String xmiOwnerID, String xmiPropertyTypeID) {
-//
+    public String generateClassifier_Property(Document doc, Element collaboration, String noun, String xmiID, String xmiPackageID, String xmiOwnerID, String xmiPropertyTypeID) {
+        Element classifier = doc.createElement("UML:ClassifierRole");
+
+        Attr attr1 = doc.createAttribute("name");
+        attr1.setValue(noun);
+        classifier.setAttributeNode(attr1);
+
+        Attr attr2 = doc.createAttribute("xmi.id");
+        attr2.setValue(xmiID);
+        classifier.setAttributeNode(attr2);
+
+        Attr attr1 = doc.createAttribute("name");
+        attr1.setValue(noun);
+        classifier.setAttributeNode(attr1);
+
+        Attr attr1 = doc.createAttribute("name");
+        attr1.setValue(noun);
+        classifier.setAttributeNode(attr1);
+
+        collaboration.appendChild(classifier);
+
         String output = "\t\t\t\t\t\t\t\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiID + "\" base =\"" + xmiRootID + "\">\n" +
                 "\t\t\t\t\t\t\t\t\t<UML:ModelElement.taggedValue>\n" +
                 "\t\t\t\t\t\t\t\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
