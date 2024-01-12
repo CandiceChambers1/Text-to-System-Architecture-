@@ -15,13 +15,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import java.io.File;
 
-public class CreateXmlFileDemo {
+public class CreateXmlFile {
     Sentences sentences;
     String modelxmiID;
     String xmiRootID;
     String diagramID;
     Blocks blocks = new Blocks();
-    public CreateXmlFileDemo(Sentences sentences){
+    public CreateXmlFile(Sentences sentences){
         this.sentences = sentences;
     }
     public String getRoot(){
@@ -72,8 +72,8 @@ public class CreateXmlFileDemo {
         // root element
         Element rootElement = doc.createElement("XMI");
         doc.appendChild(rootElement);
-        CreateXmlFileDemo.generateAttribute(doc, rootElement, "xmlns:UML", "omg.org/UML1.3");
-        CreateXmlFileDemo.generateAttribute(doc,rootElement,"xmlns:UML","omg.org/UML1.3");
+        CreateXmlFile.generateAttribute(doc, rootElement, "xmi.version", "1.1");
+        CreateXmlFile.generateAttribute(doc,rootElement,"xmlns:UML","omg.org/UML1.3");
 
         Element collaboration = null;
 //        String output = "<XMI xmi.version=\"1.1\" xmlns:UML=\"omg.org/UML1.3\">\n";
@@ -187,12 +187,6 @@ public class CreateXmlFileDemo {
         String fileName = getRoot();
         StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
         transformer.transform(source, result);
-
-        // Output to console for testing
-        StreamResult consoleResult = new StreamResult(System.out);
-        transformer.transform(source, consoleResult);
-
-
     }
 
     private String generatePropertyTypeID(String xmiID) {
@@ -247,7 +241,7 @@ public class CreateXmlFileDemo {
     public void generateHeader(Document doc, Element root){
         Element header = generateElement(doc, root, "XMI.header", "");
         Element documentation = generateElement(doc, header, "XMI.documentation", "");
-        Element exporter = generateElement(doc, documentation, "XMI.documentation","Enterprise Architect");
+        Element exporter = generateElement(doc, documentation, "XMI.exporter","Enterprise Architect");
         Element exporterVersion = generateElement(doc, documentation,"XMI.exporterVersion", "2.5");
     }
     public void generateFooter(Document doc, Element root){
@@ -650,10 +644,5 @@ public class CreateXmlFileDemo {
             bLeft+=200;
             bRight+=200;
         }
-
-//        output += "\t\t</UML:Diagram.element>\n"+
-//                "\t</UML:Diagram>\n";
-//        return output;
     }
-
 }
