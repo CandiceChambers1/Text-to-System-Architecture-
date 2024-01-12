@@ -26,14 +26,16 @@ public class Main {
             Visitor visitor = new Visitor();
             visitor.sentences = new Sentences();
             visitor.visit(sysmlParser.nlparch());
-            Output outputFormatter = new Output(visitor.sentences);
-            String outputText = outputFormatter.generateOutput();
-//            System.out.println(outputText);
-            String fileName = outputFormatter.getRoot();
-            PrintWriter printWriter = new PrintWriter(new File("src/xml/" + fileName +".xml"));
-            printWriter.println(outputText);
-            printWriter.flush();
-            printWriter.close();
+//            Output outputFormatter = new Output(visitor.sentences);
+            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences);
+            outputFormatter.generateOutput();
+//            String outputText = outputFormatter.generateOutput();
+////            System.out.println(outputText);
+//            String fileName = outputFormatter.getRoot();
+//            PrintWriter printWriter = new PrintWriter(new File("src/xml/" + fileName +".xml"));
+//            printWriter.println(outputText);
+//            printWriter.flush();
+//            printWriter.close();
 
 
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public class CreateXmlFileDemo {
     String xmiRootID;
     String diagramID;
     Blocks blocks = new Blocks();
-    public Output(Sentences sentences){
+    public CreateXmlFileDemo(Sentences sentences){
         this.sentences = sentences;
     }
     public String getRoot(){
@@ -53,7 +53,7 @@ public class CreateXmlFileDemo {
             }
         }
     }
-    public String generateOutput() throws ParserConfigurationException, TransformerException {
+    public void generateOutput() throws ParserConfigurationException, TransformerException {
 
         /*
             Looping through the sentences and call the appropriate functions
@@ -184,7 +184,8 @@ public class CreateXmlFileDemo {
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File("C:\\cars.xml"));
+        String fileName = getRoot();
+        StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
         transformer.transform(source, result);
 
         // Output to console for testing
@@ -192,7 +193,6 @@ public class CreateXmlFileDemo {
         transformer.transform(source, consoleResult);
 
 
-        return output;
     }
 
     private String generatePropertyTypeID(String xmiID) {
@@ -551,8 +551,8 @@ public class CreateXmlFileDemo {
             if (b.getBlockName("sub") != null) {
 //                    System.out.println(b.name);
                 Element diagramElement_1 = generateElement(doc,diagram_ele,"UML:DiagramElement","");
-                generateAttribute(doc,diagramElement_1,"geometry=","Left="+b_left+";Top="+b_top+";Right="+b_right+";Bottom="+b_bottom+";");
-                generateAttribute(doc,diagramElement_1,"subject=",b.XmiID);
+                generateAttribute(doc,diagramElement_1,"geometry","Left="+b_left+";Top="+b_top+";Right="+b_right+";Bottom="+b_bottom+";");
+                generateAttribute(doc,diagramElement_1,"subject",b.XmiID);
                 b_left = b_left +200;
                 b_right  = b_right +200;
                 max_bLeft = b_left - 200;
@@ -572,8 +572,8 @@ public class CreateXmlFileDemo {
 //                    p_right = b_right;
 //                    String currentXMI = b.XmiID;
                 Element diagramElement_2 = generateElement(doc,diagram_ele,"UML:DiagramElement","");
-                generateAttribute(doc,diagramElement_2,"geometry=","Left="+p_left+";Top="+p_top+";Right="+p_right+";Bottom="+p_bottom+";");
-                generateAttribute(doc,diagramElement_2,"subject=",b.XmiID);
+                generateAttribute(doc,diagramElement_2,"geometry","Left="+p_left+";Top="+p_top+";Right="+p_right+";Bottom="+p_bottom+";");
+                generateAttribute(doc,diagramElement_2,"subject",b.XmiID);
 
                 p_bottom = p_bottom + 20;
                 p_top = p_top + 20;
@@ -618,7 +618,7 @@ public class CreateXmlFileDemo {
             ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
             for (String port : BDDports) {
                 Element tag_6 = generateElement(doc,model,"UML:DiagramElement","");
-                generateAttribute(doc,tag_6,"geometry=","Left=699;Top=129;Right=714;Bottom=144;");
+                generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
                 generateAttribute(doc,tag_6,"subject", blocks.getBlockByName(port).XmiID);
             }
         }
@@ -632,8 +632,8 @@ public class CreateXmlFileDemo {
         for(String nounIndv: nounsIndv) {
             int pLeft=bLeft, pTop=bTop, pRight=bRight-55, pBottom=bBottom-45;
             Element tag_7 = generateElement(doc,model,"UML:DiagramElement","");
-            generateAttribute(doc,tag_7,"geometry=", "Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";");
-            generateAttribute(doc,tag_7,"subject=",blocks.getBlockByName(nounIndv).XmiID);
+            generateAttribute(doc,tag_7,"geometry", "Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";");
+            generateAttribute(doc,tag_7,"subject",blocks.getBlockByName(nounIndv).XmiID);
 //            output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
 //                System.err.println(nounIndv);
             ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(nounIndv).structNouns.get(0), true).structNouns;
@@ -641,8 +641,8 @@ public class CreateXmlFileDemo {
 //                    System.out.println(port);
                 PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID);
                 Element tag_8 = generateElement(doc,model,"UML:DiagramElement","");
-                generateAttribute(doc,tag_8,"geometry=", "Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";");
-                generateAttribute(doc,tag_8,"subject=",p.XmiID);
+                generateAttribute(doc,tag_8,"geometry", "Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";");
+                generateAttribute(doc,tag_8,"subject",p.XmiID);
 //                output += "\t\t\t<UML:DiagramElement geometry=\"Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";\" subject=\"" + p.XmiID + "\"/>\n";
                 pTop+=20;
                 pBottom+=20;
