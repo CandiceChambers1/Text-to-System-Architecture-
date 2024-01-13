@@ -27,7 +27,7 @@ public class Main {
             visitor.sentences = new Sentences();
             visitor.visit(sysmlParser.nlparch());
 //            Output outputFormatter = new Output(visitor.sentences);
-            CreateXmlFile outputFormatter= new CreateXmlFile(visitor.sentences);
+            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences);
             outputFormatter.generateOutput();
 //            String outputText = outputFormatter.generateOutput();
 ////            System.out.println(outputText);
