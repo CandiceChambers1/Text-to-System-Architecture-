@@ -72,13 +72,14 @@ public class CreateXmlFileDemo {
         // root element
         Element rootElement = doc.createElement("XMI");
         doc.appendChild(rootElement);
-        CreateXmlFileDemo.generateAttribute(doc, rootElement, "xmlns:UML", "omg.org/UML1.3");
-        CreateXmlFileDemo.generateAttribute(doc,rootElement,"xmlns:UML","omg.org/UML1.3");
+        generateAttribute(doc, rootElement, "xmi.version", "1.1");
+        generateAttribute(doc,rootElement,"xmlns:UML","omg.org/UML1.3");
 
         Element collaboration = null;
 //        String output = "<XMI xmi.version=\"1.1\" xmlns:UML=\"omg.org/UML1.3\">\n";
         generateHeader(doc, rootElement);
-        Element namespaceContent = generateStartContent(doc, rootElement, xmiPackageID);
+        Element content = generateElement(doc,rootElement,"XMI.content", "");
+        Element namespaceContent = generateStartContent(doc, content, xmiPackageID);
         generateTree();
         for (Block b : blocks.blocks) {
             if(b.getBlockName("sub")!=null){
@@ -87,6 +88,7 @@ public class CreateXmlFileDemo {
             if(b.getBlockName("internal")!=null){
                 if (propertyCounter == 0){
                     collaboration = generateStartCollaboration(doc, namespaceContent);
+                    generateEndCollaboration(doc, collaboration);
                     propertyCounter=1;
 
                     String propertyTypeName = "";
@@ -107,7 +109,7 @@ public class CreateXmlFileDemo {
             }
             if(b.getBlockName("ports")!= null){
                 if(propertyCounter ==1){
-                    generateEndCollaboration(doc, collaboration);
+//                    generateEndCollaboration(doc, namespaceContent);
                     propertyCounter=0;
                 }
                 generatePort(doc,namespaceContent,b.name,b.XmiID, b.ownerXMI,xmiPackageID);
@@ -173,10 +175,10 @@ public class CreateXmlFileDemo {
 //        output += generateDirection();
         for (Block b : blocks.blocks) {
             if (b.getBlockName("sub") != null) {
-                generateEncapsulation(doc,rootElement,generateXMI_ID("other"),b.XmiID);
+                generateEncapsulation(doc,content,generateXMI_ID("other"),b.XmiID);
             }
         }
-        generateDiagram(doc,rootElement,generateXMI_ID("other"),xmiPackageID);
+        generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
         generateFooter(doc,rootElement);
 
         // write the content into xml file
@@ -247,20 +249,18 @@ public class CreateXmlFileDemo {
     public void generateHeader(Document doc, Element root){
         Element header = generateElement(doc, root, "XMI.header", "");
         Element documentation = generateElement(doc, header, "XMI.documentation", "");
-        Element exporter = generateElement(doc, documentation, "XMI.documentation","Enterprise Architect");
+        Element exporter = generateElement(doc, documentation, "XMI.exporter","Enterprise Architect");
         Element exporterVersion = generateElement(doc, documentation,"XMI.exporterVersion", "2.5");
     }
     public void generateFooter(Document doc, Element root){
         Element difference = generateElement(doc,root,"XMI.difference", "");
-        Element extension = generateElement(doc, root,"XMI.extension", "");
-        generateAttribute(doc,extension,"xmi.extension","Enterprise Architect 2.5");
+        Element extension = generateElement(doc, root,"XMI.extensions", "");
+        generateAttribute(doc,extension,"xmi.extender","Enterprise Architect 2.5");
     }
-    public Element generateStartContent(Document doc, Element root, String xmiPackageID){
+    public Element generateStartContent(Document doc, Element content, String xmiPackageID){
 
         modelxmiID = generateXMI_ID("other");
         xmiRootID = generateXMI_ID("other");
-
-        Element content = generateElement(doc,root,"XMI.content", "");
 
         Element model = generateElement(doc,content,"UML:Model","");
         generateAttribute(doc,model,"name","EA Model");
@@ -287,7 +287,7 @@ public class CreateXmlFileDemo {
         Element modelElementTag = generateElement(doc,umlClass,"UML:ModelElement.taggedValue","");
 
         Element tag_1 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
-        generateAttribute(doc,tag_1,"tag","ea-stype");
+        generateAttribute(doc,tag_1,"tag","ea_stype");
         generateAttribute(doc,tag_1,"value","Port");
 
         Element tag_2 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
@@ -346,7 +346,7 @@ public class CreateXmlFileDemo {
 
         Element tag_1 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
         generateAttribute(doc,tag_1,"tag","ea_stype");
-        generateAttribute(doc,tag_1,"value","class");
+        generateAttribute(doc,tag_1,"value","Class");
 
         Element tag_2 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
         generateAttribute(doc,tag_2,"tag","package");
@@ -419,13 +419,12 @@ public class CreateXmlFileDemo {
     }
     public Element generateStartCollaboration(Document doc, Element namespace){
 
-        Element collaboration = generateElement(doc,namespace,"UML:Collaboraion", "");
+        Element collaboration = generateElement(doc,namespace,"UML:Collaboration", "");
         generateAttribute(doc,collaboration,"xmi.id",modelxmiID+"_Collaboration");
         generateAttribute(doc,collaboration,"name","Collaborations");
 
 
-        Element namespace1 = generateElement(doc,collaboration,"UML:Namespace.ownedElement","");
-        return namespace1;
+        return generateElement(doc,collaboration,"UML:Namespace.ownedElement","");
     }
 
     public void generateEndCollaboration(Document doc, Element collaboration){
@@ -457,8 +456,8 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_4,"value","One Level Block Hierarchy");
 
         Element tag_5 = generateElement(doc,model,"UML:TaggedValue","");
-        generateAttribute(doc,tag_1,"tag","propertyType");
-        generateAttribute(doc,tag_1,"value","{"+xmiPropertyTypeID+"}");
+        generateAttribute(doc,tag_5,"tag","propertyType");
+        generateAttribute(doc,tag_5,"value","{"+xmiPropertyTypeID+"}");
     }
 //    public String generateClassifier_Flow(String noun, String xmiId, String xmiPackageId, String xmiOwnerId, String xmiIdBoolean) {
 //        String output = "\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiId + "\" base =\"" + xmiPackageId + "\">\n" +
@@ -497,8 +496,8 @@ public class CreateXmlFileDemo {
 //        return output;
 //    }
 
-    public void generateEncapsulation(Document doc, Element root, String xmiId, String modelXMI_ID){
-        Element tag = generateElement(doc,root,"UML:TaggedValue","");
+    public void generateEncapsulation(Document doc, Element content, String xmiId, String modelXMI_ID){
+        Element tag = generateElement(doc,content,"UML:TaggedValue","");
         generateAttribute(doc,tag,"tag","isEncapsulated");
         generateAttribute(doc,tag,"xmi.id",xmiId);
         generateAttribute(doc,tag,"value","#NOTES#Values: true,false&#10;");
@@ -517,6 +516,7 @@ public class CreateXmlFileDemo {
     public void generateDiagramBDD(Document doc, Element root, String xmiID, String xmiPackage){
 
         Element diagram = generateElement(doc,root,"UML:Diagram","");
+        generateAttribute(doc,diagram,"name","One Level Block Hierarchy");
         generateAttribute(doc,diagram,"xmi.id",xmiID);
         generateAttribute(doc,diagram,"diagramType","ClassDiagram");
         generateAttribute(doc,diagram,"owner",xmiPackage);
@@ -603,7 +603,7 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_2,"value","CompositeStructure");
 
         Element tag_3 = generateElement(doc,model,"UML:TaggedValue","");
-        generateAttribute(doc,tag_3,"tag","ea-localid");
+        generateAttribute(doc,tag_3,"tag","ea_localid");
         generateAttribute(doc,tag_3,"value","4");
 
         Element tag_4 = generateElement(doc,model,"UML:TaggedValue","");
@@ -614,10 +614,12 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_5,"tag","styleex");
         generateAttribute(doc,tag_5,"value","MDGDgm=SysML1.4::InternalBlock;SF=1;");
 
+        Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
+
         if (sentences.getSentenceByStructNoun(noun).isPort) {
             ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
             for (String port : BDDports) {
-                Element tag_6 = generateElement(doc,model,"UML:DiagramElement","");
+                Element tag_6 = generateElement(doc,diagramElement,"UML:DiagramElement","");
                 generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
                 generateAttribute(doc,tag_6,"subject", blocks.getBlockByName(port).XmiID);
             }
@@ -628,10 +630,11 @@ public class CreateXmlFileDemo {
                 nounsIndv = nouns.split(", ");
             }
         }
+
         int bLeft=60, bTop=60, bRight=160, bBottom=160;
         for(String nounIndv: nounsIndv) {
             int pLeft=bLeft, pTop=bTop, pRight=bRight-55, pBottom=bBottom-45;
-            Element tag_7 = generateElement(doc,model,"UML:DiagramElement","");
+            Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
             generateAttribute(doc,tag_7,"geometry", "Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";");
             generateAttribute(doc,tag_7,"subject",blocks.getBlockByName(nounIndv).XmiID);
 //            output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
@@ -640,7 +643,7 @@ public class CreateXmlFileDemo {
             for (String port: ports){
 //                    System.out.println(port);
                 PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID);
-                Element tag_8 = generateElement(doc,model,"UML:DiagramElement","");
+                Element tag_8 = generateElement(doc,diagramElement,"UML:DiagramElement","");
                 generateAttribute(doc,tag_8,"geometry", "Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";");
                 generateAttribute(doc,tag_8,"subject",p.XmiID);
 //                output += "\t\t\t<UML:DiagramElement geometry=\"Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";\" subject=\"" + p.XmiID + "\"/>\n";

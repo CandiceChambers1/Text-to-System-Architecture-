@@ -32,7 +32,8 @@ public class Main {
 //            String outputText = outputFormatter.generateOutput();
 ////            System.out.println(outputText);
 //            String fileName = outputFormatter.getRoot();
-//            PrintWriter printWriter = new PrintWriter(new File("src/xml/" + fileName +".xml"));
+////            PrintWriter printWriter = new PrintWriter(new File("src/xml/" + fileName +".xml"));
+//            PrintWriter printWriter = new PrintWriter(new File("src/xml/correct" + fileName +".xml"));
 //            printWriter.println(outputText);
 //            printWriter.flush();
 //            printWriter.close();
