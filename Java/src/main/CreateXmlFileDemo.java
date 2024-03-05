@@ -129,9 +129,9 @@ public class CreateXmlFileDemo {
                     generatePortProperty(doc, namespaceContent, p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
                 }
             }
-            if(s.sentenceType=="Functional"){
-                System.err.println("Ignored Flow Properties");
-            }
+//            if(s.sentenceType=="Functional"){
+//                System.err.println("Ignored Flow Properties");
+//            }
 
         }
         for(Sentence s: sentences.sentences){
@@ -191,8 +191,8 @@ public class CreateXmlFileDemo {
         transformer.transform(source, result);
 
         // Output to console for testing
-        StreamResult consoleResult = new StreamResult(System.out);
-        transformer.transform(source, consoleResult);
+//        StreamResult consoleResult = new StreamResult(System.out);
+//        transformer.transform(source, consoleResult);
 
 
     }

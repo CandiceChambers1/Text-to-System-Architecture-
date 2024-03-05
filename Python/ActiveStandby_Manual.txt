@@ -1,0 +1,15 @@
+The ASS consists of an Active Standby System, a Side and a Bus.
+The Active Standby System consists of internal components: Side1, Side2, Bus12 and Bus21.
+The Side consists of ports Manual Selection, Side1SubSystemStatus, Side2SubSystemStatus, CLK, PrimarySide, Status and Failed.
+The Bus consists of ports In, Out and CLK.
+The Side1 instantiates a Side.
+The Side2 instantiates a Side.
+The Bus12 instantiates a Bus.
+The Bus21 instantiates a Bus.
+The Status exports an output.
+The Side1 is connected to Bus12 by the ports Status and In.
+The Bus12 is connected to Side2 by the ports Out and Side1SubSystemsStatus.
+The Side2 is connected to Bus21 by the ports Status and In.
+The Bus21 is connected to Side1 by the ports Out and Side2SubSystemStatus.
+
+

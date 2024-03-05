@@ -507,10 +507,7 @@ def finalVersion(new_final_list):
 # ### Input Text
 
 # In[16]:
-# input_paragraph = "The FGS System consists of the Left Side FGS, the Right Side FGS, a LR Bus, and a RL Bus. LR Bus is connected to Left Side FGS and Right Side FGS. RL Bus is connected to Left Side FGS and Right Side FGS. The Left Side FGS imports boolean input from the Left Transfer Switch. The Left Side FGS imports boolean input from the Left Primary Side. The Right Side FGS imports boolean input from the Right Transfer Switch. The Right Side FGS imports boolean input from the Right Primary Side. CLK_ONE supplies synchronous value to Left Side FGS. CLK_TWO supplies synchronous value to LR_Bus. CLK_THREE supplies synchronous value to Right Side FGS. CLK_FOUR supplies synchronous value to RL_Bus."
-# input_paragraph = "The coffeemaker consists of a cooking unit and a pot. The pot is connected to the cooking unit. The cooking unit consists of a tank, a heating unit, and a brewing unit. The tank is connected to the heating unit. The heating unit is connected to the brewing unit. The pot consists of a glassware, a lid, and a handle. The lid is connected to the glassware. The handle is connected to the glassware. The tank imports water and transfers it to the heating unit. The heating unit consists of a heating coil and a hot water pipe. The heating coil is connected to the hot water pipe. The heating coil imports electricity and converts it to heat. The heating coil transfers heat to the hot water pipe. The hot water pipe receives water from the tank. The hot water pipe imports heat from the heating coil. The hot water pipe imports water and heat and energizes it to hot water. The brewing unit consists of a vertical pipe, a water valve, a shower head, a filter, and a filter holder. The lower end of the vertical pipe is connected to the hot water pipe. The water valve is connected to the vertical pipe. The shower head is connected to the upper end of the vertical pipe. The filer holder consists of a filter. The vertical pipe receives hot water from the hot water pipe. The vertical pipe transfers hot water to the shower head. The shower head receives hot water from the vertical pipe. The shower head distributes it to filter. The filter imports ground coffee. The filter receives hot water from the shower head. The filter couples ground coffee and hot water. The pot stores the liquid coffee."
-# input_paragraph = "The FGS consists of a FGS System, a Side, and a Bus. The FGS System consists of internal components: Left FGS, Right FGS, LR Bus, and RL Bus. The Side consists of ports Transfer Switch, Primary Side, Pilot Flying, Bus In and CLK. The Bus consists of ports Left, Right, and CLK. The Left FGS instantiates a Side. Right FGS instantiates a Side. The LR instantiates a Bus. The RL instantiates a Bus. The Pilot Flying exports a boolean value. The Bus In imports a boolean input. The Left FGS is connected to LR by the ports Pilot Flying and Left. The RL is connected to Left FGS by the ports Left and Bus In. The LR is connected to Right FGS by the ports Right and Bus In. The Right FGS is connected to RL by the ports Pilot Flying and Right."
-input_paragraph="The ASS consists of an Active Standby System, a Side and a Bus. The Active Standby System consists of internal components: Side1, Side2, Bus12 and Bus21. The Side consists of ports Manual Selection, Side1SubSystemStatus, Side2SubSystemStatus, CLK, PrimarySide, Status and Failed. The Bus consists of ports In, Out and CLK. Side1 instantiates a Side. Side2 instantiates a Side. Bus12 instantiates a Bus. Bus21 instantiates a Bus. Status exports an output. Side1 is connected to Bus12 by the ports Status and In. Bus12 is connected to Side2 by the ports Out and Side1SubSystemsStatus. Side2 is connected to Bus21 by the ports Status and In. Bus21 is connected to Side1 by the ports Out and Side2SubSystemStatus."
+input_paragraph = open("FGS_Manual.txt ", "r")
 
 # ## Driver Code
 
@@ -531,7 +528,7 @@ if __name__ == "__main__":
     new_all_list = editLists(all_lists)
 
     # Remove stopwords from raw text
-    final_list = remove_stopwords_from_raw_text(input_paragraph)
+    final_list = remove_stopwords_from_raw_text(input_paragraph.read())
 
     # Change synonyms to our preferred  words
     changeSynonyms(final_list, new_all_list)
@@ -546,5 +543,8 @@ if __name__ == "__main__":
     new_final_list = convert_if_in_NLTK(new_para_latest)
     send_to_grammar = finalVersion(new_final_list)
 
-    print(send_to_grammar)
+    file = open("FGS_NLP.txt", "w")
+    file.write(send_to_grammar)
+
+    # print(send_to_grammar)
 
