@@ -1,3 +1,6 @@
+The electric coffee maker consists of a coffeemaker, a cooking unit, storage unit, a heating unit, hydraulic unit, brewing unit, wiring, plug,
+cord, heater, coil, casing, shower head, heating pipe, elevator pipe, basket assembly, basket, valve, filter, glassware,
+switch, insulation, hot plate, storage tank, and a handle.
 The coffeemaker consists of a cooking unit and a storage unit.
 The coffeemaker is connected to the cooking unit by the ports In_M and In_M.
 The coffeemaker is connected to the cooking unit by the ports In_M and In_M.
@@ -37,18 +40,29 @@ The heating pipe is connected to the insulation by the ports Out_E1 and In_E1.
 The heating pipe is connected to the elevator pipe by the ports Out_Liq2 and In_Liq1.
 The elevator pipe is connected to the shower head by the ports Out_Liq1 and In_Liq1.
 The shower head is connected to the hydraulic unit by the ports Out_Liq1 and Out_M.
+The brewing unit consists of a basket assembly, a basket, and a filter.
+The brewing unit is connected to the basket assembly by the ports In_M and In_M.
+The brewing unit is connected to the basket assembly by the ports In_M and In_M.
+The brewing unit is connected to the filter by the ports In_M and In_S1.
+The brewing unit is connected to the filter by the ports In_M and In_Liq1.
+The basket unit is connected to the brewing unit by the ports Out_M and Out M.
+The filter is connected to the brewing unit by the ports Out_S2 and Out_M.
+The filter is connected to the brewing unit by the ports Out_Liq2 and Out_M.
+The heater consists of a coil, casing, and an insulation.
+The heater is connected to the coil by the ports In_E and In_E1.
+The heater is connected to the casing by the ports In_M and In_Liq1.
+The coil is connected to the casing by the ports Out_E2 and In_E1.
+The coil is connected to the heater by the ports Out_E2 and Out_E.
+The casing is connected to the insulation by the ports Out_E1 and In_E1.
+The casing is connected to the heater by the ports Out_Liq2 and Out_M.
+The wiring consists of a plug, cord, and a switch.
+The wiring is connected to the plug by the ports In_E and In_E1.
+The switch is connected to the wiring by the ports Out_E1 and Out_E.
+The plug is connected to the cord by the ports Out_E1 and In_E1.
+The cord is connected to the switch by the ports In_E1 and Out_E1.
+The basket assembly consists of a basket and a valve.
+The basket assembly is connected to the basket by the ports In_M and In_S1.
+The basket assembly is connected to the basket by the ports In_M and In_Liq1.
+The basket is connected to the valve by the ports Out_Liq2 and In_Liq1.
+The valve is connected to the basket assembly by the ports Out_Liq1 and Out_M.
 
-
-The brewing unit consists of a vertical pipe, a water valve, a shower head, a filter, and a filter holder.
-The lower end of the vertical pipe is connected to the hot water pipe.
-The water valve is connected to the vertical pipe.
-The shower head is connected to the upper end of the vertical pipe.
-The filer holder consists of a filter.
-The vertical pipe receives hot water from the hot water pipe.
-The vertical pipe transfers hot water to the shower head.
-The shower head receives hot water from the vertical pipe.
-The shower head distributes it to filter.
-The filter imports ground coffee.
-The filter receives hot water from the shower head.
-The filter couples ground coffee and hot water.
-The pot stores the liquid coffee.
