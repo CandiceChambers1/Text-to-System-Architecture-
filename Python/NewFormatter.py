@@ -229,10 +229,22 @@ def changeSynonyms(final_list, new_all_list):
     index = 0
     one_list = []
 
-    if all(a in final_list for a in ("internal", ":")):
-        index_internal = final_list.index("internal")
-        final_list.remove(final_list[index_internal + 1])
-        final_list[index_internal] = internal_component[0]
+    # if all(a in final_list for a in ("internal", ":")):
+    #     index_internal = final_list.index("internal")
+    #     final_list.remove(final_list[index_internal + 1])
+    #     final_list[index_internal] = internal_component[0]
+    # This assumes that IBD has more than one component
+    for i in final_list:
+        if i == "internal":
+            if final_list[final_list.index(i) + 2] == ":":
+                final_list.remove(final_list[final_list.index(i) + 1])
+                final_list[final_list.index(i)] = internal_component[0]
+
+    # for i in final_list:
+    #     index_internal = final_list.index("internal")
+    #     final_list.remove(final_list[index_internal + 1])
+    #     final_list[index_internal] = internal_component[0]
+    #
 
     for i in final_list:
         for j in new_all_list:
@@ -507,8 +519,9 @@ def finalVersion(new_final_list):
 # ### Input Text
 
 # In[16]:
-input_paragraph = open("FGS_Manual.txt ", "r")
+# input_paragraph = open("FGS_Manual.txt ", "r")
 
+input_paragraph = open("Coffeemaker_Manual.txt", "r")
 # ## Driver Code
 
 # In[17]:
@@ -536,6 +549,7 @@ if __name__ == "__main__":
     # Convert the list to a paragraph
     new_para = createParagraphs(final_list)
 
+    # print(new_para)
     # Reformat the nouns for ANTLR standards
     new_para_latest = formatNouns(new_para)
 
@@ -543,7 +557,9 @@ if __name__ == "__main__":
     new_final_list = convert_if_in_NLTK(new_para_latest)
     send_to_grammar = finalVersion(new_final_list)
 
-    file = open("FGS_NLP.txt", "w")
+    file = open("Coffeemaker_NLP.txt", "w")
+
+    # file = open("FGS_NLP.txt", "w")
     file.write(send_to_grammar)
 
     # print(send_to_grammar)

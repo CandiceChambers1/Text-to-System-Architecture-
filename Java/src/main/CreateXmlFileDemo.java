@@ -86,26 +86,29 @@ public class CreateXmlFileDemo {
                 generateBlock(doc,namespaceContent, b.name,xmiPackageID,b.XmiID,sentences.getSentenceByStructNoun(b.name).isInternal);
             }
             if(b.getBlockName("internal")!=null){
-                if (propertyCounter == 0){
-                    collaboration = generateStartCollaboration(doc, namespaceContent);
-                    generateEndCollaboration(doc, collaboration);
-                    propertyCounter=1;
+                // insert condition to find all IBDs!!
+                    if (propertyCounter == 0){
+                        collaboration = generateStartCollaboration(doc, namespaceContent);
+                        generateEndCollaboration(doc, collaboration);
+                        propertyCounter=1;
 
-                    String propertyTypeName = "";
-                    propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
-                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
-                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+                        String propertyTypeName = "";
+                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
 
 
-                }
-                else {
-                    String propertyTypeName = "";
-                    propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
-                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                    }
+                    else {
+                        String propertyTypeName = "";
+                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+                        System.out.println(b.name);
+                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
 
-                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
 
-                }
+                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+
+                    }
             }
             if(b.getBlockName("ports")!= null){
                 if(propertyCounter ==1){

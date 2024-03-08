@@ -1,15 +1,41 @@
-The ASS consists of an Active Standby System, a Side and a Bus.
+The ASS consists of an Active Standby System, a Side, a Sub Demux, a Side Mux, a Side Demux, a Monitor, an Active Side
+Logic and a Bus.
 The Active Standby System consists of internal components: Side1, Side2, Bus12 and Bus21.
-The Side consists of ports Manual Selection, Side1SubSystemStatus, Side2SubSystemStatus, CLK, PrimarySide, Status and Failed.
-The Bus consists of ports In, Out and CLK.
+The Active Standby System consists of ports: Manual Selection, Primary Side, Side1Failed, Side2Failed,
+Side1SubSystemStatus, and Side2SubSystemStatus.
+The Side consists of internal components: Active Side Logic, Mon, Other, Other, This and This.
+The Side consists of ports Manual Selection, ThisSideSubSystemStatus, OtherSideSubSystemStatus, CLK, PrimarySide,
+OtherSideStatus, ThisSideStatus and ThisSideFailed.
+The Bus consists of ports: In, Out and CLK.
+The Sub Demux consists of ports: SubSystemStatus, SubAStatus and SubNStatus.
+The Side Mux consists of ports: Failed, Active, ThisSideFullyAvail, OtherSideFullyAvail and Status.
+The Side DeMux consists of ports: Failed, Active, ThisSideFullyAvail, OtherSideFullyAvail and Status.
+The Monitor consists of ports: ThisSideFullyAvail, OtherSideFullyAvail, ThisSideSubAStatus, ThisSideSubNStatus,
+OtherSideSubAStatus and OtherSideSubNStatus.
+The ActiveSideLogic consists of ports: ThisMonThisSideFullyAvail, ThisMonOtherSideFullyAvail, ThisSideActive,
+OtherMonOtherSideFullyAvail, OtherMonThisSideFullyAvail, OtherSideFailed, ThisSideFailed, riseManualSelection,
+OtherSideFailed and riseOtherSideActive.
 The Side1 instantiates a Side.
 The Side2 instantiates a Side.
 The Bus12 instantiates a Bus.
 The Bus21 instantiates a Bus.
-The Status exports an output.
-The Side1 is connected to Bus12 by the ports Status and In.
-The Bus12 is connected to Side2 by the ports Out and Side1SubSystemsStatus.
-The Side2 is connected to Bus21 by the ports Status and In.
-The Bus21 is connected to Side1 by the ports Out and Side2SubSystemStatus.
+The Active Side Logic instantiates an Active Side Logic.
+The Mon instantiates a Monitor.
+The Other instantiates a Side Demux.
+The Other instantiates a Sub Demux.
+The This instantiates a Side Mux.
+The This instantiates a Sub Demux.
+The Active Standby System is connected to Side1 by the ports Manual Selection and Manual Selection.
+The Active Standby System is connected to Side1 by the ports Side1SubSystemStatus and ThisSideSubSystemStatus.
+The Active Standby System is connected to Side1 by the ports Side1Failed and ThisSideFailed.
+The Active Standby System is connected to Side1 by the ports Primary Side and Primary Side.
+The Active Standby System is connected to Side2 by the ports Manual Selection and Manual Selection.
+The Active Standby System is connected to Side2 by the ports Side2SubSystemStatus and ThisSideSubSystemStatus.
+The Active Standby System is connected to Side2 by the ports Side2Failed and ThisSideFailed.
+The Active Standby System is connected to Side2 by the ports Primary Side and Primary Side.
+The Side1 is connected to Bus12 by the ports ThisSideStatus and In.
+The Bus12 is connected to Side2 by the ports Out and OtherSideSubSystemsStatus.
+The Side2 is connected to Bus21 by the ports ThisSideStatus and In.
+The Bus21 is connected to Side1 by the ports Out and OtherSideSubSystemStatus.
 
 

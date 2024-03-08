@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String inputFile = readInputFile("./src/data/FGS_NLP.txt");
+            String inputFile = readInputFile("./src/data/Coffeemaker_NLP.txt");
             String input = cleanText(inputFile);
 //            System.out.println(input);
             ANTLRInputStream inputStream = new ANTLRInputStream(input);
