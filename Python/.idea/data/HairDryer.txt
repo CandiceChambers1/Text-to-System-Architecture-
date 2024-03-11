@@ -1,4 +1,4 @@
-A hairdryer is consists of a user interface, a power unit, a propulsion unit, a heating unit and a environment.
+A hairdryer consists of a user interface, a power unit, a propulsion unit, a heating unit and a environment.
 The user interface consists of a handle and a body.
 The heating unit consists of a heater core, an insulating sleeve and a nozzle.
 The power unit consists of the mains cord, the power switch, the junction box, the heating wires and the motor wires.

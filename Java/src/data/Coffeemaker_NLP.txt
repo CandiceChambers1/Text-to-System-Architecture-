@@ -2,15 +2,13 @@ ELECTRIC_COFFEE_MAKER consists COFFEEMAKER , COOKING_UNIT , STORAGE_UNIT , HEATI
 HEATING_UNIT consists internal_components : WIRING , HEATER and HOT_PLATE.
 COFFEEMAKER consists internal_components : COOKING_UNIT and STORAGE_UNIT.
 COFFEEMAKER consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
-COOKING_UNIT consists internal_components : HYDRAULIC_UNIT , HEATING_UNIT and BREWING_UNIT.
-COOKING_UNIT consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
-STORAGE_UNIT consists internal_components : GLASSWARE and HANDLE.
-STORAGE_UNIT consists port_components : IN_M and OUT_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_E and IN_E.
 STORAGE_UNIT connected to COFFEEMAKER port_components OUT_M and OUT_M.
 COOKING_UNIT connected to STORAGE_UNIT port_components OUT_M and IN_M.
+COOKING_UNIT consists internal_components : HYDRAULIC_UNIT , HEATING_UNIT and BREWING_UNIT.
+COOKING_UNIT consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_E and IN_E.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
@@ -20,6 +18,8 @@ HEATING_UNIT connected to BREWING_UNIT port_components OUT_M and IN_M.
 BREWING_UNIT connected to COOKING_UNIT port_components OUT_M and OUT_M.
 BREWING_UNIT connected to HYDRAULIC_UNIT port_components OUT_M and IN_M.
 HYDRAULIC_UNIT connected to COOKING_UNIT port_components OUT_M and OUT_M.
+STORAGE_UNIT consists internal_components : GLASSWARE and HANDLE.
+STORAGE_UNIT consists port_components : IN_M and OUT_M.
 STORAGE_UNIT connected to GLASSWARE port_components IN_M and IN_LIQ1.
 GLASSWARE connected to STORAGE_UNIT port_components OUT_LIQ1 and OUT_M.
 STORAGE_UNIT connected to HANDLE port_components IN_M and IN_LIQ1.
