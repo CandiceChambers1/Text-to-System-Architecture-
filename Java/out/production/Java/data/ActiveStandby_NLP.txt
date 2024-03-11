@@ -1,0 +1,13 @@
+ASS consists ACTIVE_STANDBY_SYSTEM , SIDE and BUS.
+ACTIVE_STANDBY_SYSTEM consists internal_components : SIDE1 , SIDE2 , BUS12 and BUS21.
+SIDE consists port_components MANUAL_SELECTION , SIDE1SUBSYSTEMSTATUS , SIDE2SUBSYSTEMSTATUS , CLK , PRIMARYSIDE , STATUS and FAILED.
+BUS consists port_components IN , OUT and CLK.
+SIDE1 instantiates SIDE.
+SIDE2 instantiates SIDE.
+BUS12 instantiates BUS.
+BUS21 instantiates BUS.
+STATUS exports Boolean output.
+SIDE1 connected to BUS12 port_components STATUS and IN.
+BUS12 connected to SIDE2 port_components OUT and SIDE1SUBSYSTEMSTATUS.
+SIDE2 connected to BUS21 port_components STATUS and IN.
+BUS21 connected to SIDE1 port_components OUT and SIDE2SUBSYSTEMSTATUS.

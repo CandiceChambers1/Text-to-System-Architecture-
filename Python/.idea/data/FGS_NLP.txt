@@ -1,0 +1,17 @@
+FCS_SYSTEM consists FCS , FGS , and BUS.
+FCS consists internal_components : LEFT_SIDE , RIGHT_SIDE , LR and RL.
+FCS consists port_components : PRIMARY_SIDE and TRANSFER_SWITCH.
+FGS consists port_components : TRANSFER_SWITCH , PRIMARY_SIDE , PILOT_FLYING , BUS_IN and CLK.
+BUS consists port_components : LEFT , RIGHT and CLK.
+LEFT_SIDE instantiates SIDE.
+RIGHT_SIDE instantiates SIDE.
+LR instantiates BUS.
+RL instantiates BUS.
+LEFT_SIDE connected to LR port_components PILOT_FLYING and LEFT.
+RL connected to LEFT_FGS port_components LEFT and BUS_IN.
+LR connected to RIGHT_FGS port_components RIGHT and BUS_IN.
+RIGHT_FGS connected to RL port_components PILOT_FLYING and RIGHT.
+FCS connected to LEFT_SIDE port_components TRANSFER_SWITCH and TRANSFER_SWITCH.
+FCS connected to RIGHT_SIDE port_components TRANSFER_SWITCH and TRANSFER_SWITCH.
+FCS connected to RIGHT_SIDE port_components PRIMARY_SIDE and PRIMARY_SIDE.
+FCS connected to LEFT_SIDE port_components PRIMARY_SIDE and PRIMARY_SIDE.
