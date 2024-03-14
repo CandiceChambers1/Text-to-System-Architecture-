@@ -1,22 +1,58 @@
-A hairdryer consists of a user interface, a power unit, a propulsion unit, a heating unit and a environment.
-The user interface consists of a handle and a body.
-The heating unit consists of a heater core, an insulating sleeve and a nozzle.
-The power unit consists of the mains cord, the power switch, the junction box, the heating wires and the motor wires.
-The body consists of a barrel, an intake grill and a discharge opening.
-The nozzle consists of a conduit and a heater core.
-The propulsion unit consists of a motor and a fan.
-The mains cord imports electrical energy from the environment.
-The mains cord transfers electrical energy to the power switch.
-The power switch transfers electrical energy to the junction box.
-The junction box distributes electrical energy to the heater core and the motor wires.
-The fan is connected to the motor.
-The intake grill directs air to the fan.
-The motor transfers mechanical energy to the fan.
-The fan energizes air with mechanical energy to form flowing air.
-The fan steers flowing air to the heating unit.
-The heater core converts electrical energy to thermal energy.
-The heater core energizes flowing air with thermal energy to form hot flowing air.
-The conduit supplies hot flowing air to the discharge opening.
-The discharge opening exports the hot flowing air to the environment.
-The handle consists of a hand grip and a power button.
-The power button is connected to the power switch.
+A Handheld Hair Dryer consists of a  hairdryer, user interface, a power unit, a propulsion unit, a heating unit, a body,
+a handle, heating core a hand grip, an insulating sleeve, a cord, a power switch, a power button, a junction box,
+a heating wires, a motor wires, a barrel, an intake grill, a discharge opening, a conduit, a motor and a fan.
+The hairdryer consists of internal components: user interface, a power unit, a propulsion unit, a heating unit.
+The hairdryer consists of the ports: In_M, In_E, In_S, Out_E, Out_M and Out_S.
+The user interface consists of internal components: handle and a body.
+The user interface consists of the ports: In_S, In_M, In_M, Out_S and Out_M.
+The handle consists of internal componenets hand grip and power button.
+The handle consists of the ports: In_S and Out_S.
+The handle is connected to the power button by the ports: In_S and In_S.
+The user interface is connected to the handle by the ports: In_S and In_S.
+The handle is connected to the user interface by the ports: Out_S and Out_S.
+The power button is connected to the handle by the ports: Out_S and Out_S.
+The body consists of internal components: a barrel, an intake grill and a discharge opening.
+The body consists of the ports: In_M, In_M, Out_M and Out_E.
+The intake grill consists of the ports: In_M and Out_M.
+The discharge opening consists of the ports: In_M and Out_M.
+The user interface is connected to the body by the ports: In_M and In_M.
+The body is connected to the intake grill by the ports: In_M and In_M.
+The intake grill is connected to the user interface by the ports: Out_M and Out_M.
+The user interface is connected to the body by the ports: In_M and In_M.
+The body is connected to the discharge opening by the ports: In_M and In_M.
+The discharge openeing is connected to the ports: Out_M and Out_M.
+The propulsion unit consists of internal components: a motor and a fan.
+The propulsion unit consists of the ports: In_E, In_M, Out_E and Out_M.
+The fan consists of the ports: In_M, In_E and Out_E and Out_M.
+The motor consists of the ports: In_E and Out_E.
+The motor is connected to the fan by the ports: Out_E and In_E.
+The propulsion unit is connected to the motor by the ports: In_E and In_E.
+The propulsion unit is connected to the fan by the ports: In_M and In_M.
+The fan is connected to the propulsion unit by the ports: Out_M and Out_M.
+The power unit consists of internal components: a cord, a power switch, a junction box, a heating wires and a motor wires.
+The cord consists of the ports: In_E and Out_E.
+The power switch consists of the ports: In_E, In_E and Out_E.
+The junction box consists of the ports: In_E and Out_E.
+The heating wires consists of the ports: In_E and Out_E.
+The motor wires consists of the ports: In_E and Out_E.
+The power unit is connected to the cord by the ports: In_E and In_E.
+The power unit is connected to the power switch by the ports In_E and In_E.
+The cord is connected to the power switch by the ports: Out_E and In_E.
+The power switch is connected to the junction box by the ports: Out_E and In_E.
+The junction box is connected to the motor wires by the ports Out_E and In_E.
+The junction box is connected to the heating wires by the ports In_E and In_E.
+The motor wires is connected to the power unit by the ports: Out_E and Out_E.
+The heating wires is connected to the power unit by the ports: Out_E and Out_E.
+The heating unit consists of internal components: a heater core, an insulating sleeve and a nozzle.
+The heating unit consists of the ports: In_M, In_E and Out_M.
+The heater core consists of the ports: In_E, In_M, Out_M and Out_E.
+The insulating sleeve consist of In_E.
+The heater core is connected to the insulating sleeve by the ports: Out_E and In_E.
+The heater core is connected to the nozzle by the ports: Out_M and In_M.
+The heating unit is connected to the heater core by the ports: In_E and In_E.
+The nozzle is connected to the heating unit by the ports Out_M and Out_M.
+The nozzle consists of internal components: a conduit and a heater core.
+The nozzle consists of the ports: In_M and Out_M.
+The conduit consists of the ports: In_M and Out_M.
+The nozzle is connected to the conduit by the ports: In_M and In_M.
+The conduit is connected to the nozzle by the ports: Out_M and Out_M.
