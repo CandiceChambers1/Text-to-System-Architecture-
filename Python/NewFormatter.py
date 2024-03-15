@@ -519,7 +519,7 @@ def finalVersion(new_final_list):
 # ### Input Text
 
 # In[16]:
-# input_paragraph = open("FGS_Manual.txt ", "r")
+# input_paragraph = open("FGS_M.txt", "r")
 # input_paragraph = open("Coffeemaker_Manual.txt", "r")
 # input_paragraph = open(".idea/data/ActiveStandby_Manual.txt", "r")
 input_paragraph = open("data/VaccuumCleaner.txt", "r")
