@@ -96,6 +96,7 @@ public class CreateXmlFileDemo {
                         propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
                         String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
                         generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+                        System.out.println(b.name +"lll");
 
 
                     }
@@ -112,11 +113,11 @@ public class CreateXmlFileDemo {
             }
             if(b.getBlockName("ports")!= null){
                 if(propertyCounter ==1){
-//                    generateEndCollaboration(doc, namespaceContent);
+//                  generateEndCollaboration(doc, namespaceContent);
                     propertyCounter=0;
                 }
                 generatePort(doc,namespaceContent,b.name,b.XmiID, b.ownerXMI,xmiPackageID);
-//                System.out.println(b.name+" "+ blocks.getNameByXMI(b.ownerXMI));
+//              System.out.println(b.name+" "+ blocks.getNameByXMI(b.ownerXMI));
 
             }
         }
