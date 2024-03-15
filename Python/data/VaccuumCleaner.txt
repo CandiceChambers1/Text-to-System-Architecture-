@@ -1,4 +1,8 @@
-The electric handvac consists of a handvac, a nozzle assembly, a filter assembly, a nozzle body, a nozzle extender, a valve assembly, a brush assembly, a valve housing, a valve, a rocker, a bristles, a canister, a grill filter, a HEPA assembly, filter holder, a filter insert, a drive housing, a intake grill, a handle assembly, a suction assembly, a discharge assembly, a electrical assembly, a handle, a switch, a motor, a impeller, a discharge filter, a discharge grill, a battery, a charging unit, a control unit and a drive assembly
+The electric handvac consists of a handvac, a nozzle assembly, a filter assembly, a nozzle body, a nozzle extender,
+a valve assembly, a brush assembly, a valve housing, a valve, a rocker, a bristles, a canister, a grill filter,
+a HEPA assembly, filter holder, a filter insert, a drive housing, a intake grill, a handle assembly, a suction assembly,
+a discharge assembly, a electrical assembly, a handle, a switch, a motor, a impeller, a discharge filter,
+a discharge grill, a battery, a charging unit, a control unit and a drive assembly.
 The nozzle assembly consists internal components: a nozzle body, a nozzle extender, a valve assembly and a brush assembly.
 The valve assembly consists of internal components: a valve housing and a valve.
 The brush assembly consists of internal components: a rocker and the bristles.
@@ -13,7 +17,8 @@ The filter insert is connected to the filter holder.
 The grill filter is connected to the filter holder.
 The filter holder is connected to the canister.
 The nozzle body is connected to the canister.
-The drive assembly consists of internal components: a drive housing, the intake grill, the handle assembly, the suction assembly, the discharge assembly and the electrical assembly.
+The drive assembly consists of internal components: a drive housing, the intake grill, the handle assembly, the suction
+assembly, the discharge assembly and the electrical assembly.
 The handle assembly consists of internal components: the handle and the switch.
 The suction assembly consists of  internal components: the motor and the impeller.
 The discharge assembly consists of internal components: the discharge filter and the discharge grill.

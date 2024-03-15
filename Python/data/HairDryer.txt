@@ -1,5 +1,5 @@
 A Handheld Hair Dryer consists of a  hairdryer, user interface, a power unit, a propulsion unit, a heating unit, a body,
-a handle, heating core a hand grip, an insulating sleeve, a cord, a power switch, a power button, a junction box,
+a handle, a heating core, a hand grip, an insulating sleeve, a cord, a power switch, a power button, a junction box,
 a heating wires, a motor wires, a barrel, an intake grill, a discharge opening, a conduit, a motor and a fan.
 The hairdryer consists of internal components: user interface, a power unit, a propulsion unit, a heating unit.
 The hairdryer consists of the ports: In_M, In_E, In_S, Out_E, Out_M and Out_S.
