@@ -82,45 +82,59 @@ public class CreateXmlFileDemo {
         Element namespaceContent = generateStartContent(doc, content, xmiPackageID);
         generateTree();
         for (Block b : blocks.blocks) {
-            if(b.getBlockName("sub")!=null){
-                generateBlock(doc,namespaceContent, b.name,xmiPackageID,b.XmiID,sentences.getSentenceByStructNoun(b.name).isInternal);
+            if (b.getBlockName("sub") != null) {
+                generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.XmiID, sentences.getSentenceByStructNoun(b.name).isInternal);
             }
-            if(b.getBlockName("internal")!=null){
+        }
+        collaboration = generateStartCollaboration(doc, namespaceContent);
+        for (Block b : blocks.blocks) {
+            if (b.getBlockName("internal") != null ) {
                 // insert condition to find all IBDs!!
-                    if (propertyCounter == 0){
-                        collaboration = generateStartCollaboration(doc, namespaceContent);
-                        generateEndCollaboration(doc, collaboration);
-                        propertyCounter=1;
-
-                        String propertyTypeName = "";
-                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
-                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
-                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
-                        System.out.println(b.name +"lll");
+//                    if (propertyCounter == 0){
 
 
-                    }
-                    else {
-                        String propertyTypeName = "";
-                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
-                        System.out.println(b.name);
-                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                propertyCounter = 1;
 
-
-                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
-
-                    }
-            }
-            if(b.getBlockName("ports")!= null){
-                if(propertyCounter ==1){
-//                  generateEndCollaboration(doc, namespaceContent);
-                    propertyCounter=0;
+                String propertyTypeName = "";
+                Sentence s = sentences.getSentenceByStructNoun(b.name);
+                propertyTypeName = s.structNouns.get(0);
+                if(blocks.getBlockByName(propertyTypeName)!=null) {
+                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, b.XmiID);
+                    System.out.println(b.name);
                 }
+//                }else{
+//                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, );
+//                    System.out.println(b.name + "lll");
+//                }
+//                        generateEndCollaboration(doc, collaboration);
+
+//                    }
+//                    else {
+//                        String propertyTypeName = "";
+//                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
+//                        System.out.println(b.name);
+//                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+//
+//
+//                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+//
+//                    }
+            }
+        }
+        generateEndCollaboration(doc, collaboration);
+        for (Block b : blocks.blocks) {
+            if(b.getBlockName("ports")!= null){
+//                if(propertyCounter ==1){
+////                  generateEndCollaboration(doc, namespaceContent);
+//                    propertyCounter=0;
+//                }
                 generatePort(doc,namespaceContent,b.name,b.XmiID, b.ownerXMI,xmiPackageID);
 //              System.out.println(b.name+" "+ blocks.getNameByXMI(b.ownerXMI));
 
             }
         }
+
         for(Sentence s: sentences.sentences){
             if(s.sentenceType=="Instantiation"){
                 String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
@@ -511,6 +525,7 @@ public class CreateXmlFileDemo {
         generateDiagramBDD(doc,root,xmiID,xmiPackage);
         for(Sentence s: sentences.sentences) {
             if (s.isInternal) {
+
                 generateDiagramIBD(doc,root,s.structNoun, diagramID, xmiPackage, blocks.getBlockByName(s.structNoun).XmiID);
             }
         }
