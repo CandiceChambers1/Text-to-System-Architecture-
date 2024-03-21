@@ -37,6 +37,7 @@ HYDRAULIC_UNIT consists internal_components : STORAGE_TANK , HEATING_PIPE , INSU
 HYDRAULIC_UNIT consists port_components : IN_M , IN_E and OUT_M.
 HYDRAULIC_UNIT connected to STORAGE_TANK port_components IN_M and IN_LIQ1.
 HYDRAULIC_UNIT connected to HEATING_PIPE port_components IN_E and IN_E1.
+SHOWER_HEAD consists port_components : IN_LIQ1 , OUT_LIQ1.
 STORAGE_TANK connected to HEATING_PIPE port_components OUT_LIQ1 and IN_LIQ1.
 HEATING_PIPE connected to INSULATION port_components OUT_E1 and IN_E1.
 HEATING_PIPE connected to ELEVATOR_PIPE port_components OUT_LIQ2 and IN_LIQ1.

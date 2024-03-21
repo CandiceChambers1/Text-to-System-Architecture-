@@ -47,6 +47,7 @@ public class Sentences {
     }
     public Sentence getSentenceByTypePort(String type, String name, boolean isport){
         for(Sentence sentence: sentences){
+
             if(sentence.sentenceType.equals(type) && sentence.structNoun.equals(name) && sentence.isPort==isport){
                 return sentence;
             }

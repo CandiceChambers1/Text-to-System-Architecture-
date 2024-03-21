@@ -107,6 +107,14 @@ public class Blocks {
         }
         return null;
     }
+    public PortProperty getPortPropertyBlockXMI(String port, String XMI) {
+        for(PortProperty portProperty: portProperties){
+            if(portProperty.name.equals(port) && portProperty.XmiID.equals(XMI)){
+                return portProperty;
+            }
+        }
+        return null;
+    }
     public PortProperty getPortPropertyByOwnerXMI(String XMI) {
         for(PortProperty portProperty: portProperties){
             if(portProperty.ownerXMI.equals(XMI)){

@@ -30,7 +30,9 @@ public class CreateXmlFileDemo {
     public void generateTree(){
         for(Sentence s : sentences.sentences){
             if (Objects.equals(s.sentenceType, "Structural")) {
+
                 if (s.isInternal) {
+
 
                     for (String sub: s.structNouns) {
                         blocks.createBlockWithOwner("internal", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
@@ -40,6 +42,7 @@ public class CreateXmlFileDemo {
                 } else if (s.isPort) {
                     for (String sub: s.structNouns) {
                         blocks.createBlockWithOwner("ports", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
+
                     }
 
 
@@ -100,8 +103,8 @@ public class CreateXmlFileDemo {
                 propertyTypeName = s.structNouns.get(0);
                 if(blocks.getBlockByName(propertyTypeName)!=null) {
                     String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
-                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, b.XmiID);
-                    System.out.println(b.name);
+                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
+//                    System.out.println(b.name);
                 }
 //                }else{
 //                    generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, );
@@ -135,8 +138,9 @@ public class CreateXmlFileDemo {
             }
         }
 
+
         for(Sentence s: sentences.sentences){
-            if(s.sentenceType=="Instantiation"){
+            if(s.sentenceType == "Instantiation"){
                 String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
                 String noun = s.structNoun;
                 ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", nouns, true).structNouns;
@@ -147,9 +151,19 @@ public class CreateXmlFileDemo {
                     generatePortProperty(doc, namespaceContent, p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
                 }
             }
-//            if(s.sentenceType=="Functional"){
-//                System.err.println("Ignored Flow Properties");
-//            }
+            else if(s.isPort){
+                String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
+                String noun = s.structNoun;
+                ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", noun, true).structNouns;
+
+                for (String port: ports){
+                    String reuseProperty = blocks.getBlockByNameOwner(port, blocks.getXMI(noun)).XmiID;
+                    blocks.setPortProperty(port, generateXMI_ID("other"), blocks.getXMI(noun), generatePropertyTypeID(reuseProperty));
+                    PortProperty p = blocks.getPortProperty(port,blocks.getXMI(noun));
+                    generatePortProperty(doc, namespaceContent, p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
+            }
+                }
+
 
         }
         for(Sentence s: sentences.sentences){
@@ -525,7 +539,6 @@ public class CreateXmlFileDemo {
         generateDiagramBDD(doc,root,xmiID,xmiPackage);
         for(Sentence s: sentences.sentences) {
             if (s.isInternal) {
-
                 generateDiagramIBD(doc,root,s.structNoun, diagramID, xmiPackage, blocks.getBlockByName(s.structNoun).XmiID);
             }
         }
@@ -602,7 +615,8 @@ public class CreateXmlFileDemo {
     }
 
     public void generateDiagramIBD(Document doc, Element root, String noun, String xmiId, String xmiPackage,String parentXmi){
-        String nounsIndv[] = new String[0];
+        ArrayList<String> nounsIndv = null;
+
 
         Element diagram = generateElement(doc,root,"UML:Diagram","");
         generateAttribute(doc,diagram,"name",noun);
@@ -635,7 +649,7 @@ public class CreateXmlFileDemo {
 
         Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
 
-        if (sentences.getSentenceByStructNoun(noun).isPort) {
+        if (sentences.getSentenceByTypePort("Structural",noun,true).isPort) {
             ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
             for (String port : BDDports) {
                 Element tag_6 = generateElement(doc,diagramElement,"UML:DiagramElement","");
@@ -645,23 +659,33 @@ public class CreateXmlFileDemo {
         }
         for(Sentence s: sentences.sentences){
             if(s.isInternal && s.structNoun.equals(noun)){
-                String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
-                nounsIndv = nouns.split(", ");
+                nounsIndv = s.structNouns;
+
             }
+
+
         }
 
         int bLeft=60, bTop=60, bRight=160, bBottom=160;
+//        System.out.println(nounsIndv);
         for(String nounIndv: nounsIndv) {
+            System.out.println(nounIndv);
             int pLeft=bLeft, pTop=bTop, pRight=bRight-55, pBottom=bBottom-45;
             Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
             generateAttribute(doc,tag_7,"geometry", "Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";");
             generateAttribute(doc,tag_7,"subject",blocks.getBlockByName(nounIndv).XmiID);
 //            output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
-//                System.err.println(nounIndv);
-            ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(nounIndv).structNouns.get(0), true).structNouns;
+            ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(nounIndv).structNoun, true).structNouns;
+            System.out.println(ports + "lll");
             for (String port: ports){
-//                    System.out.println(port);
-                PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID);
+                PortProperty p;
+                if(blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID) != null) {
+                    p = blocks.getPortProperty(port, blocks.getBlockByName(nounIndv).XmiID);
+                }
+                else {
+                    p = blocks.getPortPropertyBlockXMI(port, blocks.getBlockByName(nounIndv).XmiID);
+
+                }
                 Element tag_8 = generateElement(doc,diagramElement,"UML:DiagramElement","");
                 generateAttribute(doc,tag_8,"geometry", "Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";");
                 generateAttribute(doc,tag_8,"subject",p.XmiID);
