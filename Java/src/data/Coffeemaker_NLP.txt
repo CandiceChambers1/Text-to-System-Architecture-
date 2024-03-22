@@ -38,7 +38,7 @@ COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_E and IN_E.
 STORAGE_UNIT connected to COFFEEMAKER port_components OUT_M and OUT_M.
 COOKING_UNIT connected to STORAGE_UNIT port_components OUT_M and IN_M.
-COOKING_UNIT connected to COFFEEMAKER port_components Out_M and Out_M.
+COOKING_UNIT connected to COFFEEMAKER port_components OUT_M and OUT_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_E and IN_E.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
