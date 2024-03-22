@@ -1,5 +1,4 @@
 ELECTRIC_COFFEE_MAKER consists COFFEEMAKER , COOKING_UNIT , STORAGE_UNIT , HEATING_UNIT , HYDRAULIC_UNIT , BREWING_UNIT , WIRING , PLUG , CORD , HEATER , COIL , CASING , SHOWER_HEAD , HEATING_PIPE , ELEVATOR_PIPE , BASKET_ASSEMBLY , BASKET , VALVE , FILTER , GLASSWARE , SWITCH , INSULATION , HOT_PLATE , STORAGE_TANK and HANDLE.
-HEATING_UNIT consists internal_components : WIRING , HEATER and HOT_PLATE.
 COFFEEMAKER consists internal_components : COOKING_UNIT and STORAGE_UNIT.
 COFFEEMAKER consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
@@ -24,6 +23,7 @@ STORAGE_UNIT connected to GLASSWARE port_components IN_M and IN_LIQ1.
 GLASSWARE connected to STORAGE_UNIT port_components OUT_LIQ1 and OUT_M.
 STORAGE_UNIT connected to HANDLE port_components IN_M and IN_LIQ1.
 HANDLE connected to STORAGE_UNIT port_components OUT_LIQ1 and OUT_M.
+HEATING_UNIT consists internal_components : WIRING , HEATER and HOT_PLATE.
 HEATING_UNIT consists port_components : IN_E , IN_M , IN_M , OUT_E , OUT_M and OUT_M.
 HEATING_UNIT connected to WIRING port_components IN_E and IN_E.
 HEATING_UNIT connected to HEATER port_components IN_M and IN_M.
@@ -38,6 +38,7 @@ HYDRAULIC_UNIT consists port_components : IN_M , IN_E and OUT_M.
 HYDRAULIC_UNIT connected to STORAGE_TANK port_components IN_M and IN_LIQ1.
 HYDRAULIC_UNIT connected to HEATING_PIPE port_components IN_E and IN_E1.
 STORAGE_TANK connected to HEATING_PIPE port_components OUT_LIQ1 and IN_LIQ1.
+SHOWER_HEAD consists port_components : IN_LIQ1 and OUT_LIQ1.
 HEATING_PIPE connected to INSULATION port_components OUT_E1 and IN_E1.
 HEATING_PIPE connected to ELEVATOR_PIPE port_components OUT_LIQ2 and IN_LIQ1.
 ELEVATOR_PIPE connected to SHOWER_HEAD port_components OUT_LIQ1 and IN_LIQ1.
@@ -65,7 +66,7 @@ WIRING connected to PLUG port_components IN_E and IN_E1.
 SWITCH connected to WIRING port_components OUT_E1 and OUT_E.
 PLUG connected to CORD port_components OUT_E1 and IN_E1.
 CORD connected to SWITCH port_components IN_E1 and OUT_E1.
-BASKET_ASSEMBLY consists BASKET and VALVE.
+BASKET_ASSEMBLY consists internal_components : BASKET and VALVE.
 BASKET_ASSEMBLY consists port_components : IN_M , IN_M and OUT_M.
 BASKET_ASSEMBLY connected to BASKET port_components IN_M and IN_S1.
 BASKET_ASSEMBLY connected to BASKET port_components IN_M and IN_LIQ1.

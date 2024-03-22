@@ -71,6 +71,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         String sentence = ctx.getText();
         boolean internal = false, port=false;
         if(sentence.contains("internal_components")) {
+//            System.out.println(sentence);
             internal = true;
         } if (sentence.contains("port_components")) {
             port=true;
@@ -78,6 +79,7 @@ public class Visitor <Object> extends AbstractParseTreeVisitor<Object> implement
         String structN = ctx.Struct_noun().getText();
         sentences.createNewSentencePortInternal("Structural", structN, port, internal);
         currentSentence = sentences.getSentenceByTypePort("Structural",structN, port);
+//        System.err.println(structN);
         currentSentence.isInternal = internal;
         currentSentence.isPort = port;
         currentSentence.isInstantiation = false;
