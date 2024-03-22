@@ -1,6 +1,4 @@
 ELECTRIC_COFFEE_MAKER consists COFFEEMAKER , COOKING_UNIT , STORAGE_UNIT , HEATING_UNIT , HYDRAULIC_UNIT , BREWING_UNIT , WIRING , PLUG , CORD , HEATER , COIL , CASING , SHOWER_HEAD , HEATING_PIPE , ELEVATOR_PIPE , BASKET_ASSEMBLY , BASKET , VALVE , FILTER , GLASSWARE , SWITCH , INSULATION , HOT_PLATE , STORAGE_TANK and HANDLE.
-
-"Structural Sentences"
 COFFEEMAKER consists internal_components : COOKING_UNIT and STORAGE_UNIT.
 COFFEEMAKER consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
 COOKING_UNIT consists internal_components : HYDRAULIC_UNIT , HEATING_UNIT and BREWING_UNIT.
@@ -35,8 +33,6 @@ BASKET_ASSEMBLY consists port_components : IN_M , IN_M and OUT_M.
 VALVE consists port_components : IN_LIQ1 and OUT_LIQ1.
 BASKET consists port_components : IN_S1 , IN_LIQ1 and OUT_LIQ2.
 FILTER consists port_components : IN_S1 , IN_LIQ1 , OUT_S2 and OUT_LIQ2.
-
-"Connection Sentences"
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_E and IN_E.
