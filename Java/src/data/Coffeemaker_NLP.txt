@@ -1,14 +1,48 @@
 ELECTRIC_COFFEE_MAKER consists COFFEEMAKER , COOKING_UNIT , STORAGE_UNIT , HEATING_UNIT , HYDRAULIC_UNIT , BREWING_UNIT , WIRING , PLUG , CORD , HEATER , COIL , CASING , SHOWER_HEAD , HEATING_PIPE , ELEVATOR_PIPE , BASKET_ASSEMBLY , BASKET , VALVE , FILTER , GLASSWARE , SWITCH , INSULATION , HOT_PLATE , STORAGE_TANK and HANDLE.
-HEATING_UNIT consists internal_components : WIRING , HEATER and HOT_PLATE.
+
+"Structural Sentences"
 COFFEEMAKER consists internal_components : COOKING_UNIT and STORAGE_UNIT.
 COFFEEMAKER consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
+COOKING_UNIT consists internal_components : HYDRAULIC_UNIT , HEATING_UNIT and BREWING_UNIT.
+COOKING_UNIT consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
+STORAGE_UNIT consists internal_components : GLASSWARE and HANDLE.
+STORAGE_UNIT consists port_components : IN_M and OUT_M.
+GLASSWARE consists port_components : IN_LIQ1 and OUT_LIQ1.
+HANDLE consists port_components : IN_LIQ1 and OUT_LIQ1.
+HEATING_UNIT consists internal_components : WIRING , HEATER and HOT_PLATE.
+HEATING_UNIT consists port_components : IN_E , IN_M , IN_M , OUT_E , OUT_M and OUT_M.
+WIRING consists internal_components : PLUG , CORD and SWITCH.
+WIRING consists port_components : IN_E and OUT_E.
+PLUG consists port_components : IN_E1 and OUT_E1.
+CORD consists port_components : IN_E1 and OUT_E1.
+SWITCH consists port_components : IN_E1 and OUT_E1.
+HEATER consists internal_components : COIL , CASING and INSULATION.
+HEATER consists port_components : IN_E , IN_M , OUT_E and OUT_M.
+COIL consists port_components : IN_E1 and OUT_E1.
+CASING consists port_components : IN_E1 , IN_LIQ1 , OUT_E1 and OUT_LIQ2.
+INSULATION consists port_components : IN_E1.
+HOT_PLATE consists port_components : IN_E1 , IN_LIQ1 and OUT_LIQ2.
+HYDRAULIC_UNIT consists internal_components : STORAGE_TANK , HEATING_PIPE , INSULATION , ELEVATOR_PIPE and SHOWER_HEAD.
+HYDRAULIC_UNIT consists port_components : IN_M , IN_E and OUT_M.
+HEATING_PIPE consists port_components : IN_E1 , IN_LIQ1 , OUT_E1 and OUT_LIQ2.
+SHOWER_HEAD consists port_components : IN_LIQ1 and OUT_LIQ1.
+ELEVATOR_PIPE consists port_components : IN_LIQ1 and OUT_LIQ1.
+STORAGE_TANK consists port_components : IN_LIQ1 and OUT_LIQ1.
+BREWING_UNIT consists internal_components : BASKET_ASSEMBLY , BASKET and FILTER.
+BREWING_UNIT consists port_components : IN_M , IN_M , OUT_M and OUT_M.
+BASKET_ASSEMBLY consists internal_components : BASKET and VALVE.
+BASKET_ASSEMBLY consists port_components : IN_M , IN_M and OUT_M.
+VALVE consists port_components : IN_LIQ1 and OUT_LIQ1.
+BASKET consists port_components : IN_S1 , IN_LIQ1 and OUT_LIQ2.
+FILTER consists port_components : IN_S1 , IN_LIQ1 , OUT_S2 and OUT_LIQ2.
+
+"Connection Sentences"
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M and IN_M.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_E and IN_E.
 STORAGE_UNIT connected to COFFEEMAKER port_components OUT_M and OUT_M.
 COOKING_UNIT connected to STORAGE_UNIT port_components OUT_M and IN_M.
-COOKING_UNIT consists internal_components : HYDRAULIC_UNIT , HEATING_UNIT and BREWING_UNIT.
-COOKING_UNIT consists port_components : IN_M , IN_E , IN_M , OUT_M and OUT_M.
+COOKING_UNIT connected to COFFEEMAKER port_components Out_M and Out_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_E and IN_E.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
 COOKING_UNIT connected to HEATING_UNIT port_components IN_M and IN_M.
@@ -18,13 +52,10 @@ HEATING_UNIT connected to BREWING_UNIT port_components OUT_M and IN_M.
 BREWING_UNIT connected to COOKING_UNIT port_components OUT_M and OUT_M.
 BREWING_UNIT connected to HYDRAULIC_UNIT port_components OUT_M and IN_M.
 HYDRAULIC_UNIT connected to COOKING_UNIT port_components OUT_M and OUT_M.
-STORAGE_UNIT consists internal_components : GLASSWARE and HANDLE.
-STORAGE_UNIT consists port_components : IN_M and OUT_M.
 STORAGE_UNIT connected to GLASSWARE port_components IN_M and IN_LIQ1.
 GLASSWARE connected to STORAGE_UNIT port_components OUT_LIQ1 and OUT_M.
 STORAGE_UNIT connected to HANDLE port_components IN_M and IN_LIQ1.
 HANDLE connected to STORAGE_UNIT port_components OUT_LIQ1 and OUT_M.
-HEATING_UNIT consists port_components : IN_E , IN_M , IN_M , OUT_E , OUT_M and OUT_M.
 HEATING_UNIT connected to WIRING port_components IN_E and IN_E.
 HEATING_UNIT connected to HEATER port_components IN_M and IN_M.
 WIRING connected to HEATER port_components OUT_E and IN_E.
@@ -33,8 +64,6 @@ HEATER connected to HOT_PLATE port_components OUT_E and IN_E1.
 HEATER connected to HEATING_UNIT port_components OUT_M and OUT_M.
 HEATER connected to HEATING_UNIT port_components OUT_E and OUT_E.
 HOT_PLATE connected to HEATING_UNIT port_components OUT_LIQ2 and OUT_M.
-HYDRAULIC_UNIT consists internal_components : STORAGE_TANK , HEATING_PIPE , INSULATION , ELEVATOR_PIPE and SHOWER_HEAD.
-HYDRAULIC_UNIT consists port_components : IN_M , IN_E and OUT_M.
 HYDRAULIC_UNIT connected to STORAGE_TANK port_components IN_M and IN_LIQ1.
 HYDRAULIC_UNIT connected to HEATING_PIPE port_components IN_E and IN_E1.
 SHOWER_HEAD consists port_components : IN_LIQ1 , OUT_LIQ1.
@@ -43,47 +72,24 @@ HEATING_PIPE connected to INSULATION port_components OUT_E1 and IN_E1.
 HEATING_PIPE connected to ELEVATOR_PIPE port_components OUT_LIQ2 and IN_LIQ1.
 ELEVATOR_PIPE connected to SHOWER_HEAD port_components OUT_LIQ1 and IN_LIQ1.
 SHOWER_HEAD connected to HYDRAULIC_UNIT port_components OUT_LIQ1 and OUT_M.
-BREWING_UNIT consists internal_components : BASKET_ASSEMBLY , BASKET and FILTER.
-BREWING_UNIT consists port_components : IN_M , IN_M , OUT_M and OUT_M.
 BREWING_UNIT connected to BASKET_ASSEMBLY port_components IN_M and IN_M.
 BREWING_UNIT connected to BASKET_ASSEMBLY port_components IN_M and IN_M.
 BREWING_UNIT connected to FILTER port_components IN_M and IN_S1.
 BREWING_UNIT connected to FILTER port_components IN_M and IN_LIQ1.
-BASKET_UNIT connected to BREWING_UNIT port_components OUT_M and OUT_M.
+BASKET_ASSEMBLY connected to BREWING_UNIT port_components OUT_M and OUT_M.
 FILTER connected to BREWING_UNIT port_components OUT_S2 and OUT_M.
 FILTER connected to BREWING_UNIT port_components OUT_LIQ2 and OUT_M.
-HEATER consists internal_components : COIL , CASING and INSULATION.
-HEATER consists port_components : IN_E , IN_M , OUT_E and OUT_M.
 HEATER connected to COIL port_components IN_E and IN_E1.
 HEATER connected to CASING port_components IN_M and IN_LIQ1.
 COIL connected to CASING port_components OUT_E2 and IN_E1.
 COIL connected to HEATER port_components OUT_E2 and OUT_E.
 CASING connected to INSULATION port_components OUT_E1 and IN_E1.
 CASING connected to HEATER port_components OUT_LIQ2 and OUT_M.
-WIRING consists internal_components : PLUG , CORD and SWITCH.
-WIRING consists port_components : IN_E and OUT_E.
 WIRING connected to PLUG port_components IN_E and IN_E1.
-SWITCH connected to WIRING port_components OUT_E1 and OUT_E.
 PLUG connected to CORD port_components OUT_E1 and IN_E1.
-CORD connected to SWITCH port_components IN_E1 and OUT_E1.
-BASKET_ASSEMBLY consists BASKET and VALVE.
-BASKET_ASSEMBLY consists port_components : IN_M , IN_M and OUT_M.
+CORD connected to SWITCH port_components OUT_E1 and IN_E1.
+SWITCH connected to WIRING port_components OUT_E1 and OUT_E.
 BASKET_ASSEMBLY connected to BASKET port_components IN_M and IN_S1.
 BASKET_ASSEMBLY connected to BASKET port_components IN_M and IN_LIQ1.
 BASKET connected to VALVE port_components OUT_LIQ2 and IN_LIQ1.
 VALVE connected to BASKET_ASSEMBLY port_components OUT_LIQ1 and OUT_M.
-GLASSWARE consists port_components : IN_LIQ1 and OUT_LIQ1.
-HANDLE consists port_components : IN_LIQ1 and OUT_LIQ1.
-FILTER consists port_components : IN_S1 , IN_LIQ1 , OUT_S2 and OUT_LIQ2.
-VALVE consists port_components : IN_LIQ1 and OUT_LIQ1.
-BASKET consists port_components : IN_S1 , IN_LIQ1 and OUT_LIQ2.
-HEATING_PIPE consists port_components : IN_E1 , IN_LIQ1 , OUT_E1 and OUT_LIQ2.
-ELEVATOR_PIPE consists port_components : IN_LIQ1 and OUT_LIQ1.
-STORAGE_TANK consists port_components : IN_LIQ1 and OUT_LIQ1.
-PLUG consists port_components : IN_E1 and OUT_E1.
-CORD consists port_components : IN_E1 and OUT_E1.
-SWITCH consists port_components : IN_E1 and OUT_E1.
-COIL consists port_components : IN_E1 and OUT_E1.
-CASING consists port_components : IN_E1 , IN_LIQ1 , OUT_E1 and OUT_LIQ2.
-INSULATION consists port_components : IN_E1.
-HOT_PLATE consists port_components : IN_E1 , IN_LIQ1 and OUT_LIQ2.

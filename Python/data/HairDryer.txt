@@ -5,7 +5,7 @@ The hairdryer consists of internal components: user interface, a power unit, a p
 The hairdryer consists of the ports: In_M, In_E, In_S, Out_E, Out_M and Out_S.
 The user interface consists of internal components: handle and a body.
 The user interface consists of the ports: In_S, In_M, In_M, Out_S and Out_M.
-The handle consists of internal componenets hand grip and power button.
+The handle consists of internal componenets: hand grip and power button.
 The handle consists of the ports: In_S and Out_S.
 The handle is connected to the power button by the ports: In_S and In_S.
 The user interface is connected to the handle by the ports: In_S and In_S.
@@ -20,7 +20,7 @@ The body is connected to the intake grill by the ports: In_M and In_M.
 The intake grill is connected to the user interface by the ports: Out_M and Out_M.
 The user interface is connected to the body by the ports: In_M and In_M.
 The body is connected to the discharge opening by the ports: In_M and In_M.
-The discharge openeing is connected to the ports: Out_M and Out_M.
+The discharge opening is connected to the ports: Out_M and Out_M.
 The propulsion unit consists of internal components: a motor and a fan.
 The propulsion unit consists of the ports: In_E, In_M, Out_E and Out_M.
 The fan consists of the ports: In_M, In_E and Out_E and Out_M.

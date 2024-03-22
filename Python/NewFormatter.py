@@ -520,9 +520,9 @@ def finalVersion(new_final_list):
 
 # In[16]:
 # input_paragraph = open("FGS_M.txt", "r")
-# input_paragraph = open("Coffeemaker_Manual.txt", "r")
+input_paragraph = open("/home/candice/IdeaProjects/NLP-to-System-Architecture-/Python/data/Coffeemaker_Manual.txt", "r")
 # input_paragraph = open(".idea/data/ActiveStandby_Manual.txt", "r")
-input_paragraph = open("data/VaccuumCleaner.txt", "r")
+# input_paragraph = open("data/VaccuumCleaner.txt", "r")
 # ## Driver Code
 
 # In[17]:
@@ -558,7 +558,7 @@ if __name__ == "__main__":
     new_final_list = convert_if_in_NLTK(new_para_latest)
     send_to_grammar = finalVersion(new_final_list)
 
-    file = open("data/VaccuumCleaner_NLP.txt", "w")
+    file = open("data/Coffeemaker_NLP.txt", "w")
 
     # file = open("FGS_NLP.txt", "w")
     file.write(send_to_grammar)

@@ -1,7 +1,6 @@
 The electric coffee maker consists of a coffeemaker, a cooking unit, storage unit, a heating unit, hydraulic unit, brewing unit, wiring, plug,
 cord, heater, coil, casing, shower head, heating pipe, elevator pipe, basket assembly, basket, valve, filter, glassware,
 switch, insulation, hot plate, storage tank and a handle.
-The heating unit consists of internal components: a wiring, a heater and a hot plate.
 The coffeemaker consists of internal components: a cooking unit and a storage unit.
 The coffeemaker consists of ports: In_M, In_E, In_M, Out_M and Out_M.
 The coffeemaker is connected to the cooking unit by the ports In_M and In_M.
@@ -26,6 +25,7 @@ The storage unit is connected to the glassware by the ports In_M and In_Liq1.
 The glassware is connected to the storage unit by the ports Out_Liq1 and Out_M.
 The storage unit is connected to the handle by the ports In_M and In_Liq1.
 The handle is connected to the storage unit by the ports Out_Liq1 and Out_M.
+The heating unit consists of internal components: a wiring, a heater and a hot plate.
 The heating unit consists of ports: In_E, In_M, In_M, Out_E, Out_M and Out_M.
 The heating unit is connected to the wiring by the ports In_E and In_E.
 The heating unit is connected to the heater by the ports In_M and In_M.
@@ -50,7 +50,7 @@ The brewing unit is connected to the basket assembly by the ports In_M and In_M.
 The brewing unit is connected to the basket assembly by the ports In_M and In_M.
 The brewing unit is connected to the filter by the ports In_M and In_S1.
 The brewing unit is connected to the filter by the ports In_M and In_Liq1.
-The basket unit is connected to the brewing unit by the ports Out_M and Out M.
+The basket unit is connected to the brewing unit by the ports: Out_M and Out M.
 The filter is connected to the brewing unit by the ports Out_S2 and Out_M.
 The filter is connected to the brewing unit by the ports Out_Liq2 and Out_M.
 The heater consists of internal components: a coil, casing and an insulation.
@@ -67,7 +67,7 @@ The wiring is connected to the plug by the ports In_E and In_E1.
 The switch is connected to the wiring by the ports Out_E1 and Out_E.
 The plug is connected to the cord by the ports Out_E1 and In_E1.
 The cord is connected to the switch by the ports In_E1 and Out_E1.
-The basket assembly consists of a basket and a valve.
+The basket assembly consists of internal components: a basket and a valve.
 The basket assembly consists of ports: In_M, In_M and Out_M.
 The basket assembly is connected to the basket by the ports In_M and In_S1.
 The basket assembly is connected to the basket by the ports In_M and In_Liq1.

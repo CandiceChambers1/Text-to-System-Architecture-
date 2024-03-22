@@ -1,10 +1,14 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Block {
+    ArrayList<Block> blocks;
     String type;
     String name;
     String XmiID;
     String ownerXMI;
+    Blocks block = new Blocks();
     public Block(String type, String name, String XmiID){
         this.type=type;
         this.name=name;
@@ -18,10 +22,9 @@ public class Block {
     }
 
     public String getBlockName(String type){
-            if(this.type.equals(type)){
+        if(this.type.equals(type)){
                 return name;
-            }
+        }
         return null;
     }
-
 }
