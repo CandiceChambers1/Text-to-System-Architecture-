@@ -1,5 +1,4 @@
 package main;
-
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -20,12 +19,9 @@ public class CreateXmlFileDemo {
     String modelxmiID;
     String xmiRootID;
     String diagramID;
-    Blocks blocks = new Blocks();
+    SysMLComponents components = new SysMLComponents();
     public CreateXmlFileDemo(Sentences sentences){
         this.sentences = sentences;
-    }
-    public String getRoot(){
-        return blocks.getBlockByType("root").name;
     }
     public void generateTree(){
         for(Sentence s : sentences.sentences){
@@ -34,24 +30,25 @@ public class CreateXmlFileDemo {
                 if (s.isInternal) {
 
 
-                    for (String sub: s.structNouns) {
-                        blocks.createBlockWithOwner("internal", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
+                    for (String name: s.structNouns) {
+
+                        components.createProperties(name, generateXMI_ID("other"), components.getXMI(s.structNoun), generatePropertyTypeID(components.getXMI(name)));
                     }
 
 
                 } else if (s.isPort) {
-                    for (String sub: s.structNouns) {
-                        blocks.createBlockWithOwner("ports", sub, generateXMI_ID("other"), blocks.getXMI(s.structNoun));
+                    for (String name: s.structNouns) {
+                        components.createPorts(name, generateXMI_ID("other"), components.getXMI(s.structNoun));
 
                     }
 
 
                 } else {
-//                    System.out.println(s.structNoun);
-                    blocks.createBlock("root", s.structNoun, generateXMI_ID("other"));
-                    for (String sub: s.structNouns) {
-                        blocks.createBlock("sub", sub, generateXMI_ID("other"));
+                    for (String name: s.structNouns) {
+                        components.createBlock(name, generateXMI_ID("other"));
+                        System.out.println("Owner: "+name);
                     }
+
                 }
             }
         }
@@ -62,35 +59,41 @@ public class CreateXmlFileDemo {
             Looping through the sentences and call the appropriate functions
          */
 
-        String xmiPackageID, xmiOwnerID;
+        // Variable Initializations
+        String xmiOwnerID;
         int propertyCounter =0;
-        xmiPackageID = generateXMI_ID("package");
-//        System.out.println(xmiPackageID);
 
+        // Generates the package XMI ID
+        String xmiPackageID = generateXMI_ID("package");
 
+        // Creating the XML document
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.newDocument();
 
-        // root element
+        // Root element Initialized
         Element rootElement = doc.createElement("XMI");
         doc.appendChild(rootElement);
         generateAttribute(doc, rootElement, "xmi.version", "1.1");
         generateAttribute(doc,rootElement,"xmlns:UML","omg.org/UML1.3");
 
-        Element collaboration = null;
-//        String output = "<XMI xmi.version=\"1.1\" xmlns:UML=\"omg.org/UML1.3\">\n";
+
+
+        // Generate the Header and the namespaceContent
         generateHeader(doc, rootElement);
         Element content = generateElement(doc,rootElement,"XMI.content", "");
         Element namespaceContent = generateStartContent(doc, content, xmiPackageID);
+
+        //Generate the Tree based on the input sentences
         generateTree();
-        for (Block b : blocks.blocks) {
+
+        for (Block b : components.blocks) {
             if (b.getBlockName("sub") != null) {
                 generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.XmiID, sentences.getSentenceByStructNoun(b.name).isInternal);
             }
         }
-        collaboration = generateStartCollaboration(doc, namespaceContent);
-        for (Block b : blocks.blocks) {
+        Element collaboration = generateStartCollaboration(doc, namespaceContent);
+        for (Block b : components.blocks) {
             if (b.getBlockName("internal") != null ) {
                 // insert condition to find all IBDs!!
 //                    if (propertyCounter == 0){
@@ -101,8 +104,8 @@ public class CreateXmlFileDemo {
                 String propertyTypeName = "";
                 Sentence s = sentences.getSentenceByStructNoun(b.name);
                 propertyTypeName = s.structNouns.get(0);
-                if(blocks.getBlockByName(propertyTypeName)!=null) {
-                    String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+                if(components.getBlockByName(propertyTypeName)!=null) {
+                    String propertyTypeId = generatePropertyTypeID(components.getBlockByName(propertyTypeName).XmiID);
                     generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
 //                    System.out.println(b.name);
                 }
@@ -117,7 +120,7 @@ public class CreateXmlFileDemo {
 //                        String propertyTypeName = "";
 //                        propertyTypeName = sentences.getSentenceByStructNoun(b.name).structNouns.get(0);
 //                        System.out.println(b.name);
-//                        String propertyTypeId = generatePropertyTypeID(blocks.getBlockByName(propertyTypeName).XmiID);
+//                        String propertyTypeId = generatePropertyTypeID(components.getBlockByName(propertyTypeName).XmiID);
 //
 //
 //                        generateClassifier_Property(doc, collaboration, b.name, b.XmiID, xmiPackageID, b.ownerXMI, propertyTypeId);
@@ -126,28 +129,28 @@ public class CreateXmlFileDemo {
             }
         }
         generateEndCollaboration(doc, collaboration);
-        for (Block b : blocks.blocks) {
+        for (Block b : components.blocks) {
             if(b.getBlockName("ports")!= null){
 //                if(propertyCounter ==1){
 ////                  generateEndCollaboration(doc, namespaceContent);
 //                    propertyCounter=0;
 //                }
                 generatePort(doc,namespaceContent,b.name,b.XmiID, b.ownerXMI,xmiPackageID);
-//              System.out.println(b.name+" "+ blocks.getNameByXMI(b.ownerXMI));
+//              System.out.println(b.name+" "+ components.getNameByXMI(b.ownerXMI));
 
             }
         }
 
 
         for(Sentence s: sentences.sentences){
-            if(s.sentenceType == "Instantiation"){
+            if(Objects.equals(s.sentenceType, "Instantiation")){
                 String nouns = s.structNouns.toString().replace("[", "").replace("]", "");
                 String noun = s.structNoun;
                 ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", nouns, true).structNouns;
                 for (String port: ports){
-                    String reuseProperty = blocks.getBlockByNameOwner(port, blocks.getXMI(nouns)).XmiID;
-                    blocks.setPortProperty(port, generateXMI_ID("other"), blocks.getBlockByName(noun).XmiID, generatePropertyTypeID(reuseProperty));
-                    PortProperty p = blocks.getPortProperty(port,blocks.getBlockByName(noun).XmiID);
+                    String reuseProperty = components.getBlockByNameOwner(port, components.getXMI(nouns)).XmiID;
+                    components.setPortProperty(port, generateXMI_ID("other"), components.getBlockByName(noun).XmiID, generatePropertyTypeID(reuseProperty));
+                    PortProperty p = components.getPortProperty(port, components.getBlockByName(noun).XmiID);
                     generatePortProperty(doc, namespaceContent, p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
                 }
             }
@@ -157,9 +160,9 @@ public class CreateXmlFileDemo {
                 ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", noun, true).structNouns;
 
                 for (String port: ports){
-                    String reuseProperty = blocks.getBlockByNameOwner(port, blocks.getXMI(noun)).XmiID;
-                    blocks.setPortProperty(port, generateXMI_ID("other"), blocks.getXMI(noun), generatePropertyTypeID(reuseProperty));
-                    PortProperty p = blocks.getPortProperty(port,blocks.getXMI(noun));
+                    String reuseProperty = components.getBlockByNameOwner(port, components.getXMI(noun)).XmiID;
+                    components.setPortProperty(port, generateXMI_ID("other"), components.getXMI(noun), generatePropertyTypeID(reuseProperty));
+                    PortProperty p = components.getPortProperty(port, components.getXMI(noun));
                     generatePortProperty(doc, namespaceContent, p.name,p.XmiID,p.ownerXMI,xmiPackageID,p.reuseProperty);
             }
                 }
@@ -167,7 +170,7 @@ public class CreateXmlFileDemo {
 
         }
         for(Sentence s: sentences.sentences){
-            if(s.sentenceType=="Connection"){
+            if(Objects.equals(s.sentenceType, "Connection")){
                 String src,dest;
                 ArrayList<String> nouns = s.structNouns;
                 for (int i = 0; i < nouns.size(); i += 2) {
@@ -178,19 +181,19 @@ public class CreateXmlFileDemo {
 
                         PortProperty p1,p2;
                         String s1;
-                        if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) !=null) {
-                            p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
-                            p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
+                        if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null) {
+                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
+                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
                             generateAssociation(doc,namespaceContent,src,dest,p1.XmiID,p2.XmiID);
                         }
-                        else if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))!=null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) ==null){
-                            p1 = blocks.getPortProperty(src, blocks.getXMI(s.structNoun));
-                            s1 = blocks.getXMI(dest);
+                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) ==null){
+                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
+                            s1 = components.getXMI(dest);
                             generateAssociation(doc, namespaceContent,src,dest,p1.XmiID,s1);
                         }
-                        else if(blocks.getPortProperty(src, blocks.getXMI(s.structNoun))==null && blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun)) !=null){
-                            s1 = blocks.getXMI(src);
-                            p2 = blocks.getPortProperty(dest, blocks.getXMI(s.connectionNoun));
+                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))==null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null){
+                            s1 = components.getXMI(src);
+                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
                             generateAssociation(doc, namespaceContent,src,dest,s1, p2.XmiID);
                         }
                     } else {
@@ -205,7 +208,7 @@ public class CreateXmlFileDemo {
 //        generateFinalContent();
 
 //        output += generateDirection();
-        for (Block b : blocks.blocks) {
+        for (Block b : components.blocks) {
             if (b.getBlockName("sub") != null) {
                 generateEncapsulation(doc,content,generateXMI_ID("other"),b.XmiID);
             }
@@ -539,7 +542,7 @@ public class CreateXmlFileDemo {
         generateDiagramBDD(doc,root,xmiID,xmiPackage);
         for(Sentence s: sentences.sentences) {
             if (s.isInternal) {
-                generateDiagramIBD(doc,root,s.structNoun, diagramID, xmiPackage, blocks.getBlockByName(s.structNoun).XmiID);
+                generateDiagramIBD(doc,root,s.structNoun, diagramID, xmiPackage, components.getBlockByName(s.structNoun).XmiID);
             }
         }
     }
@@ -579,7 +582,7 @@ public class CreateXmlFileDemo {
         String currentXMI = " ";
 
         Element diagram_ele = generateElement(doc,diagram,"UML:Diagram.element","");
-        for(Block b: blocks.blocks){
+        for(Block b: components.blocks){
             if (b.getBlockName("sub") != null) {
 //                    System.out.println(b.name);
                 Element diagramElement_1 = generateElement(doc,diagram_ele,"UML:DiagramElement","");
@@ -654,7 +657,7 @@ public class CreateXmlFileDemo {
             for (String port : BDDports) {
                 Element tag_6 = generateElement(doc,diagramElement,"UML:DiagramElement","");
                 generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
-                generateAttribute(doc,tag_6,"subject", blocks.getBlockByName(port).XmiID);
+                generateAttribute(doc,tag_6,"subject", components.getBlockByName(port).XmiID);
             }
         }
         for(Sentence s: sentences.sentences){
@@ -673,17 +676,17 @@ public class CreateXmlFileDemo {
             int pLeft=bLeft, pTop=bTop, pRight=bRight-55, pBottom=bBottom-45;
             Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
             generateAttribute(doc,tag_7,"geometry", "Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";");
-            generateAttribute(doc,tag_7,"subject",blocks.getBlockByName(nounIndv).XmiID);
-//            output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + blocks.getBlockByName(nounIndv).XmiID + "\"/>\n";
+            generateAttribute(doc,tag_7,"subject", components.getBlockByName(nounIndv).XmiID);
+//            output += "\t\t\t<UML:DiagramElement geometry=\"Left="+bLeft+";Top="+bTop+";Right="+bRight+";Bottom="+bBottom+";\" subject=\"" + components.getBlockByName(nounIndv).XmiID + "\"/>\n";
             ArrayList<String> ports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(nounIndv).structNoun, true).structNouns;
             System.out.println(ports + "lll");
             for (String port: ports){
                 PortProperty p;
-                if(blocks.getPortProperty(port,blocks.getBlockByName(nounIndv).XmiID) != null) {
-                    p = blocks.getPortProperty(port, blocks.getBlockByName(nounIndv).XmiID);
+                if(components.getPortProperty(port, components.getBlockByName(nounIndv).XmiID) != null) {
+                    p = components.getPortProperty(port, components.getBlockByName(nounIndv).XmiID);
                 }
                 else {
-                    p = blocks.getPortPropertyBlockXMI(port, blocks.getBlockByName(nounIndv).XmiID);
+                    p = components.getPortPropertyBlockXMI(port, components.getBlockByName(nounIndv).XmiID);
 
                 }
                 Element tag_8 = generateElement(doc,diagramElement,"UML:DiagramElement","");
