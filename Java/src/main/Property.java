@@ -4,12 +4,12 @@ public class Property {
     String name;
     String xmiID;
     String ownerXMI;
-    String reusePropertyID;
+    String propertyType;
 
-    public Property(String name, String xmiID, String ownerXMI, String reusePropertyID) {
+    public Property(String name, String xmiID, String ownerXMI, String propertyType) {
         this.name = name;
         this.xmiID =xmiID;
         this.ownerXMI=ownerXMI;
-        this.reusePropertyID=reusePropertyID;
+        this.propertyType=propertyType;
     }
 }

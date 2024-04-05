@@ -17,6 +17,7 @@ public class Main {
         try {
 
             String inputFile = readInputFile("./src/data/Coffeemaker_NLP.txt");
+//            String inputFile = readInputFile("./src/data/FGS_NLP.txt");
             String input = cleanText(inputFile);
 //            System.out.println(input);
             ANTLRInputStream inputStream = new ANTLRInputStream(input);
@@ -27,7 +28,7 @@ public class Main {
             visitor.sentences = new Sentences();
             visitor.visit(sysmlParser.nlparch());
 //            Output outputFormatter = new Output(visitor.sentences);
-            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences);
+            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences , true);
             outputFormatter.generateOutput();
         } catch (Exception e) {
             e.printStackTrace();
