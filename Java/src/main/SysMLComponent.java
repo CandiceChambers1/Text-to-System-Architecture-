@@ -19,12 +19,15 @@ public class SysMLComponent {
         blocks.add(new Block(name, xmiID));
     }
 
+    public void createPorts(String name, String xmiID, String ownerXMI) {
+        ports.add(new Port(name, xmiID, ownerXMI));
+    }
+
     public void createProperties(String name, String xmiID, String ownerXMI, String propertyType) {
         properties.add(new Property(name, xmiID, ownerXMI, propertyType));
     }
-
-    public void createPorts(String name, String xmiID, String ownerXMI) {
-        ports.add(new Port(name, xmiID, ownerXMI));
+    public  void createPortProperties(String name, String xmiID, String ownerXMI, String reuseProperty){
+        portProperties.add(new PortProperty(name, xmiID, ownerXMI, reuseProperty));
     }
 
     public String getXMI(String owner) {

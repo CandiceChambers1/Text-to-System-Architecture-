@@ -39,9 +39,8 @@ public class CreateXmlFileDemo {
                         if(debug)
                             System.out.println("Property: "+name);
                         }
-//                        for(String blockName: s.structNoun){
-//                            components.createPortProperties(name, );
-//                        }
+//                        components.createPortProperties(name, generateXMI_ID("other"), components.getXMI(s.structNoun), generatePropertyTypeID(components.getXMI(name)));
+
                     }
 
 
@@ -107,11 +106,12 @@ public class CreateXmlFileDemo {
                     System.out.println("Diagram for: "+b.name + " " + sentences.getSentenceByStructNoun(b.name).isInternal);
         }
 
-        // Generating
+        // Generating Classifier Role Blocks
         Element collaboration = generateStartCollaboration(doc, namespaceContent);
         for (Property p : components.properties) {
             generateClassifier_Property(doc, collaboration, p.name, p.xmiID, xmiPackageID, p.ownerXMI, p.propertyType);
-            System.out.println("Classifier Role: "+ p.name);
+            if(debug)
+                System.out.println("Classifier Role: "+ p.name);
         }
 
         generateEndCollaboration(doc, collaboration);
@@ -149,6 +149,13 @@ public class CreateXmlFileDemo {
 //
 //        }
 //        generateEndCollaboration(doc, collaboration);
+
+        for(PortProperty p : components.portProperties){
+            components.createPortProperties(p.name, p.XmiID, p.ownerXMI,p.reuseProperty);
+            if(debug)
+                System.out.println("Port Properties: "+p.name);
+        }
+
 //        for (Block b : components.blocks) {
 //            if(b.getBlockName("ports")!= null){
 ////                if(propertyCounter ==1){
@@ -244,11 +251,11 @@ public class CreateXmlFileDemo {
 //        String fileName = getRoot();
 //        StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
 //        transformer.transform(source, result);
-
-        // Output to console for testing
+//
+//         Output to console for testing
 //        StreamResult consoleResult = new StreamResult(System.out);
 //        transformer.transform(source, consoleResult);
-
+//
 
     }
 
