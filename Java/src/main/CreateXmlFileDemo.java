@@ -223,24 +223,26 @@ public class CreateXmlFileDemo {
                         String destPortBlockXMI, srcPortBlockXMI;
                         if (debug) {
                             System.out.println("Source Block: " + s.structNoun + " Destination Block: " + s.connectionNoun);
-                            System.out.println("Source: " + src + " Destination: " + dest);
                         }
                         if(components.getPortProperty(src, components.getBlockXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getBlockXMI(s.connectionNoun)) !=null) {
                             srcPort = components.getPortProperty(src, components.getBlockXMI(s.structNoun));
                             destPort = components.getPortProperty(dest, components.getBlockXMI(s.connectionNoun));
-                            System.out.println("Inner Source: " + srcPort.name + " Destination: " + destPort.name);
+                            if (debug)
+                                System.out.println("Inner Source: " + srcPort.name + " Destination: " + destPort.name);
                             generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
                         }
                         else if(components.getPortProperty(src, components.getBlockXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getBlockXMI(s.connectionNoun)) ==null){
                             destPortBlockXMI = components.getPropertyXMI(dest);
                             srcPort = components.getPortProperty(src, components.getBlockXMI(s.structNoun));
-                            System.out.println("Inner Source: " + srcPort.name + " Destination: " + dest);
+                            if (debug)
+                                System.out.println("Inner Source: " + srcPort.name + " Destination: " + dest);
                             generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPortBlockXMI);
                         }
                         else if(components.getPortProperty(src, components.getBlockXMI(s.structNoun))==null && components.getPortProperty(dest, components.getBlockXMI(s.connectionNoun)) !=null){
                             srcPortBlockXMI = components.getPropertyXMI(src);
                             destPort = components.getPortProperty(dest, components.getBlockXMI(s.connectionNoun));
-                            System.out.println("Inner Source: " + src + " Destination: " + destPort.name);
+                            if (debug)
+                                System.out.println("Inner Source: " + src + " Destination: " + destPort.name);
                             generateAssociation(doc, namespaceContent,src,dest,srcPortBlockXMI, destPort.xmiID);
                         }
                     } else {
