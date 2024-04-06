@@ -17,6 +17,8 @@ public class Main {
         try {
 //            String inputFileName = "./src/data/FGS_NLP.txt";
             String inputFileName = "./src/data/Coffeemaker_NLP.txt";
+            String filename = inputFileName.split("/")[3].split(".txt")[0];
+            System.out.println(filename);
             String inputFile = readInputFile(inputFileName);
             String input = cleanText(inputFile);
 //            System.out.println(input);
@@ -27,8 +29,8 @@ public class Main {
             Visitor visitor = new Visitor();
             visitor.sentences = new Sentences();
             visitor.visit(sysmlParser.nlparch());
-            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences , true);
-            outputFormatter.generateOutput();
+            CreateXmlFileDemo outputFormatter= new CreateXmlFileDemo(visitor.sentences , false);
+            outputFormatter.generateOutput(filename);
         } catch (Exception e) {
             e.printStackTrace();
         }

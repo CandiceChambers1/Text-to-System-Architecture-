@@ -63,7 +63,7 @@ public class CreateXmlFileDemo {
             }
         }
     }
-    public void generateOutput() throws ParserConfigurationException, TransformerException {
+    public void generateOutput(String filename) throws ParserConfigurationException, TransformerException {
 
         /*
             Looping through the sentences and call the appropriate functions
@@ -255,26 +255,25 @@ public class CreateXmlFileDemo {
 //        generateFinalContent();
 
 //        output += generateDirection();
-//        for (Block b : components.blocks) {
-//            if (b.getBlockName("sub") != null) {
-//                generateEncapsulation(doc,content,generateXMI_ID("other"),b.XmiID);
-//            }
-//        }
+        for (Block b : components.blocks) {
+                generateEncapsulation(doc,content,generateXMI_ID("other"),b.xmiID);
+            }
+
 //        generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
 //        generateFooter(doc,rootElement);
-//
-//        // write the content into xml file
-//        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//        Transformer transformer = transformerFactory.newTransformer();
-//        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//        DOMSource source = new DOMSource(doc);
-//        String fileName = getRoot();
-//        StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
-//        transformer.transform(source, result);
-//
+
+        // write the content into xml file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource source = new DOMSource(doc);
+        String name= filename;
+        StreamResult result = new StreamResult(new File("src/xml/" + name +".xml"));
+        transformer.transform(source, result);
+
 //         Output to console for testing
-//        StreamResult consoleResult = new StreamResult(System.out);
-//        transformer.transform(source, consoleResult);
+        StreamResult consoleResult = new StreamResult(System.out);
+        transformer.transform(source, consoleResult);
 
 
     }
@@ -578,13 +577,13 @@ public class CreateXmlFileDemo {
 //        return output;
 //    }
 
-//    public void generateEncapsulation(Document doc, Element content, String xmiId, String modelXMI_ID){
-//        Element tag = generateElement(doc,content,"UML:TaggedValue","");
-//        generateAttribute(doc,tag,"tag","isEncapsulated");
-//        generateAttribute(doc,tag,"xmi.id",xmiId);
-//        generateAttribute(doc,tag,"value","#NOTES#Values: true,false&#10;");
-//        generateAttribute(doc,tag,"modelElement",modelXMI_ID);
-//    }
+    public void generateEncapsulation(Document doc, Element content, String xmiId, String modelXMI_ID){
+        Element tag = generateElement(doc,content,"UML:TaggedValue","");
+        generateAttribute(doc,tag,"tag","isEncapsulated");
+        generateAttribute(doc,tag,"xmi.id",xmiId);
+        generateAttribute(doc,tag,"value","#NOTES#Values: true,false&#10;");
+        generateAttribute(doc,tag,"modelElement",modelXMI_ID);
+    }
 //    public void generateDiagram(Document doc, Element root,String xmiID, String xmiPackage) {
 //        generateDiagramBDD(doc,root,xmiID,xmiPackage);
 //        for(Sentence s: sentences.sentences) {
@@ -593,8 +592,8 @@ public class CreateXmlFileDemo {
 //            }
 //        }
 //    }
-
-
+//
+//
 //    public void generateDiagramBDD(Document doc, Element root, String xmiID, String xmiPackage){
 //
 //        Element diagram = generateElement(doc,root,"UML:Diagram","");
@@ -738,7 +737,7 @@ public class CreateXmlFileDemo {
 //                }
 //                Element tag_8 = generateElement(doc,diagramElement,"UML:DiagramElement","");
 //                generateAttribute(doc,tag_8,"geometry", "Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";");
-//                generateAttribute(doc,tag_8,"subject",p.XmiID);
+//                generateAttribute(doc,tag_8,"subject",p.xmiID);
 ////                output += "\t\t\t<UML:DiagramElement geometry=\"Left="+pLeft+";Top="+pTop+";Right="+pRight+";Bottom="+pBottom+";\" subject=\"" + p.XmiID + "\"/>\n";
 //                pTop+=20;
 //                pBottom+=20;
@@ -751,5 +750,5 @@ public class CreateXmlFileDemo {
 ////                "\t</UML:Diagram>\n";
 ////        return output;
 //    }
-//
+
 }
