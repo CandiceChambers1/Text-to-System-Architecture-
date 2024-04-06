@@ -38,6 +38,14 @@ public class SysMLComponent {
         }
         return null;
     }
+    public String getPropertyXMI(String name) {
+        for (Property property : properties) {
+            if (property.name.equals(name)) {
+                return property.xmiID;
+            }
+        }
+        return null;
+    }
     public String getPortXMI(String name) {
         for (Port port : ports) {
             if (port.name.equals(name)) {
@@ -46,7 +54,12 @@ public class SysMLComponent {
         }
         return null;
     }
-    public void setPortProperty(String name, String XmiID, String ownerXMI, String reuseProperty) {
-        portProperties.add(new PortProperty(name, XmiID, ownerXMI, reuseProperty));
+    public PortProperty getPortProperty(String name, String ownerXMI) {
+        for (PortProperty portProperty : portProperties) {
+            if (portProperty.name.equals(name) && portProperty.ownerXMI.equals(ownerXMI)) {
+                return portProperty;
+            }
+        }
+        return null;
     }
 }

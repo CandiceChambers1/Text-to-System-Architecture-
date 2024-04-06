@@ -2,13 +2,13 @@ package main;
 
 public class PortProperty {
     String name;
-    String XmiID;
+    String xmiID;
     String ownerXMI;
     String reuseProperty;
 
-    public PortProperty(String name, String XmiID, String ownerXMI, String reuseProperty){
+    public PortProperty(String name, String xmiID, String ownerXMI, String reuseProperty){
         this.name=name;
-        this.XmiID=XmiID;
+        this.xmiID=xmiID;
         this.ownerXMI = ownerXMI;
         this.reuseProperty = reuseProperty;
     }
