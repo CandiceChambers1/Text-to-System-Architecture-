@@ -113,13 +113,20 @@ public class CreateXmlFileDemo {
                 System.out.println("Classifier Role: "+ p.name);
         }
         generateEndCollaboration(doc, collaboration);
+
+        // Creating the Ports for Classifier Roles
         for (Property p : components.properties){
             Sentence portSentence = sentences.getSentenceByTypePort("Structural",p.name,true);
             for (String portName: portSentence.structNouns){
                 components.createPortProperties(portName, generateXMI_ID("other"), components.getBlockXMI(portSentence.structNoun), generatePropertyTypeID(components.getPortXMI(portName)));
-                if (debug)
-                    System.out.println("Classifier Ports: "+ portName + " for " + portSentence.structNoun);
             }
+        }
+
+        // Generating Ports for the Classifier Roles
+        for (PortProperty pp : components.portProperties){
+            generatePortProperty(doc, collaboration, pp.name, pp.XmiID, xmiPackageID, pp.ownerXMI, pp.reuseProperty);
+            if (debug)
+                System.out.println("Classifier Ports: "+ pp.name);
         }
 //                 insert condition to find all IBDs!!
 //                    if (propertyCounter == 0){
@@ -202,66 +209,66 @@ public class CreateXmlFileDemo {
 //
 //
 //        }
-//        for(Sentence s: sentences.sentences){
-//            if(Objects.equals(s.sentenceType, "Connection")){
-//                String src,dest;
-//                ArrayList<String> nouns = s.structNouns;
-//                for (int i = 0; i < nouns.size(); i += 2) {
-//                    src = nouns.get(i);
-//
-//                    if (i + 1 < nouns.size()) {
-//                        dest = nouns.get(i + 1);
-//
-//                        PortProperty p1,p2;
-//                        String s1;
-//                        if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null) {
-//                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
-//                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
-//                            generateAssociation(doc,namespaceContent,src,dest,p1.XmiID,p2.XmiID);
-//                        }
-//                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) ==null){
-//                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
-//                            s1 = components.getXMI(dest);
-//                            generateAssociation(doc, namespaceContent,src,dest,p1.XmiID,s1);
-//                        }
-//                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))==null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null){
-//                            s1 = components.getXMI(src);
-//                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
-//                            generateAssociation(doc, namespaceContent,src,dest,s1, p2.XmiID);
-//                        }
-//                    } else {
-//                        continue;
-//
-//                    }
-//                }
-//
-//            }
-//        }
-//
-////        generateFinalContent();
-//
-////        output += generateDirection();
-//        for (Block b : components.blocks) {
-//            if (b.getBlockName("sub") != null) {
-//                generateEncapsulation(doc,content,generateXMI_ID("other"),b.XmiID);
-//            }
-//        }
-//        generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
-//        generateFooter(doc,rootElement);
-//
-//        // write the content into xml file
-//        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//        Transformer transformer = transformerFactory.newTransformer();
-//        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//        DOMSource source = new DOMSource(doc);
-//        String fileName = getRoot();
-//        StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
-//        transformer.transform(source, result);
-//
-//         Output to console for testing
-//        StreamResult consoleResult = new StreamResult(System.out);
-//        transformer.transform(source, consoleResult);
-//
+        for(Sentence s: sentences.sentences){
+            if(Objects.equals(s.sentenceType, "Connection")){
+                String src,dest;
+                ArrayList<String> nouns = s.structNouns;
+                for (int i = 0; i < nouns.size(); i += 2) {
+                    src = nouns.get(i);
+
+                    if (i + 1 < nouns.size()) {
+                        dest = nouns.get(i + 1);
+
+                        PortProperty p1,p2;
+                        String s1;
+                        if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null) {
+                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
+                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
+                            generateAssociation(doc,namespaceContent,src,dest,p1.XmiID,p2.XmiID);
+                        }
+                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))!=null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) ==null){
+                            p1 = components.getPortProperty(src, components.getXMI(s.structNoun));
+                            s1 = components.getXMI(dest);
+                            generateAssociation(doc, namespaceContent,src,dest,p1.XmiID,s1);
+                        }
+                        else if(components.getPortProperty(src, components.getXMI(s.structNoun))==null && components.getPortProperty(dest, components.getXMI(s.connectionNoun)) !=null){
+                            s1 = components.getXMI(src);
+                            p2 = components.getPortProperty(dest, components.getXMI(s.connectionNoun));
+                            generateAssociation(doc, namespaceContent,src,dest,s1, p2.XmiID);
+                        }
+                    } else {
+                        continue;
+
+                    }
+                }
+
+            }
+        }
+
+//        generateFinalContent();
+
+//        output += generateDirection();
+        for (Block b : components.blocks) {
+            if (b.getBlockName("sub") != null) {
+                generateEncapsulation(doc,content,generateXMI_ID("other"),b.XmiID);
+            }
+        }
+        generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
+        generateFooter(doc,rootElement);
+
+        // write the content into xml file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource source = new DOMSource(doc);
+        String fileName = getRoot();
+        StreamResult result = new StreamResult(new File("src/xml/" + fileName +".xml"));
+        transformer.transform(source, result);
+
+         Output to console for testing
+        StreamResult consoleResult = new StreamResult(System.out);
+        transformer.transform(source, consoleResult);
+
 
     }
 
