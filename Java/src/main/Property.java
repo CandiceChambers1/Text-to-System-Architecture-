@@ -12,4 +12,5 @@ public class Property {
         this.ownerXMI=ownerXMI;
         this.propertyType=propertyType;
     }
+
 }

@@ -30,15 +30,22 @@ public class SysMLComponent {
         portProperties.add(new PortProperty(name, xmiID, ownerXMI, reuseProperty));
     }
 
-    public String getXMI(String owner) {
+    public String getBlockXMI(String name) {
         for (Block block : blocks) {
-            if (block.name.equals(owner)) {
-                return block.XmiID;
+            if (block.name.equals(name)) {
+                return block.xmiID;
             }
         }
         return null;
     }
-
+    public String getPortXMI(String name) {
+        for (Port port : ports) {
+            if (port.name.equals(name)) {
+                return port.xmiID;
+            }
+        }
+        return null;
+    }
     public void setPortProperty(String name, String XmiID, String ownerXMI, String reuseProperty) {
         portProperties.add(new PortProperty(name, XmiID, ownerXMI, reuseProperty));
     }

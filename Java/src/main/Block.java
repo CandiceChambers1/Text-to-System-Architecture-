@@ -2,11 +2,11 @@ package main;
 
 public class Block {
     String name;
-    String XmiID;
+    String xmiID;
 //    String ownerXMI;
-    public Block(String name, String XmiID){
+    public Block(String name, String xmiID){
         this.name=name;
-        this.XmiID=XmiID;
+        this.xmiID=xmiID;
     }
 //    public Block(String type, String name, String XmiID, String ownerXMI){
 //        this.type=type;
