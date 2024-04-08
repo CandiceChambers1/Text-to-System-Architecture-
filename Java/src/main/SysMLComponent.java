@@ -38,6 +38,7 @@ public class SysMLComponent {
         }
         return null;
     }
+
     public String getPropertyXMI(String name) {
         for (Property property : properties) {
             if (property.name.equals(name)) {
@@ -58,6 +59,15 @@ public class SysMLComponent {
         for (PortProperty portProperty : portProperties) {
             if (portProperty.name.equals(name) && portProperty.ownerXMI.equals(ownerXMI)) {
                 return portProperty;
+            }
+        }
+        return null;
+    }
+
+    public Property getPropertyByXMI(String xmiID) {
+        for (Property property : properties) {
+            if (property.xmiID.equals(xmiID)) {
+                return property;
             }
         }
         return null;

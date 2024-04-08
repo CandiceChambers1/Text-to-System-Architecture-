@@ -63,4 +63,13 @@ public class Sentences {
         }
         return null;
     }
+
+    public Sentence getSentenceByTypeChild(String type, String noun) {
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(type) && sentence.structNouns.contains(noun)){
+                return sentence;
+            }
+        }
+        return null;
+    }
 }

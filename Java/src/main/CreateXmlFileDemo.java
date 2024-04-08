@@ -39,7 +39,6 @@ public class CreateXmlFileDemo {
                         if(debug)
                             System.out.println("Property: "+name);
                         }
-
                     }
 
 
@@ -60,6 +59,15 @@ public class CreateXmlFileDemo {
                     }
 
                 }
+            }
+            if (Objects.equals(s.sentenceType, "Instantiation")) {
+                Sentence is = sentences.getSentenceByTypeChild("Structural", s.structNoun);
+                if(components.getBlockXMI(s.structNouns.get(0)) !=null){
+                    components.createProperties(s.structNoun, generateXMI_ID("other"), components.getBlockXMI(is.structNoun), generatePropertyTypeID(components.getBlockXMI(s.structNouns.get(0))));
+                    if(debug)
+                        System.out.println("Property: "+s.structNoun);
+                }
+
             }
         }
     }
@@ -115,10 +123,20 @@ public class CreateXmlFileDemo {
         generateEndCollaboration(doc, collaboration);
 
         // Creating the Ports for Classifier Roles
+        Sentence portSentence;
         for (Property p : components.properties){
-            Sentence portSentence = sentences.getSentenceByTypePort("Structural",p.name,true);
-            for (String portName: portSentence.structNouns){
-                components.createPortProperties(portName, generateXMI_ID("other"), components.getBlockXMI(portSentence.structNoun), generatePropertyTypeID(components.getPortXMI(portName)));
+            portSentence= sentences.getSentenceByTypePort("Structural",p.name,true);
+            if (portSentence !=null)
+                for (String portName: portSentence.structNouns){
+                    components.createPortProperties(portName, generateXMI_ID("other"), components.getBlockXMI(portSentence.structNoun), generatePropertyTypeID(components.getPortXMI(portName)));
+                }
+            else {
+                Sentence is = sentences.getSentenceByTypeName("Instantiation", p.name);
+                portSentence = sentences.getSentenceByTypePort("Structural", is.structNouns.get(0),true);
+                if (portSentence !=null)
+                    for (String portName: portSentence.structNouns){
+                        components.createPortProperties(portName, generateXMI_ID("other"), components.getPropertyXMI(p.name), generatePropertyTypeID(components.getPortXMI(portName)));
+                    }
             }
         }
 
@@ -272,8 +290,8 @@ public class CreateXmlFileDemo {
         transformer.transform(source, result);
 
 //         Output to console for testing
-        StreamResult consoleResult = new StreamResult(System.out);
-        transformer.transform(source, consoleResult);
+//        StreamResult consoleResult = new StreamResult(System.out);
+//        transformer.transform(source, consoleResult);
 
 
     }
