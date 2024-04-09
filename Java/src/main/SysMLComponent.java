@@ -72,4 +72,13 @@ public class SysMLComponent {
         }
         return null;
     }
+
+    public String getPropertyXMIbyOwner(String name, String ownerXMI) {
+        for (Property property : properties) {
+            if (property.name.equals(name) && property.ownerXMI.equals(ownerXMI)) {
+                return property.xmiID;
+            }
+        }
+        return null;
+    }
 }

@@ -26,7 +26,7 @@ HEATING_PIPE consists port_components : IN_E1 , IN_LIQ1 , OUT_E1 and OUT_LIQ2.
 SHOWER_HEAD consists port_components : IN_LIQ1 and OUT_LIQ1.
 ELEVATOR_PIPE consists port_components : IN_LIQ1 and OUT_LIQ1.
 STORAGE_TANK consists port_components : IN_LIQ1 and OUT_LIQ1.
-BREWING_UNIT consists internal_components : BASKET_ASSEMBLY , BASKET and FILTER.
+BREWING_UNIT consists internal_components : BASKET_ASSEMBLY and FILTER.
 BREWING_UNIT consists port_components : IN_M , IN_M , OUT_M and OUT_M.
 BASKET_ASSEMBLY consists internal_components : BASKET and VALVE.
 BASKET_ASSEMBLY consists port_components : IN_M , IN_M and OUT_M.

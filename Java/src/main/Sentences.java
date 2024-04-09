@@ -72,4 +72,12 @@ public class Sentences {
         }
         return null;
     }
+    public Sentence getSentenceByTypeChildInternal(String type, String noun){
+        for(Sentence sentence: sentences){
+            if(sentence.sentenceType.equals(type) && sentence.structNoun.equals(noun) && sentence.isInternal){
+                return sentence;
+            }
+        }
+        return null;
+    }
 }
