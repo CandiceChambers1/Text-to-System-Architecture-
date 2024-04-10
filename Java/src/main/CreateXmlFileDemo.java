@@ -178,12 +178,19 @@ public class CreateXmlFileDemo {
                             if(components.getPropertyXMI(s.structNoun) != null && components.getPropertyXMI(s.structNoun) != null){
                                 System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
                                 System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+                                System.out.println("Source Port XMI: " + components.getPortProperty(src,s.structNoun).xmiID );
+                                System.out.println(" \n\n");
+                                srcPort = components.getPortProperty(src,s.structNoun);
+                                destPort = components.getPortProperty(dest,s.connectionNoun);
+                                generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
                             } else if(components.getPropertyXMI(s.structNoun) == null) {
-                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
-                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+                                System.out.println(" \n\n");
+//                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
+//                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
                             } else if (components.getPropertyXMI(s.connectionNoun) == null){
-                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
-                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+                                System.out.println(" \n\n");
+//                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
+//                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
                             }
 
 //                            System.out.println("Property: "+s.structNoun + " Property Owner" + components.getProperty(s.structNoun,));

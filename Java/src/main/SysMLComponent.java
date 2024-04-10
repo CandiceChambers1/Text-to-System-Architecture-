@@ -74,9 +74,10 @@ public class SysMLComponent {
         }
         return null;
     }
-    public PortProperty getPortProperty(String name, String ownerXMI) {
+    public PortProperty getPortProperty(String name, String ownerName) {
+
         for (PortProperty portProperty : portProperties) {
-            if (portProperty.name.equals(name) && portProperty.ownerXMI.equals(ownerXMI)) {
+            if (portProperty.name.equals(name) && portProperty.ownerName.equals(ownerName)) {
                 return portProperty;
             }
         }
