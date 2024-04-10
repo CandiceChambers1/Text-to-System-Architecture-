@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<XMI xmlns:UML="omg.org/UML1.3" xmi.version="1.1">
+    <XMI.header>
+        <XMI.documentation>
+            <XMI.exporter>Enterprise Architect</XMI.exporter>
+            <XMI.exporterVersion>2.5</XMI.exporterVersion>
+        </XMI.documentation>
+    </XMI.header>
+    <XMI.content>
+        <UML:Model name="EA Model" xmi.id="MX_EAID_80467244_4065_7335_9519_570091358321">
+            <UML:Namespace.ownedElement>
+                <UML:Class name="EARootClass" xmi.id="EAID_28495243_2489_4849_9463_512801300216"/>
+                <UML:Package name="One Level Block Hierarchy" xmi.id="EAPK_86179905_2794_5807_9790_904995658181">
+                    <UML:Namespace.ownedElement>
+                        <UML:Class name="FGS" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_11980312_2538_9499_7406_805481451345">
+                            <UML:ModelElement.stereotype>
+                                <UML:Stereotype name="block"/>
+                            </UML:ModelElement.stereotype>
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Class"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="stereotype" value="block"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="BUS" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_43241366_7179_8556_7262_189093846888">
+                            <UML:ModelElement.stereotype>
+                                <UML:Stereotype name="block"/>
+                            </UML:ModelElement.stereotype>
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Class"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="stereotype" value="block"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="FCS" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_36869636_1285_7071_2825_193040545563">
+                            <UML:ModelElement.stereotype>
+                                <UML:Stereotype name="block"/>
+                            </UML:ModelElement.stereotype>
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Class"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="stereotype" value="block"/>
+                                <UML:TaggedValue tag="diagram" value="EAID_45469825_6190_2978_5964_611484101155"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PRIMARY_SIDE" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_98113241_3558_9146_3554_734341838954">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="TRANSFER_SWITCH" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_68073858_4805_6066_7097_920904612796">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="BUS_IN" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_23664861_1494_8457_4011_103719790084">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_11980312_2538_9499_7406_805481451345"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_87049967_8444_8537_4025_489823906061">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_11980312_2538_9499_7406_805481451345"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PILOT_FLYING" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_73734763_2435_5114_6252_594079647026">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_11980312_2538_9499_7406_805481451345"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PRIMARY_SIDE" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_34495876_1502_1448_6141_543643412088">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_11980312_2538_9499_7406_805481451345"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="TRANSFER_SWITCH" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_63127055_5728_5866_3523_593266467295">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_11980312_2538_9499_7406_805481451345"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="RIGHT" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_85675594_6986_6058_3725_211468853188">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_43241366_7179_8556_7262_189093846888"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_54055891_9893_8298_5434_234543165064">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_43241366_7179_8556_7262_189093846888"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="LEFT" namespace="EAPK_86179905_2794_5807_9790_904995658181" xmi.id="EAID_12515387_8288_3380_5719_526369990303">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="owner" value="EAID_43241366_7179_8556_7262_189093846888"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Collaboration name="Collaborations" xmi.id="EAID_80467244_4065_7335_9519_570091358321_Collaboration">
+                            <UML:Namespace.ownedElement>
+                                <UML:ClassifierRole base="EAID_28495243_2489_4849_9463_512801300216" name="LEFT_SIDE" xmi.id="EAID_34079701_1132_8208_2191_643516658607">
+                                    <UML:ModelElement.taggedValue>
+                                        <UML:TaggedValue tag="ea_stype" value="Part"/>
+                                        <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                        <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                        <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                        <UML:TaggedValue tag="propertyType" value="{11980312-2538-9499-7406-805481451345}"/>
+                                    </UML:ModelElement.taggedValue>
+                                </UML:ClassifierRole>
+                                <UML:ClassifierRole base="EAID_28495243_2489_4849_9463_512801300216" name="RIGHT_SIDE" xmi.id="EAID_88320673_5988_9982_4615_933845748656">
+                                    <UML:ModelElement.taggedValue>
+                                        <UML:TaggedValue tag="ea_stype" value="Part"/>
+                                        <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                        <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                        <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                        <UML:TaggedValue tag="propertyType" value="{11980312-2538-9499-7406-805481451345}"/>
+                                    </UML:ModelElement.taggedValue>
+                                </UML:ClassifierRole>
+                                <UML:ClassifierRole base="EAID_28495243_2489_4849_9463_512801300216" name="LR" xmi.id="EAID_95622223_5561_7834_2405_869458257236">
+                                    <UML:ModelElement.taggedValue>
+                                        <UML:TaggedValue tag="ea_stype" value="Part"/>
+                                        <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                        <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                        <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                        <UML:TaggedValue tag="propertyType" value="{43241366-7179-8556-7262-189093846888}"/>
+                                    </UML:ModelElement.taggedValue>
+                                </UML:ClassifierRole>
+                                <UML:ClassifierRole base="EAID_28495243_2489_4849_9463_512801300216" name="RL" xmi.id="EAID_84606467_8901_7712_5576_994081328200">
+                                    <UML:ModelElement.taggedValue>
+                                        <UML:TaggedValue tag="ea_stype" value="Part"/>
+                                        <UML:TaggedValue tag="package" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                        <UML:TaggedValue tag="owner" value="EAID_36869636_1285_7071_2825_193040545563"/>
+                                        <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                        <UML:TaggedValue tag="propertyType" value="{43241366-7179-8556-7262-189093846888}"/>
+                                    </UML:ModelElement.taggedValue>
+                                </UML:ClassifierRole>
+                            </UML:Namespace.ownedElement>
+                            <UML:Collaboration.interaction/>
+                        </UML:Collaboration>
+                        <UML:Class name="BUS_IN" namespace="EAID_34079701_1132_8208_2191_643516658607" xmi.id="EAID_79184928_2776_3679_4574_972854794349">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_34079701_1132_8208_2191_643516658607"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{23664861-1494-8457-4011-103719790084}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAID_34079701_1132_8208_2191_643516658607" xmi.id="EAID_41043317_4534_3852_3231_137503287088">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_34079701_1132_8208_2191_643516658607"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{87049967-8444-8537-4025-489823906061}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PILOT_FLYING" namespace="EAID_34079701_1132_8208_2191_643516658607" xmi.id="EAID_13545188_8307_2334_6353_562287313680">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_34079701_1132_8208_2191_643516658607"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{73734763-2435-5114-6252-594079647026}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PRIMARY_SIDE" namespace="EAID_34079701_1132_8208_2191_643516658607" xmi.id="EAID_48782572_6026_5158_4311_224363381899">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_34079701_1132_8208_2191_643516658607"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{98113241-3558-9146-3554-734341838954}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="TRANSFER_SWITCH" namespace="EAID_34079701_1132_8208_2191_643516658607" xmi.id="EAID_38526700_3684_6840_4580_970304877014">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_34079701_1132_8208_2191_643516658607"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{68073858-4805-6066-7097-920904612796}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="BUS_IN" namespace="EAID_88320673_5988_9982_4615_933845748656" xmi.id="EAID_72997934_3808_3685_6367_302514108727">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_88320673_5988_9982_4615_933845748656"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{23664861-1494-8457-4011-103719790084}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAID_88320673_5988_9982_4615_933845748656" xmi.id="EAID_27525459_6177_4154_1598_652110832323">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_88320673_5988_9982_4615_933845748656"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{87049967-8444-8537-4025-489823906061}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PILOT_FLYING" namespace="EAID_88320673_5988_9982_4615_933845748656" xmi.id="EAID_56686394_5168_9624_9255_342126580602">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_88320673_5988_9982_4615_933845748656"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{73734763-2435-5114-6252-594079647026}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="PRIMARY_SIDE" namespace="EAID_88320673_5988_9982_4615_933845748656" xmi.id="EAID_74395240_8013_2592_5801_598094110794">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_88320673_5988_9982_4615_933845748656"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{98113241-3558-9146-3554-734341838954}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="TRANSFER_SWITCH" namespace="EAID_88320673_5988_9982_4615_933845748656" xmi.id="EAID_30109089_4903_2027_6384_422206875256">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_88320673_5988_9982_4615_933845748656"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{68073858-4805-6066-7097-920904612796}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="RIGHT" namespace="EAID_95622223_5561_7834_2405_869458257236" xmi.id="EAID_13115787_2614_2859_6122_383932430336">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_95622223_5561_7834_2405_869458257236"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{85675594-6986-6058-3725-211468853188}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAID_95622223_5561_7834_2405_869458257236" xmi.id="EAID_76704644_5861_1848_7889_902332855265">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_95622223_5561_7834_2405_869458257236"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{87049967-8444-8537-4025-489823906061}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="LEFT" namespace="EAID_95622223_5561_7834_2405_869458257236" xmi.id="EAID_28310896_9613_8968_3824_171300282241">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_95622223_5561_7834_2405_869458257236"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{12515387-8288-3380-5719-526369990303}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="RIGHT" namespace="EAID_84606467_8901_7712_5576_994081328200" xmi.id="EAID_44092615_1885_3639_1307_834162181878">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_84606467_8901_7712_5576_994081328200"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{85675594-6986-6058-3725-211468853188}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="CLK" namespace="EAID_84606467_8901_7712_5576_994081328200" xmi.id="EAID_83200621_3712_5007_3002_460288891574">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_84606467_8901_7712_5576_994081328200"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{87049967-8444-8537-4025-489823906061}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                        <UML:Class name="LEFT" namespace="EAID_84606467_8901_7712_5576_994081328200" xmi.id="EAID_21694979_1586_8476_5808_273297402879">
+                            <UML:ModelElement.taggedValue>
+                                <UML:TaggedValue tag="ea_stype" value="Port"/>
+                                <UML:TaggedValue tag="package" value="EAID_84606467_8901_7712_5576_994081328200"/>
+                                <UML:TaggedValue tag="owner" value="EAPK_86179905_2794_5807_9790_904995658181"/>
+                                <UML:TaggedValue tag="package_name" value="One Level Block Hierarchy"/>
+                                <UML:TaggedValue tag="reusesProperty" value="{12515387-8288-3380-5719-526369990303}"/>
+                            </UML:ModelElement.taggedValue>
+                        </UML:Class>
+                    </UML:Namespace.ownedElement>
+                </UML:Package>
+            </UML:Namespace.ownedElement>
+        </UML:Model>
+        <UML:TaggedValue modelElement="EAID_11980312_2538_9499_7406_805481451345" tag="isEncapsulated" value="#NOTES#Values: true,false&amp;#10;" xmi.id="EAID_28803024_4145_5632_1458_143036352685"/>
+        <UML:TaggedValue modelElement="EAID_43241366_7179_8556_7262_189093846888" tag="isEncapsulated" value="#NOTES#Values: true,false&amp;#10;" xmi.id="EAID_48124776_1052_6050_9644_217893433511"/>
+        <UML:TaggedValue modelElement="EAID_36869636_1285_7071_2825_193040545563" tag="isEncapsulated" value="#NOTES#Values: true,false&amp;#10;" xmi.id="EAID_49658872_8844_7460_3529_439782723877"/>
+    </XMI.content>
+</XMI>
