@@ -15,21 +15,28 @@ public class SysMLComponent {
         portProperties = new ArrayList<PortProperty>();
     }
 
+    // Create a block
     public void createBlock(String name, String xmiID) {
         blocks.add(new Block(name, xmiID));
     }
 
+    // Create a Port
     public void createPorts(String name, String xmiID, String ownerXMI) {
         ports.add(new Port(name, xmiID, ownerXMI));
     }
 
-    public void createProperties(String name, String xmiID, String ownerXMI, String propertyType) {
-        properties.add(new Property(name, xmiID, ownerXMI, propertyType));
-    }
-    public  void createPortProperties(String name, String xmiID, String ownerXMI, String reuseProperty){
-        portProperties.add(new PortProperty(name, xmiID, ownerXMI, reuseProperty));
+    // Create a Property
+    public void createProperties(String name, String xmiID, String ownerName, String ownerXMI, String propertyType) {
+        properties.add(new Property(name, xmiID, ownerName, ownerXMI, propertyType));
     }
 
+    // Create Port Properties
+    public  void createPortProperties(String name, String xmiID, String ownerName, String ownerXMI, String reuseProperty){
+        portProperties.add(new PortProperty(name, xmiID, ownerName, ownerXMI, reuseProperty));
+    }
+
+    // Get a Block's XMI based on its name
+    // Assumption: Block names are unique
     public String getBlockXMI(String name) {
         for (Block block : blocks) {
             if (block.name.equals(name)) {
@@ -39,8 +46,20 @@ public class SysMLComponent {
         return null;
     }
 
+    // Get Property Owner XMI based on the ownerName
+    // Assumption: Owner Names are unique (Blocks)
+    public String getPropertyOwnerXMI(String ownerName){
+        for(Property property: properties){
+            if(property.ownerName.equals(ownerName)){
+                return property.ownerXMI;
+            }
+        }
+        return null;
+    }
+    // Get Property XMI based on the name and owner
     public String getPropertyXMI(String name) {
         for (Property property : properties) {
+//            System.out.println(property.name);
             if (property.name.equals(name)) {
                 return property.xmiID;
             }
@@ -59,6 +78,15 @@ public class SysMLComponent {
         for (PortProperty portProperty : portProperties) {
             if (portProperty.name.equals(name) && portProperty.ownerXMI.equals(ownerXMI)) {
                 return portProperty;
+            }
+        }
+        return null;
+    }
+
+    public Property getProperty(String name, String ownerName) {
+        for (Property property : properties) {
+            if (property.name.equals(name) && property.ownerName.equals(ownerName)) {
+                return property;
             }
         }
         return null;
