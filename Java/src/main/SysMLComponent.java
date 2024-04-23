@@ -8,11 +8,13 @@ public class SysMLComponent {
     ArrayList<Property> properties;
     ArrayList<PortProperty> portProperties;
 
+    ArrayList<Association> association;
     public SysMLComponent() {
         blocks = new ArrayList<Block>();
         ports = new ArrayList<Port>();
         properties = new ArrayList<Property>();
         portProperties = new ArrayList<PortProperty>();
+        association = new ArrayList<Association>();
     }
 
     // Create a block
@@ -33,6 +35,10 @@ public class SysMLComponent {
     // Create Port Properties
     public  void createPortProperties(String name, String xmiID, String ownerName, String ownerXMI, String reuseProperty){
         portProperties.add(new PortProperty(name, xmiID, ownerName, ownerXMI, reuseProperty));
+    }
+
+    public void createAssociation(String xmiID, String srcName, String srcXMI, String destName, String destXMI){
+        association.add(new Association(xmiID,srcName,srcXMI,destName,destXMI));
     }
 
     // Get a Block's XMI based on its name
@@ -66,9 +72,9 @@ public class SysMLComponent {
         }
         return null;
     }
-    public String getPortXMI(String name) {
+    public String getPortXMI(String name, String ownerXMI) {
         for (Port port : ports) {
-            if (port.name.equals(name)) {
+            if (port.name.equals(name) && port.ownerXMI.equals(ownerXMI)) {
                 return port.xmiID;
             }
         }

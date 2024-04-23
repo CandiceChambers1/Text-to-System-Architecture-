@@ -136,14 +136,16 @@ public class CreateXmlFileDemo {
             // If the properties are blocks (instantiate themselves)
             if (portSentence !=null)
                 for (String portName: portSentence.structNouns) {
-                    components.createPortProperties(portName, generateXMI_ID("other"), p.name, p.xmiID, generatePropertyTypeID(components.getPortXMI(portName)));
+                    components.createPortProperties(portName, generateXMI_ID("other"), p.name, p.xmiID,
+                            generatePropertyTypeID(components.getPortXMI(portName,components.getBlockXMI(p.name))));
                 }
             else {
                 // If the properties aren't block (instantiate other blocks)
                 portSentence = sentences.getSentenceByTypePort("Structural", is.structNouns.get(0),true);
                 if (portSentence !=null)
                     for (String portName: portSentence.structNouns){
-                        components.createPortProperties(portName, generateXMI_ID("other"), p.name,p.xmiID,generatePropertyTypeID(components.getPortXMI(portName)));
+                        components.createPortProperties(portName, generateXMI_ID("other"), p.name,p.xmiID,
+                                generatePropertyTypeID(components.getPortXMI(portName,components.getBlockXMI(p.name))));
                     }
             }
         }
@@ -154,7 +156,7 @@ public class CreateXmlFileDemo {
 //            if (debug)
 //                System.out.println("Generated Classifier Ports: "+ pp.name);
         }
-
+        // Creating the Association for IBDs
         for(Sentence s: sentences.sentences){
             if(Objects.equals(s.sentenceType, "Connection")){
                 String src,dest;
@@ -173,14 +175,17 @@ public class CreateXmlFileDemo {
 
                             srcPort = components.getPortProperty(src,s.structNoun);
                             destPort = components.getPortProperty(dest,s.connectionNoun);
-                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
+                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,destPort.xmiID);
+//                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
                         } else if(components.getPropertyXMI(s.structNoun) == null) {
 //                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPortXMI(src)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
 //                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
 //                                System.out.println(" \n\n");
 
                             destPort = components.getPortProperty(dest,s.connectionNoun);
-                            generateAssociation(doc,namespaceContent,src,dest, components.getPortXMI(src), destPort.xmiID);
+                            components.createAssociation(generateXMI_ID("other"),src,
+                                    components.getPortXMI(src, components.getBlockXMI(s.structNoun)),dest,destPort.xmiID);
+//                            generateAssociation(doc,namespaceContent,src,dest, components.getPortXMI(src), destPort.xmiID);
 
                         } else if (components.getPropertyXMI(s.connectionNoun) == null){
 //                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
@@ -188,11 +193,18 @@ public class CreateXmlFileDemo {
 //                                System.out.println(" \n\n");
 
                             srcPort = components.getPortProperty(src,s.structNoun);
-                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID, components.getPortXMI(s.connectionNoun));
+                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,
+                                    components.getPortXMI(dest, components.getBlockXMI(s.connectionNoun)));
+//                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID, components.getPortXMI(s.connectionNoun));
                         }
                     }
                 }
             }
+        }
+
+        // Generate the Associations
+        for (Association a: components.association){
+            generateAssociation(doc,namespaceContent,a.xmiID,a.srcName,a.destName,a.srcXMI,a.destXMI);
         }
 
 //        generateFinalContent();
@@ -201,7 +213,7 @@ public class CreateXmlFileDemo {
             }
 
         generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
-//        generateFooter(doc,rootElement);
+        generateFooter(doc,rootElement);
 
         // write the content into xml file
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -271,11 +283,11 @@ public class CreateXmlFileDemo {
     public void generateHeader(Document doc, Element root){
         Element header = generateElement(doc, root, "XMI.header", "");
         Element documentation = generateElement(doc, header, "XMI.documentation", "");
-        Element exporter = generateElement(doc, documentation, "XMI.exporter","Enterprise Architect");
-        Element exporterVersion = generateElement(doc, documentation,"XMI.exporterVersion", "2.5");
+        generateElement(doc, documentation, "XMI.exporter","Enterprise Architect");
+        generateElement(doc, documentation,"XMI.exporterVersion", "2.5");
     }
     public void generateFooter(Document doc, Element root){
-        Element difference = generateElement(doc,root,"XMI.difference", "");
+        generateElement(doc,root,"XMI.difference", "");
         Element extension = generateElement(doc, root,"XMI.extensions", "");
         generateAttribute(doc,extension,"xmi.extender","Enterprise Architect 2.5");
     }
@@ -391,10 +403,10 @@ public class CreateXmlFileDemo {
         }
     }
 
-    public void generateAssociation(Document doc, Element namespace, String srcNoun,String destNoun, String srcXmiId, String destXmiId){
-        String xmiId = generateXMI_ID("other");
+    public void generateAssociation(Document doc, Element namespace, String xmiID, String srcNoun,String destNoun, String srcXmiId, String destXmiId){
+//        String xmiId = generateXMI_ID("other");
         Element association = generateElement(doc,namespace,"UML:Association","");
-        generateAttribute(doc,association,"xmi.id",xmiId);
+        generateAttribute(doc,association,"xmi.id",xmiID);
 
         Element model = generateElement(doc,association,"UML:ModelElement.taggedValue","");
         Element tag_1 = generateElement(doc,model,"UML:TaggedValue","");
@@ -529,31 +541,31 @@ public class CreateXmlFileDemo {
         generateDiagramBDD(doc,root,xmiID,xmiPackage);
         for(Sentence s: sentences.sentences) {
             if (s.isInternal) {
-                System.out.println("IBD");
-//                generateDiagramIBD(doc,root,s.structNoun, diagramID, xmiPackage, components.getBlockByName(s.structNoun).XmiID);
+//                System.out.println("IBD: " + s.structNoun + " Properties: " + s.structNouns + " " + diagramID + " " + components.getBlockXMI(s.structNoun));
+                generateDiagramIBD(doc,root,s.structNoun, s.structNouns, diagramID,xmiPackage, components.getBlockXMI(s.structNoun));
             }
         }
     }
 
 
-    public void generateDiagramBDD(Document doc, Element root, String xmiID, String xmiPackage){
+    public void generateDiagramBDD(Document doc, Element root, String xmiID, String xmiPackage) {
 
-        Element diagram = generateElement(doc,root,"UML:Diagram","");
-        generateAttribute(doc,diagram,"name","One Level Block Hierarchy");
-        generateAttribute(doc,diagram,"xmi.id",xmiID);
-        generateAttribute(doc,diagram,"diagramType","ClassDiagram");
-        generateAttribute(doc,diagram,"owner",xmiPackage);
-        generateAttribute(doc,diagram,"toolName","Enterprise Architect 2.5");
+        Element diagram = generateElement(doc, root, "UML:Diagram", "");
+        generateAttribute(doc, diagram, "name", "One Level Block Hierarchy");
+        generateAttribute(doc, diagram, "xmi.id", xmiID);
+        generateAttribute(doc, diagram, "diagramType", "ClassDiagram");
+        generateAttribute(doc, diagram, "owner", xmiPackage);
+        generateAttribute(doc, diagram, "toolName", "Enterprise Architect 2.5");
 
-        Element model = generateElement(doc,diagram,"UML:ModelElement.taggedValue","");
+        Element model = generateElement(doc, diagram, "UML:ModelElement.taggedValue", "");
 
-        Element tag_1 = generateElement(doc,model,"UML:TaggedValue","");
-        generateAttribute(doc,tag_1,"tag","package");
-        generateAttribute(doc,tag_1,"value",xmiPackage);
+        Element tag_1 = generateElement(doc, model, "UML:TaggedValue", "");
+        generateAttribute(doc, tag_1, "tag", "package");
+        generateAttribute(doc, tag_1, "value", xmiPackage);
 
-        Element tag_2 = generateElement(doc,model,"UML:TaggedValue","");
-        generateAttribute(doc,tag_2,"tag","styleex");
-        generateAttribute(doc,tag_2,"value","MDGDgm=SysML1.4::BlockDefinition;SF=1;");
+        Element tag_2 = generateElement(doc, model, "UML:TaggedValue", "");
+        generateAttribute(doc, tag_2, "tag", "styleex");
+        generateAttribute(doc, tag_2, "value", "MDGDgm=SysML1.4::BlockDefinition;SF=1;");
 
         int b_left, b_right, b_top, b_bottom;
         b_left = 60;
@@ -566,77 +578,85 @@ public class CreateXmlFileDemo {
         p_left = 60;
         p_right = 160;
         p_top = 60;
-        p_bottom  = 160;
+        p_bottom = 160;
         String currentXMI = " ";
 
-        Element diagram_ele = generateElement(doc,diagram,"UML:Diagram.element","");
-        for(Block b: components.blocks) {
+        Element diagram_ele = generateElement(doc, diagram, "UML:Diagram.element", "");
+        for (Block b : components.blocks) {
 //            System.out.println("Blocks: " + b.name + " " +b.xmiID);
-            Element diagramElement_1 = generateElement(doc,diagram_ele,"UML:DiagramElement","");
-            generateAttribute(doc,diagramElement_1,"geometry","Left="+b_left+";Top="+b_top+";Right="+b_right+";Bottom="+b_bottom+";");
-            generateAttribute(doc,diagramElement_1,"subject",b.xmiID);
+            Element diagramElement_1 = generateElement(doc, diagram_ele, "UML:DiagramElement", "");
+            generateAttribute(doc, diagramElement_1, "geometry", "Left=" + b_left + ";Top=" + b_top + ";Right=" + b_right + ";Bottom=" + b_bottom + ";");
+            generateAttribute(doc, diagramElement_1, "subject", b.xmiID);
 
         }
+        for (Port p : components.ports) {
+            Element diagramElement_2 = generateElement(doc, diagram_ele, "UML:DiagramElement", "");
+            generateAttribute(doc, diagramElement_2, "geometry", "Left=" + p_left + ";Top=" + p_top + ";Right=" + p_right + ";Bottom=" + p_bottom + ";");
+            generateAttribute(doc, diagramElement_2, "subject", p.xmiID);
 
-//            }if (b.getBlockName("ports") !=null) {
-//                //                    System.out.println(b.name);
-////                    System.out.println(b.name + " " + b.ownerXMI);
-//                p_left = max_bLeft;
-//                if (!b.ownerXMI.equals(currentXMI)){
-//                    b_left = b_left - 200;
-//                    p_left = b_left;
-//                    currentXMI = " ";
-//                    currentXMI += b.ownerXMI;
-//                }
-//
-////                    p_right = b_right;
-////                    String currentXMI = b.XmiID;
-//                Element diagramElement_2 = generateElement(doc,diagram_ele,"UML:DiagramElement","");
-//                generateAttribute(doc,diagramElement_2,"geometry","Left="+p_left+";Top="+p_top+";Right="+p_right+";Bottom="+p_bottom+";");
-//                generateAttribute(doc,diagramElement_2,"subject",b.XmiID);
-//
-//                p_bottom = p_bottom + 20;
-//                p_top = p_top + 20;
-//            }
-
+            p_bottom = p_bottom + 20;
+            p_top = p_top + 20;
+        }
 
     }
 
-//    public void generateDiagramIBD(Document doc, Element root, String noun, String xmiId, String xmiPackage,String parentXmi){
-//        ArrayList<String> nounsIndv = null;
-//
-//
-//        Element diagram = generateElement(doc,root,"UML:Diagram","");
-//        generateAttribute(doc,diagram,"name",noun);
-//        generateAttribute(doc,diagram,"xmi.id",xmiId);
-//        generateAttribute(doc,diagram,"diagramType","CompositeStructureDiagram");
-//        generateAttribute(doc,diagram,"owner",xmiPackage);
-//        generateAttribute(doc,diagram,"toolName","Enterprise Architect 2.5");
-//
-//        Element model = generateElement(doc,diagram,"UML:ModelElement.taggedValue","");
-//
-//        Element tag_1 = generateElement(doc,model,"UML:TaggedValue","");
-//        generateAttribute(doc,tag_1,"tag","package");
-//        generateAttribute(doc,tag_1,"value",xmiPackage);
-//
-//        Element tag_2 = generateElement(doc,model,"UML:TaggedValue","");
-//        generateAttribute(doc,tag_2,"tag","type");
-//        generateAttribute(doc,tag_2,"value","CompositeStructure");
-//
-//        Element tag_3 = generateElement(doc,model,"UML:TaggedValue","");
-//        generateAttribute(doc,tag_3,"tag","ea_localid");
-//        generateAttribute(doc,tag_3,"value","4");
-//
-//        Element tag_4 = generateElement(doc,model,"UML:TaggedValue","");
-//        generateAttribute(doc,tag_4,"tag","parent");
-//        generateAttribute(doc,tag_4,"value",parentXmi);
-//
-//        Element tag_5 = generateElement(doc,model,"UML:TaggedValue","");
-//        generateAttribute(doc,tag_5,"tag","styleex");
-//        generateAttribute(doc,tag_5,"value","MDGDgm=SysML1.4::InternalBlock;SF=1;");
-//
-//        Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
-//
+    public void generateDiagramIBD(Document doc, Element root, String noun, ArrayList<String> properties, String xmiId, String xmiPackage,String parentXmi){
+
+        Element diagram = generateElement(doc,root,"UML:Diagram","");
+        generateAttribute(doc,diagram,"name",noun);
+        generateAttribute(doc,diagram,"xmi.id",xmiId);
+        generateAttribute(doc,diagram,"diagramType","CompositeStructureDiagram");
+        generateAttribute(doc,diagram,"owner",xmiPackage);
+        generateAttribute(doc,diagram,"toolName","Enterprise Architect 2.5");
+
+        Element model = generateElement(doc,diagram,"UML:ModelElement.taggedValue","");
+
+        Element tag_1 = generateElement(doc,model,"UML:TaggedValue","");
+        generateAttribute(doc,tag_1,"tag","package");
+        generateAttribute(doc,tag_1,"value",xmiPackage);
+
+        Element tag_2 = generateElement(doc,model,"UML:TaggedValue","");
+        generateAttribute(doc,tag_2,"tag","type");
+        generateAttribute(doc,tag_2,"value","CompositeStructure");
+
+        Element tag_3 = generateElement(doc,model,"UML:TaggedValue","");
+        generateAttribute(doc,tag_3,"tag","ea_localid");
+        generateAttribute(doc,tag_3,"value","4");
+
+        Element tag_4 = generateElement(doc,model,"UML:TaggedValue","");
+        generateAttribute(doc,tag_4,"tag","parent");
+        generateAttribute(doc,tag_4,"value",parentXmi);
+
+        Element tag_5 = generateElement(doc,model,"UML:TaggedValue","");
+        generateAttribute(doc,tag_5,"tag","styleex");
+        generateAttribute(doc,tag_5,"value","MDGDgm=SysML1.4::InternalBlock;SF=1;");
+
+        Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
+
+        for(String p: properties){
+//            System.out.println(components.getProperty(p,noun).name);
+            Element tag_6 = generateElement(doc,diagramElement,"UML:DiagramElement","");
+            generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
+            generateAttribute(doc,tag_6,"subject", components.getProperty(p,noun).xmiID);
+
+//            for(Port port: components.ports){
+////                Port ports = components.getPortXMI(p)
+//            }
+
+            for(PortProperty portProperty: components.portProperties){
+                PortProperty pProperty = components.getPortProperty(portProperty.name,p);
+                if(pProperty != null) {
+                    System.out.println("Not null: " + pProperty.name);
+
+                }else{
+                    System.out.println("null: " + portProperty.name);
+                }
+//                String port = components.;
+//                System.out.println("Ports for " + p + " :" + components.getPropertyXMI());
+            }
+        }
+
+
 //        if (sentences.getSentenceByTypePort("Structural",noun,true).isPort) {
 //            ArrayList<String> BDDports = sentences.getSentenceByTypePort("Structural", sentences.getSentenceByStructNoun(noun).structNoun, true).structNouns;
 //            for (String port : BDDports) {
@@ -653,7 +673,7 @@ public class CreateXmlFileDemo {
 //
 //
 //        }
-//
+
 //        int bLeft=60, bTop=60, bRight=160, bBottom=160;
 ////        System.out.println(nounsIndv);
 //        for(String nounIndv: nounsIndv) {
@@ -684,10 +704,10 @@ public class CreateXmlFileDemo {
 //            bLeft+=200;
 //            bRight+=200;
 //        }
-//
+
 ////        output += "\t\t</UML:Diagram.element>\n"+
 ////                "\t</UML:Diagram>\n";
 ////        return output;
-//    }
+    }
 
 }
