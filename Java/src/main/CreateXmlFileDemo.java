@@ -50,27 +50,22 @@ public class CreateXmlFileDemo {
 //                            System.out.println("Ports: "+name);
 
                     }
-
-
                 } else {
                     for (String name: s.structNouns) {
                         components.createBlock(name, generateXMI_ID("other"));
 //                        if(debug)
 //                            System.out.println("Block: "+name);
                     }
-
                 }
             }
             if (Objects.equals(s.sentenceType, "Instantiation")) {
-                Sentence is = sentences.getSentenceByTypeChild("Structural", s.structNoun);
                 if(components.getBlockXMI(s.structNouns.get(0)) !=null){
-//                    String ID = generateXMI_ID("other");
-//                    System.out.println(ID);
-                    components.createProperties(s.structNoun, generateXMI_ID("other"), is.structNoun,components.getBlockXMI(is.structNoun), generatePropertyTypeID(components.getBlockXMI(s.structNouns.get(0))));
+                    components.createProperties(s.structNoun, generateXMI_ID("other"), s.structNouns.get(0),
+                            components.getBlockXMI(s.structNouns.get(0)),
+                            generatePropertyTypeID(components.getBlockXMI(s.structNouns.get(0))));
 //                    if(debug)
 //                        System.out.println("Property: "+s.structNoun);
                 }
-
             }
         }
     }
@@ -144,8 +139,11 @@ public class CreateXmlFileDemo {
                 portSentence = sentences.getSentenceByTypePort("Structural", is.structNouns.get(0),true);
                 if (portSentence !=null)
                     for (String portName: portSentence.structNouns){
+//                        System.out.println("Property: " +p.name + " Property XMI: " + p.xmiID);
+//                        System.out.println("Property Owner: " + components.getPropertyByXMI(p.xmiID).ownerXMI);
+//                        System.out.println(("Port Name: " + portName));
                         components.createPortProperties(portName, generateXMI_ID("other"), p.name,p.xmiID,
-                                generatePropertyTypeID(components.getPortXMI(portName,components.getBlockXMI(p.name))));
+                                generatePropertyTypeID(components.getPortXMI(portName,components.getPropertyByXMI(p.xmiID).ownerXMI)));
                     }
             }
         }
@@ -191,7 +189,6 @@ public class CreateXmlFileDemo {
 //                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
 //                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
 //                                System.out.println(" \n\n");
-
                             srcPort = components.getPortProperty(src,s.structNoun);
                             components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,
                                     components.getPortXMI(dest, components.getBlockXMI(s.connectionNoun)));
@@ -614,25 +611,44 @@ public class CreateXmlFileDemo {
 
         Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
 
-        for(String p: properties){
-//            System.out.println(components.getProperty(p,noun).name);
-            Element tag_6 = generateElement(doc,diagramElement,"UML:DiagramElement","");
-            generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
-            generateAttribute(doc,tag_6,"subject", components.getProperty(p,noun).xmiID);
+        System.out.println("IBD: "+ noun);
+        Block b = components.getBlock(noun);
+        System.out.println(b.name);
+        components.g
 
-            for(Port port: components.ports){
-                System.out.println("Port: "+ port.name +" " + " "+ port.xmiID + " "+ components.getPortXMI(port.name,components.getBlockXMI(p)));
-                System.out.println(p);
-                String portXMI = components.getPortXMI(port.name,components.getBlockXMI(p));
-                int count = 0;
-                if(portXMI != null && count<=0){
-                    Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
-                    generateAttribute(doc,tag_7,"geometry", "Left=699;Top=129;Right=714;Bottom=144;");
-                    generateAttribute(doc,tag_7,"subject", portXMI);
-                    count++;
-                }
+        Element tag_6 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+        generateAttribute(doc, tag_6, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+//        generateAttribute(doc, tag_6, "subject", components.getProperty(p, noun).xmiID);
+
+        for(String p: properties){
+//            System.out.println(p);
+            if(components.getProperty(p,noun) != null) {
+
+//            System.out.println(components.getProperty(p,noun).name);
+                Element tag_7 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+                generateAttribute(doc, tag_7, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+                generateAttribute(doc, tag_7, "subject", components.getProperty(p, noun).xmiID);
+            } else{
+                Element tag_7 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+                generateAttribute(doc, tag_7, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+                generateAttribute(doc, tag_7, "subject", components.getPropertyXMI(p));
+            }
+//            components.getPortXMI()
+//            if(Objects.equals(p, noun)){
+//                System.out.println("Yes");
+//            }
+//                System.out.println("Port: "+ port.name +" " + " "+ port.xmiID + " "+ components.getPortXMI(port.name,components.getBlockXMI(p)));
+//                System.out.println(p);
+//                String portXMI = components.getPortXMI(port.name,components.getBlockXMI(p));
+//                if(portXMI != null && count<=0){
+//                    Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
+//                    generateAttribute(doc,tag_7,"geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+//                    generateAttribute(doc,tag_7,"subject", portXMI);
+//                    count++;
+//                }
 //                Port ports = components.getPortXMI(p)
             }
+            System.out.println(" ");
 
 //            for(PortProperty portProperty: components.portProperties){
 //                PortProperty pProperty = components.getPortProperty(portProperty.name,p);
@@ -701,4 +717,3 @@ public class CreateXmlFileDemo {
 ////        return output;
     }
 
-}

@@ -52,6 +52,14 @@ public class SysMLComponent {
         return null;
     }
 
+    public Block getBlock(String name){
+        for(Block block: blocks){
+            if(block.name.equals((name))){
+                return block;
+            }
+        }
+        return null;
+    }
     // Get Property Owner XMI based on the ownerName
     // Assumption: Owner Names are unique (Blocks)
     public String getPropertyOwnerXMI(String ownerName){
@@ -72,6 +80,16 @@ public class SysMLComponent {
         }
         return null;
     }
+
+    public String getPort(String name, String ownerXMI) {
+        for (Port port : ports) {
+            if (port.name.equals(name) && port.ownerXMI.equals(ownerXMI)) {
+                return port;
+            }
+        }
+        return null;
+    }
+
     public String getPortXMI(String name, String ownerXMI) {
         for (Port port : ports) {
             if (port.name.equals(name) && port.ownerXMI.equals(ownerXMI)) {
