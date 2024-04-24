@@ -493,22 +493,7 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_5,"tag","propertyType");
         generateAttribute(doc,tag_5,"value","{"+xmiPropertyTypeID+"}");
     }
-//    public String generateClassifier_Flow(String noun, String xmiId, String xmiPackageId, String xmiOwnerId, String xmiIdBoolean) {
-//        String output = "\t<UML:ClassifierRole name =\"" + noun + "\" xmi.id =\"" + xmiId + "\" base =\"" + xmiPackageId + "\">\n" +
-//                "\t\t<UML:ModelElement.stereotype>\n"+
-//                "\t\t\t<UML:Stereotype name=\"FlowProperty\"/>" +
-//                "\t\t</UML:ModelElement.stereotype>"+
-//                "\t\t<UML:ModelElement.taggedValue>\n" +
-//                "\t\t\t<UML:TaggedValue tag=\"ea_stype\" value=\"Part\"/>\n" +
-//                "\t\t\t<UML:TaggedValue tag= \"package\" value=\"" + xmiPackageId + "/>\n" +
-//                "\t\t\t<UML:TaggedValue tag=\"owner\" value = \"" + xmiOwnerId + "\">\n" +
-//                "\t\t\t<UML:TaggedValue tag=\"package_name\" value=\"One Level Block Hierarchy\"/>\n" +
-//                "\t\t\t<UML:TaggedValue tag=\"stereotype\" value=\"FlowProperty\">"+
-//                "\t\t\t<UML:TaggedValue tag=\"propertyType\" value=\"{" + xmiIdBoolean + "}\"/>\n" +
-//                "\t\t</UML:ModelElement.taggedValue>\n" +
-//                "\t</UML:ClassifierRole>\n";
 //
-//        return output;
 //    }
 
 //    public String generateIBD(String noun, String xmiId, String xmiPackageId, String xmiOwnerId, String xmiIdBoolean, String xmiIdCollaboration) {
@@ -525,10 +510,6 @@ public class CreateXmlFileDemo {
 //        return output;
 //    }
 
-//    public String generateDirection(String xmiId, String direction){
-//        String output = "\t<UML:TaggedValue tag=\"direction\" xmi.id=\"" + xmiId + "\" value=\"" + direction + "#NOTES#Values: in,out,inout,none;\" modelElement=\"" + xmiId+ "\"/>\n";
-//        return output;
-//    }
 
     public void generateEncapsulation(Document doc, Element content, String xmiId, String modelXMI_ID){
         Element tag = generateElement(doc,content,"UML:TaggedValue","");
@@ -639,21 +620,31 @@ public class CreateXmlFileDemo {
             generateAttribute(doc,tag_6,"geometry","Left=699;Top=129;Right=714;Bottom=144;");
             generateAttribute(doc,tag_6,"subject", components.getProperty(p,noun).xmiID);
 
-//            for(Port port: components.ports){
-////                Port ports = components.getPortXMI(p)
-//            }
-
-            for(PortProperty portProperty: components.portProperties){
-                PortProperty pProperty = components.getPortProperty(portProperty.name,p);
-                if(pProperty != null) {
-                    System.out.println("Not null: " + pProperty.name);
-
-                }else{
-                    System.out.println("null: " + portProperty.name);
+            for(Port port: components.ports){
+                System.out.println("Port: "+ port.name +" " + " "+ port.xmiID + " "+ components.getPortXMI(port.name,components.getBlockXMI(p)));
+                System.out.println(p);
+                String portXMI = components.getPortXMI(port.name,components.getBlockXMI(p));
+                int count = 0;
+                if(portXMI != null && count<=0){
+                    Element tag_7 = generateElement(doc,diagramElement,"UML:DiagramElement","");
+                    generateAttribute(doc,tag_7,"geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+                    generateAttribute(doc,tag_7,"subject", portXMI);
+                    count++;
                 }
-//                String port = components.;
-//                System.out.println("Ports for " + p + " :" + components.getPropertyXMI());
+//                Port ports = components.getPortXMI(p)
             }
+
+//            for(PortProperty portProperty: components.portProperties){
+//                PortProperty pProperty = components.getPortProperty(portProperty.name,p);
+//                if(pProperty != null) {
+//                    System.out.println("Not null: " + pProperty.name);
+//
+//                }else{
+//                    System.out.println("null: " + portProperty.name);
+//                }
+////                String port = components.;
+////                System.out.println("Ports for " + p + " :" + components.getPropertyXMI());
+//            }
         }
 
 
