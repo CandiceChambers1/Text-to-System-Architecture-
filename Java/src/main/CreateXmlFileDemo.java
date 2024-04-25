@@ -31,12 +31,13 @@ public class CreateXmlFileDemo {
             if (Objects.equals(s.sentenceType, "Structural")) {
 
                 if (s.isInternal) {
-
-
+                    components.getBlock(s.structNoun).diagramID = generateXMI_ID("other");
+//                    System.out.println(s.structNoun);
                     for (String name: s.structNouns) {
                         if(components.getBlockXMI(name) !=null){
-//                        System.out.println(s.structNoun + " " +name)
+//                        System.out.println(s.structNoun);
                             components.createProperties(name, generateXMI_ID("other"), s.structNoun, components.getBlockXMI(s.structNoun), generatePropertyTypeID(components.getBlockXMI(name)));
+                            components.getBlock(name).diagramID = generateXMI_ID("other");
 //                            if(debug)
 //                                System.out.println("Property: "+name);
                         }
@@ -102,7 +103,7 @@ public class CreateXmlFileDemo {
 
         // Generating the XML Code for the SysML Blocks
         for (Block b : components.blocks) {
-            generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.xmiID, sentences.getSentenceByStructNoun(b.name).isInternal);
+            generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.xmiID,b.diagramID,sentences.getSentenceByStructNoun(b.name).isInternal);
 //            if(debug)
 //                System.out.println("Generated Block: "+b.name + " " + sentences.getSentenceByStructNoun(b.name).isInternal);
         }
@@ -362,7 +363,7 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_5,"tag","reusesProperty");
         generateAttribute(doc,tag_5,"value","{"+reuseProperty+"}");
     }
-    public void generateBlock(Document doc, Element namespace, String noun, String xmiPackageID, String xmiID, boolean isInternal ){
+    public void generateBlock(Document doc, Element namespace, String noun, String xmiPackageID, String xmiID, String diagramID, boolean isInternal ){
 
         Element umlClass = generateElement(doc,namespace,"UML:Class", "");
         generateAttribute(doc,umlClass,"name",noun);
@@ -392,10 +393,14 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_4,"value","block");
 
         if(isInternal){
-            diagramID = generateXMI_ID("other");
             Element tag_5 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
-            generateAttribute(doc,tag_5,"tag","diagram");
-            generateAttribute(doc,tag_5,"value",diagramID);
+            generateAttribute(doc,tag_5,"tag","ea_ntype");
+            generateAttribute(doc,tag_5,"value","8");
+
+//            diagramID = generateXMI_ID("other");
+            Element tag_6 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
+            generateAttribute(doc,tag_6,"tag","diagram");
+            generateAttribute(doc,tag_6,"value",diagramID);
 
         }
     }
@@ -516,11 +521,13 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag,"modelElement",modelXMI_ID);
     }
     public void generateDiagram(Document doc, Element root,String xmiID, String xmiPackage) {
+        int ea_localid = 2;
         generateDiagramBDD(doc,root,xmiID,xmiPackage);
         for(Sentence s: sentences.sentences) {
             if (s.isInternal) {
 //                System.out.println("IBD: " + s.structNoun + " Properties: " + s.structNouns + " " + diagramID + " " + components.getBlockXMI(s.structNoun));
-                generateDiagramIBD(doc,root,s.structNoun, s.structNouns, diagramID,xmiPackage, components.getBlockXMI(s.structNoun));
+                generateDiagramIBD(doc,root,s.structNoun, s.structNouns, components.getBlock(s.structNoun).diagramID,xmiPackage, components.getBlockXMI(s.structNoun),ea_localid);
+                ea_localid++;
             }
         }
     }
@@ -578,7 +585,7 @@ public class CreateXmlFileDemo {
 
     }
 
-    public void generateDiagramIBD(Document doc, Element root, String noun, ArrayList<String> properties, String xmiId, String xmiPackage,String parentXmi){
+    public void generateDiagramIBD(Document doc, Element root, String noun, ArrayList<String> properties, String xmiId, String xmiPackage,String parentXmi, int ea_localid){
 
         Element diagram = generateElement(doc,root,"UML:Diagram","");
         generateAttribute(doc,diagram,"name",noun);
@@ -598,8 +605,8 @@ public class CreateXmlFileDemo {
         generateAttribute(doc,tag_2,"value","CompositeStructure");
 
         Element tag_3 = generateElement(doc,model,"UML:TaggedValue","");
-        generateAttribute(doc,tag_3,"tag","ea_localid");
-        generateAttribute(doc,tag_3,"value","4");
+        generateAttribute(doc,tag_3,"tag", "ea_localid");
+        generateAttribute(doc,tag_3,"value",String.valueOf(ea_localid));
 
         Element tag_4 = generateElement(doc,model,"UML:TaggedValue","");
         generateAttribute(doc,tag_4,"tag","parent");
@@ -613,13 +620,12 @@ public class CreateXmlFileDemo {
 
         System.out.println("IBD: "+ noun);
         Block b = components.getBlock(noun);
-        System.out.println(b.name);
-        components.g
-
-        Element tag_6 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
-        generateAttribute(doc, tag_6, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
-//        generateAttribute(doc, tag_6, "subject", components.getProperty(p, noun).xmiID);
-
+        ArrayList<Port> blocks_ports =  components.getListPort(b.xmiID);
+        for(Port bp: blocks_ports) {
+            Element tag_6 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+            generateAttribute(doc, tag_6, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+            generateAttribute(doc, tag_6, "subject", bp.xmiID);
+        }
         for(String p: properties){
 //            System.out.println(p);
             if(components.getProperty(p,noun) != null) {
@@ -628,10 +634,24 @@ public class CreateXmlFileDemo {
                 Element tag_7 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
                 generateAttribute(doc, tag_7, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
                 generateAttribute(doc, tag_7, "subject", components.getProperty(p, noun).xmiID);
+
+
+                ArrayList<PortProperty> propertyPort = components.getListPortProperty(components.getProperty(p, noun).xmiID);
+                for(PortProperty pp: propertyPort){
+                    Element tag_8 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+                    generateAttribute(doc, tag_8, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+                    generateAttribute(doc, tag_8, "subject", pp.xmiID);
+                }
             } else{
                 Element tag_7 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
                 generateAttribute(doc, tag_7, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
                 generateAttribute(doc, tag_7, "subject", components.getPropertyXMI(p));
+                ArrayList<PortProperty> propertyPort = components.getListPortProperty(components.getPropertyXMI(p));
+                for(PortProperty pp: propertyPort){
+                    Element tag_8 = generateElement(doc, diagramElement, "UML:DiagramElement", "");
+                    generateAttribute(doc, tag_8, "geometry", "Left=699;Top=129;Right=714;Bottom=144;");
+                    generateAttribute(doc, tag_8, "subject", pp.xmiID);
+                }
             }
 //            components.getPortXMI()
 //            if(Objects.equals(p, noun)){

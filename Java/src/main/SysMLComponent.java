@@ -81,13 +81,14 @@ public class SysMLComponent {
         return null;
     }
 
-    public String getPort(String name, String ownerXMI) {
+    public ArrayList<Port> getListPort(String ownerXMI) {
+        ArrayList<Port> p = new ArrayList<Port>();
         for (Port port : ports) {
-            if (port.name.equals(name) && port.ownerXMI.equals(ownerXMI)) {
-                return port;
+            if (port.ownerXMI.equals(ownerXMI)) {
+                p.add(port);
             }
         }
-        return null;
+        return p;
     }
 
     public String getPortXMI(String name, String ownerXMI) {
@@ -106,6 +107,16 @@ public class SysMLComponent {
             }
         }
         return null;
+    }
+
+    public ArrayList<PortProperty> getListPortProperty(String ownerXMI) {
+        ArrayList<PortProperty> p = new ArrayList<PortProperty>();
+        for (PortProperty portProperty : portProperties) {
+            if (portProperty.ownerXMI.equals(ownerXMI)) {
+                p.add(portProperty);
+            }
+        }
+        return p;
     }
 
     public Property getProperty(String name, String ownerName) {
