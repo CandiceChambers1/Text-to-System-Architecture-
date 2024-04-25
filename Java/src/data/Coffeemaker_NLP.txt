@@ -33,6 +33,8 @@ BASKET_ASSEMBLY consists port_components : IN_M1 , IN_M2 and OUT_M.
 VALVE consists port_components : IN_LIQ1 and OUT_LIQ1.
 BASKET consists port_components : IN_S1 , IN_LIQ1 and OUT_LIQ2.
 FILTER consists port_components : IN_S1 , IN_LIQ1 , OUT_S2 and OUT_LIQ2.
+
+
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M1 and IN_M1.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_M2 and IN_M2.
 COFFEEMAKER connected to COOKING_UNIT port_components IN_E and IN_E.

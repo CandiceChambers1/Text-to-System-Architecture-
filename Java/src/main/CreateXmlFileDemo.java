@@ -155,6 +155,7 @@ public class CreateXmlFileDemo {
 //            if (debug)
 //                System.out.println("Generated Classifier Ports: "+ pp.name);
         }
+        int count = 0;
         // Creating the Association for IBDs
         for(Sentence s: sentences.sentences){
             if(Objects.equals(s.sentenceType, "Connection")){
@@ -166,35 +167,83 @@ public class CreateXmlFileDemo {
                         dest = nouns.get(i + 1);
 
                         PortProperty srcPort,destPort;
-                        if(components.getPropertyXMI(s.structNoun) != null && components.getPropertyXMI(s.connectionNoun) != null){
-//                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
-//                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
-//                                System.out.println("Source Port XMI: " + components.getPortProperty(src,s.structNoun).xmiID );
-//                                System.out.println(" \n\n");
+//                        System.out.println("Source: " + s.structNoun + " Dest: " + s.connectionNoun);
+//                        System.out.println(src + " " + dest);
 
-                            srcPort = components.getPortProperty(src,s.structNoun);
-                            destPort = components.getPortProperty(dest,s.connectionNoun);
-                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,destPort.xmiID);
-//                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
-                        } else if(components.getPropertyXMI(s.structNoun) == null) {
-//                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPortXMI(src)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
-//                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
-//                                System.out.println(" \n\n");
+//                        int count = 0;
+                        System.out.println("\n"+ s.structNoun + " " + s.connectionNoun);
+                        for(Sentence s1: sentences.sentences){
+                            if (s1.isInternal) {
+//                                System.out.println(s1.structNoun +"    "+ s1.structNouns);
 
-                            destPort = components.getPortProperty(dest,s.connectionNoun);
-                            components.createAssociation(generateXMI_ID("other"),src,
-                                    components.getPortXMI(src, components.getBlockXMI(s.structNoun)),dest,destPort.xmiID);
-//                            generateAssociation(doc,namespaceContent,src,dest, components.getPortXMI(src), destPort.xmiID);
+                                if(s1.structNouns.contains(s.structNoun) && s1.structNouns.contains(s.connectionNoun)){
+                                    Property sourceProperty = components.getProperty(s.structNoun, s1.structNoun);
+                                    Property destProperty = components.getProperty(s.connectionNoun, s1.structNoun);
+                                    srcPort = components.getPortProperty(src,sourceProperty.name);
+                                    destPort = components.getPortProperty(dest,destProperty.name);
 
-                        } else if (components.getPropertyXMI(s.connectionNoun) == null){
-//                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
-//                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
-//                                System.out.println(" \n\n");
-                            srcPort = components.getPortProperty(src,s.structNoun);
-                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,
-                                    components.getPortXMI(dest, components.getBlockXMI(s.connectionNoun)));
-//                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID, components.getPortXMI(s.connectionNoun));
+                                    components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, destPort.xmiID);
+                                    break;
+                                } else if (s1.structNoun.equals(s.structNoun) && s1.structNouns.contains(s.connectionNoun)) {
+                                    System.out.println("\nSecond if");
+
+                                    Block srcBlock = components.getBlock(s.structNoun);
+                                    Property destProperty = components.getProperty(s.connectionNoun, s1.structNoun);
+//                                    srcPort = components.getPort(src,srcBlock.name);
+                                    destPort = components.getPortProperty(dest,destProperty.name);
+//                                    System.out.println(srcBlock.name + " " + destProperty.name);
+
+                                    components.createAssociation(generateXMI_ID("other"),src,components.getPortXMI(src,srcBlock.xmiID), dest, destPort.xmiID);
+                                    break;
+                                } else if (s1.structNouns.contains(s.structNoun) && s1.structNoun.equals(s.connectionNoun)) {
+                                    System.out.println("\nThird if");
+                                    Property sourceProperty = components.getProperty(s.structNoun, s1.structNoun);
+                                    Block destBlock = components.getBlock(s.connectionNoun);
+                                    srcPort = components.getPortProperty(src,sourceProperty.name);
+                                    destPort = components.getPortProperty(dest,destBlock.name);
+
+                                    components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, components.getPortXMI(src,destBlock.xmiID));
+//                                    System.out.println(sourceProperty.name + " " + destBlock.name);
+                                    break;
+                                } else{
+//                                    System.out.println("Never");
+
+                                }
+                            }
                         }
+//
+
+//                        Property sourceProperty = components.getProperty(s.structNoun,);
+//                        Property destProperty = components.getProperty(s.connectionNoun, components.getPropertyXMI(s.connectionNoun));
+//                        if(components.getPropertyXMI(s.structNoun) != null && components.getPropertyXMI(s.connectionNoun) != null){
+////                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
+////                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+////                                System.out.println("Source Port XMI: " + components.getPortProperty(src,s.structNoun).xmiID );
+////                                System.out.println(" \n\n");
+//
+//                            srcPort = components.getPortProperty(src,s.structNoun);
+//                            destPort = components.getPortProperty(dest,s.connectionNoun);
+//                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,destPort.xmiID);
+////                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID,destPort.xmiID);
+//                        } else if(components.getPropertyXMI(s.structNoun) == null ) {
+////                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPortXMI(src)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
+////                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+////                                System.out.println(" \n\n");
+//
+////                            destPort = components.getPortProperty(dest,s.connectionNoun);
+////                            components.createAssociation(generateXMI_ID("other"),src,
+////                                    components.getPortXMI(src, components.getBlockXMI(s.structNoun)),dest,destPort.xmiID);
+////                            generateAssociation(doc,namespaceContent,src,dest, components.getPortXMI(src), destPort.xmiID);
+////                            System.out.println("Nothing");
+//                        } else if (components.getPropertyXMI(s.connectionNoun) == null){
+////                                System.out.println("Source Property : " + s.structNoun  +" " +components.getPropertyXMI(s.structNoun)+ "           Destination Property " + s.connectionNoun  + " "+ components.getPropertyXMI(s.connectionNoun));
+////                                System.out.println("Source Port: " + src + "                         Dest Port: " + dest);
+////                                System.out.println(" \n\n");
+//                            srcPort = components.getPortProperty(src,s.structNoun);
+//                            components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID,dest,
+//                                    components.getPortXMI(dest, components.getBlockXMI(s.connectionNoun)));
+////                            generateAssociation(doc,namespaceContent,src,dest,srcPort.xmiID, components.getPortXMI(s.connectionNoun));
+//                        }
                     }
                 }
             }
@@ -618,7 +667,7 @@ public class CreateXmlFileDemo {
 
         Element diagramElement = generateElement(doc,diagram,"UML:Diagram.element","");
 
-        System.out.println("IBD: "+ noun);
+//        System.out.println("IBD: "+ noun);
         Block b = components.getBlock(noun);
         ArrayList<Port> blocks_ports =  components.getListPort(b.xmiID);
         for(Port bp: blocks_ports) {
@@ -668,7 +717,7 @@ public class CreateXmlFileDemo {
 //                }
 //                Port ports = components.getPortXMI(p)
             }
-            System.out.println(" ");
+//            System.out.println(" ");
 
 //            for(PortProperty portProperty: components.portProperties){
 //                PortProperty pProperty = components.getPortProperty(portProperty.name,p);
