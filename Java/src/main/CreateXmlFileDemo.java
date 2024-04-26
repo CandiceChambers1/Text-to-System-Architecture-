@@ -202,7 +202,7 @@ public class CreateXmlFileDemo {
                                     srcPort = components.getPortProperty(src,sourceProperty.name);
                                     destPort = components.getPortProperty(dest,destBlock.name);
 
-                                    components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, components.getPortXMI(src,destBlock.xmiID));
+                                    components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, components.getPortXMI(dest,destBlock.xmiID));
 //                                    System.out.println(sourceProperty.name + " " + destBlock.name);
                                     break;
                                 } else{
