@@ -185,7 +185,7 @@ public class CreateXmlFileDemo {
                                     components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, destPort.xmiID);
                                     break;
                                 } else if (s1.structNoun.equals(s.structNoun) && s1.structNouns.contains(s.connectionNoun)) {
-                                    System.out.println("\nSecond if");
+//                                    System.out.println("\nSecond if");
 
                                     Block srcBlock = components.getBlock(s.structNoun);
                                     Property destProperty = components.getProperty(s.connectionNoun, s1.structNoun);
@@ -196,7 +196,7 @@ public class CreateXmlFileDemo {
                                     components.createAssociation(generateXMI_ID("other"),src,components.getPortXMI(src,srcBlock.xmiID), dest, destPort.xmiID);
                                     break;
                                 } else if (s1.structNouns.contains(s.structNoun) && s1.structNoun.equals(s.connectionNoun)) {
-                                    System.out.println("\nThird if");
+//                                    System.out.println("\nThird if");
                                     Property sourceProperty = components.getProperty(s.structNoun, s1.structNoun);
                                     Block destBlock = components.getBlock(s.connectionNoun);
                                     srcPort = components.getPortProperty(src,sourceProperty.name);
