@@ -171,7 +171,7 @@ public class CreateXmlFileDemo {
 //                        System.out.println(src + " " + dest);
 
 //                        int count = 0;
-                        System.out.println("\n"+ s.structNoun + " " + s.connectionNoun);
+//                        System.out.println("\n"+ s.structNoun + " " + s.connectionNoun);
                         for(Sentence s1: sentences.sentences){
                             if (s1.isInternal) {
 //                                System.out.println(s1.structNoun +"    "+ s1.structNouns);
