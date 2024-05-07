@@ -93,16 +93,19 @@ public class SysMLComponent {
 
     public String getPortXMI(String name, String ownerXMI) {
         for (Port port : ports) {
+//            System.out.println(port.name + " "+ name);
+//            System.out.println(port.ownerXMI + " " + ownerXMI);
             if (port.name.equals(name) && port.ownerXMI.equals(ownerXMI)) {
+//                System.out.println("Here");
                 return port.xmiID;
             }
         }
         return null;
     }
-    public PortProperty getPortProperty(String name, String ownerName) {
+    public PortProperty getPortProperty(String name, String ownerXMI) {
 
         for (PortProperty portProperty : portProperties) {
-            if (portProperty.name.equals(name) && portProperty.ownerName.equals(ownerName)) {
+            if (portProperty.name.equals(name) && portProperty.ownerXMI.equals(ownerXMI)) {
                 return portProperty;
             }
         }
@@ -121,6 +124,7 @@ public class SysMLComponent {
 
     public Property getProperty(String name, String ownerName) {
         for (Property property : properties) {
+//            System.out.println(property.name + " "+ property.ownerName);
             if (property.name.equals(name) && property.ownerName.equals(ownerName)) {
                 return property;
             }
