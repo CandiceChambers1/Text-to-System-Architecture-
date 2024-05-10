@@ -210,7 +210,8 @@ public class CreateXmlFileDemo {
                                     srcPort = components.getPortProperty(src,sourceProperty.xmiID);
                                     destPort = components.getPortProperty(dest,destProperty.xmiID);
 //                                    System.out.println("Source Noun: " +s.structNoun+ " Source: " + src + " "+ srcPort.xmiID);
-//                                    System.out.println("Connection Noun: " + s.connectionNoun +" Destination: " + dest + " "+ destPort.xmiID);
+//
+//                                    System.out.println("Connection Noun: " + s.connectionNoun +" Destination: " + dest + " ");
                                     components.createAssociation(generateXMI_ID("other"),src,srcPort.xmiID, dest, destPort.xmiID);
 //                                    System.out.println("\n\n");
                                     break;
