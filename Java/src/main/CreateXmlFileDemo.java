@@ -105,7 +105,7 @@ public class CreateXmlFileDemo {
 
         // Generating the XML Code for the SysML Blocks
         for (Block b : components.blocks) {
-            System.out.println("Block: " + b.name + " XMI: " + b.xmiID);
+//            System.out.println("Block: " + b.name + " XMI: " + b.xmiID);
             generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.xmiID,b.diagramID,sentences.getSentenceByStructNoun(b.name).isInternal);
 //            if(debug)
 //                System.out.println("Generated Block: "+b.name + " " + sentences.getSentenceByStructNoun(b.name).isInternal);
@@ -129,16 +129,16 @@ public class CreateXmlFileDemo {
 
         // Creating the Ports for Classifier Roles
         Sentence portSentence;
-        for (Property p : components.properties){
-            portSentence= sentences.getSentenceByTypePort("Structural",p.name,true);
+        for (Property p : components.properties) {
+            portSentence = sentences.getSentenceByTypePort("Structural", p.name, true);
             Sentence is = sentences.getSentenceByTypeName("Instantiation", p.name);
             // If the properties are blocks (instantiate themselves)
-            if (portSentence !=null)
-                for (String portName: portSentence.structNouns) {
+            if (portSentence != null){
+                for (String portName : portSentence.structNouns) {
                     components.createPortProperties(portName, generateXMI_ID("other"), p.name, p.xmiID,
-                            generatePropertyTypeID(components.getPortXMI(portName,components.getBlockXMI(p.name))));
+                            generatePropertyTypeID(components.getPortXMI(portName, components.getBlockXMI(p.name))));
                 }
-            else {
+            } else {
                 // If the properties aren't block (instantiate other blocks)
                 portSentence = sentences.getSentenceByTypePort("Structural", is.structNouns.get(0),true);
                 if (portSentence !=null)
@@ -202,7 +202,7 @@ public class CreateXmlFileDemo {
 //                                System.out.println(s1.structNoun +"    "+ s1.structNouns);
 
                                 if(s1.structNouns.contains(s.structNoun) && s1.structNouns.contains(s.connectionNoun)){
-                                    System.out.println("Source: "+ src+ " Owner: "+ s.structNoun + " Owner-owner: " + s1.structNoun);
+//                                    System.out.println("Source: "+ src+ " Owner: "+ s.structNoun + " Owner-owner: " + s1.structNoun);
                                     Property sourceProperty = components.getProperty(s.structNoun, s1.structNoun);
 
 //                                    System.out.println(sourceProperty.name);
@@ -220,8 +220,8 @@ public class CreateXmlFileDemo {
                                     Block srcBlock = components.getBlock(s.structNoun);
                                     Property destProperty = components.getProperty(s.connectionNoun, s1.structNoun);
 //                                    srcPort = components.getPort(src,srcBlock.name);
-                                    System.out.println("Source Noun: "+ s1.structNoun +" Connection noun: " + s.connectionNoun);
-                                    System.out.println(destProperty.name + " " + destProperty.xmiID);
+//                                    System.out.println("Source Noun: "+ s1.structNoun +" Connection noun: " + s.connectionNoun);
+//                                    System.out.println(destProperty.name + " " + destProperty.xmiID);
                                     destPort = components.getPortProperty(dest,destProperty.xmiID);
 //                                    System.out.println(srcBlock.name + " " + destProperty.name);
 
@@ -482,6 +482,10 @@ public class CreateXmlFileDemo {
             Element tag_6 = generateElement(doc,modelElementTag,"UML:TaggedValue","");
             generateAttribute(doc,tag_6,"tag","diagram");
             generateAttribute(doc,tag_6,"value",diagramID);
+
+            Element tag_7 = generateElement(doc,modelElementTag, "UML:TaggedValue", "");
+            generateAttribute(doc,tag_7,"tag","$ea_xref_property");
+            generateAttribute(doc,tag_7,"value", "$XREFPROP=$XID={FFA1F5BF-8E6E-4d74-B245-DDDF2BD5BEE9}$XID;$NAM=DefaultDiagram$NAM;$TYP=element property$TYP;$SUP={" + generatePropertyTypeID(diagramID) + "}$SUP;$ENDXREF;");
 
         }
     }
