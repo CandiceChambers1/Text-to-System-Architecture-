@@ -4,6 +4,7 @@ public class Block {
     String name;
     String xmiID;
 //    String ownerXMI;
+    String diagramID = " ";
     public Block(String name, String xmiID){
         this.name=name;
         this.xmiID=xmiID;
