@@ -1,59 +1,53 @@
-The ASS consists of an Active Standby System, a Side, a Sub Demux, a Side Mux, a Side Demux, a Monitor, an Active Side
-Logic and a Bus.
-The Active Standby System consists of internal components: Side1, Side2, Bus12 and Bus21.
-The Active Standby System consists of ports: Manual Selection, Primary Side, Side1Failed, Side2Failed,
-Side1SubSystemStatus, and Side2SubSystemStatus.
-The Side consists of internal components: Active Side Logic, Mon, Other Side, Other Sub, This Side  and This Sub.
-The Side consists of ports Manual Selection, ThisSideSubSystemStatus, OtherSideSubSystemStatus, CLK, PrimarySide,
-OtherSideStatus, ThisSideStatus and ThisSideFailed.
+The ASS consists of a Bus, a Side, a Sub Demux, a Side Mux, an Active Standby System, a Side Demux, a Monitor and Active Side Logic.
 The Bus consists of ports: In, Out and CLK.
-The Sub Demux consists of ports: SubSystemStatus, SubAStatus and SubNStatus.
-The Side Mux consists of ports: Failed, Active, ThisSideFullyAvail, OtherSideFullyAvail and Status.
-The Side DeMux consists of ports: Failed, Active, ThisSideFullyAvail, OtherSideFullyAvail and Status.
-The Monitor consists of ports: ThisSideFullyAvail, OtherSideFullyAvail, ThisSideSubAStatus, ThisSideSubNStatus,
-OtherSideSubAStatus and OtherSideSubNStatus.
-The ActiveSideLogic consists of ports: ThisMonThisSideFullyAvail, ThisMonOtherSideFullyAvail, ThisSideActive,
-OtherMonOtherSideFullyAvail, OtherMonThisSideFullyAvail, OtherSideFailed, ThisSideFailed, riseManualSelection,
-OtherSideFailed and riseOtherSideActive.
+The Sub Demux consists of ports: Sub System Status, Sub A Status and Sub N Status.
+The Side consists of internal components: Active Side Logic 1, Mon, Other Side Demux, Other Sub Demux, This Side Mux and This Sub Demux.
+The Side consists of ports Manual Selection, This Side Sub System Status, Other Side Sub System Status, This Side Failed, Primary Side, Other Side Status, This Side Status and CLK.
+The Side Mux consists of ports: Failed, Active, This Side Fully Avail, Other Side Fully Avail and Status.
+The Active Standby System consists of internal components: Side1, Side2, Bus12 and Bus21.
+The Active Standby System consists of ports: Manual Selection, Primary Side, Side1 Failed, Side2 Failed, Side1 Sub System Status and Side2 Sub System Status.
+The Monitor consists of ports: This Side Sub A Status, This Side Sub N Status, Other Side Sub A Status, Other Side Sub N Status, This Side Fully Avail and Other Side Fully Avail.
+The Side DeMux consists of ports: Failed, Active, This Side Fully Avail, Other Side Fully Avail and Status.
+The ActiveSideLogic consists of ports: This Mon This Side Fully Avail, This Mon Other Side Fully Avail, Other Mon This Side Fully Avail, Other Mon Other Side Fully Avail, This Side Failed, Rise Manual Selection, Other Side Failed, Rise Other Side Active and This Side Active.
 The Side1 instantiates a Side.
 The Side2 instantiates a Side.
 The Bus12 instantiates a Bus.
 The Bus21 instantiates a Bus.
-The Active Side Logic instantiates an Active Side Logic.
+The Active Side Logic 1 instantiates an Active Side Logic.
 The Mon instantiates a Monitor.
-The Other Side instantiates a Side Demux.
-The Other Sub instantiates a Sub Demux.
-The This Side instantiates a Side Mux.
-The This Sub instantiates a Sub Demux.
+The Other Side Demux instantiates a Side Demux.
+The Other Sub Demux instantiates a Sub Demux.
+The This Side Mux instantiates a Side Mux.
+The This Sub Demux instantiates a Sub Demux.
 The Active Standby System is connected to the Side1 by the ports Manual Selection and Manual Selection.
-The Active Standby System is connected to the Side1 by the ports Side1SubSystemStatus and ThisSideSubSystemStatus.
-The Active Standby System is connected to the Side1 by the ports Side1Failed and ThisSideFailed.
+The Active Standby System is connected to the Side1 by the ports Side1 Sub System Status and This Side Sub System Status.
+The Active Standby System is connected to the Side1 by the ports Side1 Failed and This Side Failed.
 The Active Standby System is connected to the Side1 by the ports Primary Side and Primary Side.
 The Active Standby System is connected to the Side2 by the ports Manual Selection and Manual Selection.
-The Active Standby System is connected to the Side2 by the ports Side2SubSystemStatus and ThisSideSubSystemStatus.
-The Active Standby System is connected to the Side2 by the ports Side2Failed and ThisSideFailed.
+The Active Standby System is connected to the Side2 by the ports Side2 Sub System Status and This Side Sub System Status.
+The Active Standby System is connected to the Side2 by the ports Side2 Failed and This Side Failed.
 The Active Standby System is connected to the Side2 by the ports Primary Side and Primary Side.
-The Side1 is connected to the Bus12 by the ports ThisSideStatus and In.
-The Bus12 is connected to the Side2 by the ports Out and OtherSideSubSystemsStatus.
-The Side2 is connected to the Bus21 by the ports ThisSideStatus and In.
-The Bus21 is connected to the Side1 by the ports Out and OtherSideSubSystemStatus.
-The Side is connected to the This Sub by the ports ThisSideSubSystem and SubSystemStatus.
-The Side is connected to the Other Sub by the ports OtherSideSubSystemStatus and SubSystemStatus.
-The Side is connected to the Other Side by the ports OtherSideStatus and SubSystemStatus.
-The Side is connected to the This Side by the ports ThisSideFailed and Failed.
-The Side is connected to the Active Side Logic by the ports ThisSideFailed and ThisSideFailed.
-The Side is connected to the Active Side Logic by the ports Manual Selection and riseManualSelection.
-The This Sub is connected to the Mon by the ports SubAStatus and ThisSideSubAStatus.
-The This Sub is connected to the Mon by the ports SubNStatus and ThisSideSubNStatus.
-The Other Sub is connected to the Mon by the ports SubAStatus and OtherSideSubAStatus.
-The Other Sub is connected to the Mon by the ports SubNStatus and OtherSideSubNStatus.
-The Mon is connected to the This Side by the ports ThisSideFullyAvail and ThisSideFullyAvail.
-The Mon is connected to the This Side by the ports OtherSideFullyAvail and OtherSideFullyAvail.
-The Mon is connected to the Active Side Logic by the ports ThisSideFullyAvail and ThisMonThisSideFullyAvail.
-The Mon is connected to the Active Side Logic by the ports OtherSideFullyAvail and ThisMonOtherSideFullyAvail.
-The Other Side is connected to the Active Side Logic by the ports Active and riseOtherSideActive.
-The Other Side is connected to the Active Side Logic by the ports Failed and OtherSideFailed.
-The Other Side is connected to the Active Side Logic by the ports ThisSideFullyAvail and OtherMonThisSideFullyAvail.
-The Other Side is connected to the Active Side Logic by the ports OtherSideFullyAvail and OtherMonOtherSideFullyAvail.
-The Active Side Logic is connected to the This Side by the ports ThisSideActive and Active.
-The This Side is connected to the Side by the ports Status and ThisSideStatus.
+The Side1 is connected to the Bus12 by the ports This Side Status and In.
+The Bus12 is connected to the Side2 by the ports Out and Other Side Sub System Status.
+The Side2 is connected to the Bus21 by the ports This Side Status and In.
+The Bus21 is connected to the Side1 by the ports Out and Other Side Sub System Status.
+The Side is connected to the This Sub Demux by the ports This Side Sub System Status and Sub System Status.
+The Side is connected to the Other Sub Demux by the ports Other Side Sub System Status and Sub System Status.
+The Side is connected to the Other Side Demux by the ports Other Side Status and Status.
+The Side is connected to the This Side Mux by the ports This Side Failed and Failed.
+The Side is connected to the Active Side Logic 1 by the ports This Side Failed and This Side Failed.
+The Side is connected to the Active Side Logic 1 by the ports Manual Selection and Rise Manual Selection.
+The This Sub Demux is connected to the Mon by the ports Sub A Status and This Side Sub A Status.
+The This Sub Demux is connected to the Mon by the ports Sub N Status and This Side Sub N Status.
+The Other Sub Demux is connected to the Mon by the ports Sub A Status and Other Side Sub A Status.
+The Other Sub Demux is connected to the Mon by the ports Sub N Status and Other Side Sub N Status.
+The Mon is connected to the This Side Mux by the ports This Side Fully Avail and This Side Fully Avail.
+The Mon is connected to the This Side Mux by the ports Other Side Fully Avail and Other Side Fully Avail.
+The Mon is connected to the Active Side Logic 1 by the ports This Side Fully Avail and This Mon This Side Fully Avail.
+The Mon is connected to the Active Side Logic 1 by the ports Other Side Fully Avail and This Mon Other Side Fully Avail.
+The Other Side Demux is connected to the Active Side Logic 1 by the ports Active and Rise Other Side Active.
+The Other Side Demux is connected to the Active Side Logic 1 by the ports Failed and Other Side Failed.
+The Other Side Demux is connected to the Active Side Logic 1 by the ports This Side Fully Avail and Other Mon This Side Fully Avail.
+The Other Side Demux is connected to the Active Side Logic 1 by the ports Other Side Fully Avail and Other Mon Other Side Fully Avail.
+The Active Side Logic 1 is connected to the This Side Mux by the ports This Side Active and Active.
+The This Side Mux is connected to the Side by the ports Status and This Side Status.
