@@ -23,6 +23,7 @@ public class Sentences {
 
     public Sentence getSentenceByStructNoun(String noun){
         for(Sentence sentence: sentences){
+//            System.out.println(sentence.structNoun);
             if(sentence.structNoun.equals(noun)){
                 return sentence;
             }

@@ -1,9 +1,9 @@
-A Handheld Hair Dryer consists of a hairdryer, user interface, a power unit, a propulsion unit, a heating unit, a handle, a body, a heating wires, a power switch, a fan, a heater core, an insulating sleeve, an intake grill, a junction box, a cord, a motor, a power button, a discharge opening, and motor wires.
-The hairdryer consists of internal components: user interface, a power unit, a propulsion unit and a heating unit.
-The hairdryer consists of the ports: In_M, In_E and Out_M.
+A Handheld Hair Dryer consists of a hair dryer, user interface, a power unit, a propulsion unit, a heating unit, a handle, a body, a heating wires, a power switch, a fan, a heater core, an insulating sleeve, an intake grill, a junction box, a cord, a motor, a power button, a discharge opening and motor wires.
+The hair dryer consists of internal components: user interface, a power unit, a propulsion unit and a heating unit.
+The hair dryer consists of the ports: In_M, In_E and Out_M.
 The user interface consists of internal components: handle and a body.
 The user interface consists of the ports: In_E, In_M1, In_M2, Out_E, Out_M1 and Out_M2.
-The handle consists of internal componenets: a power button.
+The handle consists of internal components: a power button.
 The power button consists of the ports: In_E and Out_E.
 The handle consists of the ports: In_E and Out_E.
 The power unit consists of internal components: a cord, a power switch, a junction box, a heating wires and a motor wires.
@@ -25,42 +25,42 @@ The body consists of internal components: an intake grill and a discharge openin
 The body consists of the ports: In_M1, In_M2, Out_M1 and Out_M2.
 The intake grill consists of the ports: In_M and Out_M.
 The discharge opening consists of the ports: In_M and Out_M.
-The hair dryer is connected to the user interface by the ports: In_E and In_E.
-The hair dryer is connected to the user interface by the ports: In_M and In_M1.
-The hair dryer is connected to the power unit by the ports: In_E and In_E1.
-The heating unit is connected to the user interface by the ports: Out_M and In_M2.
-The user interface is connected to the propulsion unit by the ports: Out_M1 and In_M.
-The user interface is connected to the hair dryer by the ports: Out_M2 and Out_M.
-The user interface is connected to the power unit by the ports: Out_E and In_E2.
-The power unit is connected to the propulsion unit by the ports: Out_E1 and In_E.
-The power unit is connected to the heating unit by the ports: Out_E2 and In_E.
-The propulsion unit is connected to the heating unit by the ports: Out_M and In_M.
-The user interface is connected to the handle by the ports: In_E and In_E.
-The handle is connected to the user interface by the ports: Out_E and Out_E.
-The user interface is connected to the body by the ports: In_M1 and In_M1.
-The body is connected to the user interface by the ports: Out_M1 and Out_M1.
-The user interface is connected to the body by the ports: In_M2 and In_M2.
-The body us connected to the user interface by the ports: Out_M2 and Out_M2.
-The handle is connected to the power button by the ports: In_E and In_E.
-The power button is connected to the handle by the ports: Out_E and Out_E.
-The body is connected to the intake grill by the ports: In_M1 and In_M.
-The intake grill is connected to the body by the ports: Out_M and Out_M2.
-The body is connected to the discharge opening by the ports: In_M2 and In_M.
-The discharge opening is connected to the body to the ports: Out_M and Out_M1.
-The power unit is connected to the cord by the ports: In_E1 and In_E.
+The hair dryer is connected to the user interface by the ports In_E and In_E.
+The hair dryer is connected to the user interface by the ports In_M and In_M1.
+The hair dryer is connected to the power unit by the ports In_E and In_E1.
+The heating unit is connected to the user interface by the ports Out_M and In_M2.
+The user interface is connected to the propulsion unit by the ports Out_M1 and In_M.
+The user interface is connected to the hair dryer by the ports Out_M2 and Out_M.
+The user interface is connected to the power unit by the ports Out_E and In_E2.
+The power unit is connected to the propulsion unit by the ports Out_E1 and In_E.
+The power unit is connected to the heating unit by the ports Out_E2 and In_E.
+The propulsion unit is connected to the heating unit by the ports Out_M and In_M.
+The user interface is connected to the handle by the ports In_E and In_E.
+The handle is connected to the user interface by the ports Out_E and Out_E.
+The user interface is connected to the body by the ports In_M1 and In_M1.
+The body is connected to the user interface by the ports Out_M1 and Out_M1.
+The user interface is connected to the body by the ports In_M2 and In_M2.
+The body is connected to the user interface by the ports Out_M2 and Out_M2.
+The handle is connected to the power button by the ports In_E and In_E.
+The power button is connected to the handle by the ports Out_E and Out_E.
+The body is connected to the intake grill by the ports In_M1 and In_M.
+The intake grill is connected to the body by the ports Out_M and Out_M2.
+The body is connected to the discharge opening by the ports In_M2 and In_M.
+The discharge opening is connected to the body by the ports Out_M and Out_M1.
+The power unit is connected to the cord by the ports In_E1 and In_E.
 The power unit is connected to the power switch by the ports In_E2 and In_E2.
-The cord is connected to the power switch by the ports: Out_E and In_E1.
-The power switch is connected to the junction box by the ports: Out_E and In_E.
+The cord is connected to the power switch by the ports Out_E and In_E1.
+The power switch is connected to the junction box by the ports Out_E and In_E.
 The junction box is connected to the motor wires by the ports Out_E1 and In_E.
 The junction box is connected to the heating wires by the ports Out_E2 and In_E.
-The motor wires is connected to the power unit by the ports: Out_E and Out_E1.
-The heating wires is connected to the power unit by the ports: Out_E and Out_E2.
-The propulsion unit is connected to the motor by the ports: In_E and In_E.
-The propulsion unit is connected to the fan by the ports: In_M and In_M.
-The motor is connected to the fan by the ports: Out_E and In_E.
-The fan is connected to the propulsion unit by the ports: Out_M and Out_M.
-The fan is connected to the propulsion unit by the ports: Out_E and Out_E.
-The heating unit is connected to the heater core by the ports: In_E and In_E.
-The heating unit is connected to the heater core by the ports: In_M and In_M.
-The heater core is connected to the insulating sleeve by the ports: Out_E and In_E.
-The heater core is connected to the heating unit by the ports: Out_M and Out_M.
+The motor wires is connected to the power unit by the ports Out_E and Out_E1.
+The heating wires is connected to the power unit by the ports Out_E and Out_E2.
+The propulsion unit is connected to the motor by the ports In_E and In_E.
+The propulsion unit is connected to the fan by the ports In_M and In_M.
+The motor is connected to the fan by the ports Out_E and In_E.
+The fan is connected to the propulsion unit by the ports Out_M and Out_M.
+The fan is connected to the propulsion unit by the ports Out_E and Out_E.
+The heating unit is connected to the heater core by the ports In_E and In_E.
+The heating unit is connected to the heater core by the ports In_M and In_M.
+The heater core is connected to the insulating sleeve by the ports Out_E and In_E.
+The heater core is connected to the heating unit by the ports Out_M and Out_M.

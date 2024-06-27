@@ -71,7 +71,7 @@ The brewing unit is connected to the basket assembly by the ports In_M1 and In_M
 The brewing unit is connected to the basket assembly by the ports In_M2 and In_M2.
 The brewing unit is connected to the filter by the ports In_M1 and In_S1.
 The brewing unit is connected to the filter by the ports In_M2 and In_Liq1.
-The basket assembly is connected to the brewing unit by the ports: Out_M and Out M1.
+The basket assembly is connected to the brewing unit by the ports Out_M and Out M1.
 The filter is connected to the brewing unit by the ports Out_S2 and Out_M2.
 The filter is connected to the brewing unit by the ports Out_Liq2 and Out_M1.
 The heater is connected to the coil by the ports In_E and In_E1.

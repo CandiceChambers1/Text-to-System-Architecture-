@@ -1,16 +1,16 @@
-The FCS System consists of a FCS, a FGS, and a Bus.
+The FCS System consists of a FCS, a FGS and a Bus.
 The FCS consists of internal components: Left Side, Right Side, LR and RL.
 The FCS consists of ports: Primary Side and Transfer Switch.
 The FGS consists of ports: Transfer Switch, Primary Side, Pilot Flying, Bus In and CLK.
 The Bus consists of ports: Left, Right and CLK.
-The Left Side instantiates a Side.
-The Right Side instantiates a Side.
+The Left Side instantiates a FGS.
+The Right Side instantiates a FGS.
 The LR instantiates a Bus.
 The RL instantiates a Bus.
 The Left Side is connected to LR by the ports Pilot Flying and Left.
-The RL is connected to Left FGS by the ports Left and Bus In.
-The LR is connected to Right FGS by the ports Right and Bus In.
-The Right FGS is connected to RL by the ports Pilot Flying and Right.
+The RL is connected to Left Side by the ports Left and Bus In.
+The LR is connected to Right Side by the ports Right and Bus In.
+The Right Side is connected to RL by the ports Pilot Flying and Right.
 The FCS is connected to the Left Side by the ports Transfer Switch and Transfer Switch.
 The FCS is connected to the Right Side by the ports Transfer Switch and Transfer Switch.
 The FCS is connected to the Right Side by the ports Primary Side and Primary Side.

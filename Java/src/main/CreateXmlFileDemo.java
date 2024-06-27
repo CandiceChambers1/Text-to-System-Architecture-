@@ -29,7 +29,6 @@ public class CreateXmlFileDemo {
     public void generateTree(){
         for(Sentence s : sentences.sentences){
             if (Objects.equals(s.sentenceType, "Structural")) {
-
                 if (s.isInternal) {
                     components.getBlock(s.structNoun).diagramID = generateXMI_ID("other");
                     for (String name: s.structNouns) {
@@ -105,9 +104,9 @@ public class CreateXmlFileDemo {
 
         // Generating the XML Code for the SysML Blocks
         for (Block b : components.blocks) {
-//            System.out.println("Block: " + b.name + " XMI: " + b.xmiID);
-            generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.xmiID,b.diagramID,sentences.getSentenceByStructNoun(b.name).isInternal);
-//            if(debug)
+            System.out.println("Block: " + b.name + " XMI: " + b.xmiID);
+                generateBlock(doc, namespaceContent, b.name, xmiPackageID, b.xmiID,b.diagramID,sentences.getSentenceByStructNoun(b.name).isInternal);
+//          if(debug)
 //                System.out.println("Generated Block: "+b.name + " " + sentences.getSentenceByStructNoun(b.name).isInternal);
         }
 

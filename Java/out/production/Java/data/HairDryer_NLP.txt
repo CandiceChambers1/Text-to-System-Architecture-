@@ -2,12 +2,12 @@ HANDHELD_HAIR_DRYER consists HAIR_DRYER , USER_INTERFACE , POWER_UNIT , PROPULSI
 HAIR_DRYER consists internal_components : USER_INTERFACE , POWER_UNIT , PROPULSION_UNIT and HEATING_UNIT.
 HAIR_DRYER consists port_components : IN_M , IN_E and OUT_M.
 USER_INTERFACE consists internal_components : HANDLE and BODY.
-USER_INTERFACE consists port_components : IN_E, IN_M1, IN_M2 , OUT_E , OUT_M1 and OUT_M2.
+USER_INTERFACE consists port_components : IN_E , IN_M1 , IN_M2 , OUT_E , OUT_M1 and OUT_M2.
 HANDLE consists internal_components : POWER_BUTTON.
 POWER_BUTTON consists port_components : IN_E and OUT_E.
 HANDLE consists port_components : IN_E and OUT_E.
 POWER_UNIT consists internal_components : CORD , POWER_SWITCH , JUNCTION_BOX , HEATING_WIRES and MOTOR_WIRES.
-POWER_UNIT consists port_components : IN_E1 , IN_E2, OUT_E1 and OUT_E2.
+POWER_UNIT consists port_components : IN_E1 , IN_E2 , OUT_E1 and OUT_E2.
 CORD consists port_components : IN_E and OUT_E.
 POWER_SWITCH consists port_components : IN_E1 , IN_E2 and OUT_E.
 JUNCTION_BOX consists port_components : IN_E , OUT_E1 and OUT_E2.
@@ -17,7 +17,7 @@ PROPULSION_UNIT consists internal_components : MOTOR and FAN.
 PROPULSION_UNIT consists port_components : IN_E , IN_M , OUT_E and OUT_M.
 FAN consists port_components : IN_M , IN_E , OUT_E and OUT_M.
 MOTOR consists port_components : IN_E and OUT_E.
-HEATING_UNIT consists internal_components : HEATER_CORE  and INSULATING_SLEEVE.
+HEATING_UNIT consists internal_components : HEATER_CORE and INSULATING_SLEEVE.
 HEATING_UNIT consists port_components : IN_M , IN_E and OUT_M.
 HEATER_CORE consists port_components : IN_E , IN_M , OUT_M and OUT_E.
 INSULATING_SLEEVE consists port_components : IN_E.
@@ -27,6 +27,7 @@ INTAKE_GRILL consists port_components : IN_M and OUT_M.
 DISCHARGE_OPENING consists port_components : IN_M and OUT_M.
 HAIR_DRYER connected to USER_INTERFACE port_components IN_E and IN_E.
 HAIR_DRYER connected to USER_INTERFACE port_components IN_M and IN_M1.
+HAIR_DRYER connected to POWER_UNIT port_components IN_E and IN_E1.
 HEATING_UNIT connected to USER_INTERFACE port_components OUT_M and IN_M2.
 USER_INTERFACE connected to PROPULSION_UNIT port_components OUT_M1 and IN_M.
 USER_INTERFACE connected to HAIR_DRYER port_components OUT_M2 and OUT_M.
@@ -62,3 +63,4 @@ FAN connected to PROPULSION_UNIT port_components OUT_E and OUT_E.
 HEATING_UNIT connected to HEATER_CORE port_components IN_E and IN_E.
 HEATING_UNIT connected to HEATER_CORE port_components IN_M and IN_M.
 HEATER_CORE connected to INSULATING_SLEEVE port_components OUT_E and IN_E.
+HEATER_CORE connected to HEATING_UNIT port_components OUT_M and OUT_M.
