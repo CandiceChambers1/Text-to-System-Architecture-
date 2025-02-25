@@ -10,12 +10,10 @@
 
 import nltk
 from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet
-from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.stem.snowball import SnowballStemmer
-
+import os
 
 # ## Downloads
 
@@ -516,17 +514,10 @@ def finalVersion(new_final_list):
     return send_to_grammar
 
 
-# ### Input Text
+### Input Text
 
-# In[16]:
-# input_paragraph = open("FGS_M.txt", "r")
-# input_paragraph = open("/home/candice/IdeaProjects/NLP-to-System-Architecture-/Python/data/Coffeemaker_Manual.txt", "r")
-# input_paragraph = open(".idea/data/ActiveStandby_Manual.txt", "r")
-# input_paragraph = open("data/HairDryer.txt", "r")
-# input_paragraph = open("data/VaccuumCleaner.txt", "r")
-# ## Driver Code
-
-# In[17]:
+input_paragraph = open(r"...\Text-to-System-Architecture-\Python\src\data\VaccuumCleaner_Manual.txt", "r")
+## Driver Code
 
 
 # Driver Code
@@ -559,7 +550,16 @@ if __name__ == "__main__":
     new_final_list = convert_if_in_NLTK(new_para_latest)
     send_to_grammar = finalVersion(new_final_list)
 
-    file = open("data/Coffeemaker_NLP.txt", "w")
+    file_name = input_paragraph.name
+    result = file_name.split("\\")
+
+    file_name = result[-1]
+    name = file_name.split("_")
+    f_name = name[0]
+
+    output_file = r"...\Text-to-System-Architecture-\Python\src\gen\\" + f_name + "_NLP.txt"
+
+    file = open(output_file, "w")
 
     # file = open("FGS_NLP.txt", "w")
     file.write(send_to_grammar)

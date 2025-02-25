@@ -26,8 +26,8 @@ The heating pipe consists of ports: In_E1, In_Liq1, Out_E1 and Out_Liq2.
 The shower head consists of ports: In_Liq1 and Out_Liq1.
 The elevator pipe consists of ports: In_Liq1 and Out_Liq1.
 The storage tank consists of ports: In_Liq1 and Out_Liq1.
-The brewing unit consists of internal components: a basket assembly, and a filter.
-The brewing unit consists of ports: In_M1, In_M2, Out_M1, and Out_M2.
+The brewing unit consists of internal components: a basket assembly and a filter.
+The brewing unit consists of ports: In_M1, In_M2, Out_M1 and Out_M2.
 The basket assembly consists of internal components: a basket and a valve.
 The basket assembly consists of ports: In_M1, In_M2 and Out_M.
 The valve consists of ports: In_Liq1 and Out_Liq1.
@@ -46,7 +46,7 @@ The heating unit is connected to the hydraulic unit by the ports Out_E and In_E.
 The heating unit is connected to the brewing unit by the ports Out_M1 and In_M1.
 The heating unit is connected to the brewing unit by the ports Out_M2 and In_M2.
 The brewing unit is connected to the cooking unit by the ports Out_M2 and Out_M2.
-The brewing unit is connected to the hydraulic unit by the ports Out_M1 and In_M1.
+The brewing unit is connected to the hydraulic unit by the ports Out_M1 and In_M.
 The hydraulic unit is connected to the cooking unit by the ports Out_M and Out_M1.
 The storage unit is connected to the glassware by the ports In_M and In_Liq1.
 The glassware is connected to the storage unit by the ports Out_Liq1 and Out_M.
