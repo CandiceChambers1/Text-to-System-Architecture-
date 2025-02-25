@@ -516,7 +516,7 @@ def finalVersion(new_final_list):
 
 ### Input Text
 
-input_paragraph = open(r"...\Text-to-System-Architecture-\Python\src\data\VaccuumCleaner_Manual.txt", "r")
+input_paragraph = open(r"C:\Users\candi\IdeaProjects\Text-to-System-Architecture-\Python\src\data\ActiveStandby_Manual.txt", "r")
 ## Driver Code
 
 
@@ -557,7 +557,7 @@ if __name__ == "__main__":
     name = file_name.split("_")
     f_name = name[0]
 
-    output_file = r"...\Text-to-System-Architecture-\Python\src\gen\\" + f_name + "_NLP.txt"
+    output_file = r"C:\Users\candi\IdeaProjects\Text-to-System-Architecture-\Python\src\gen\\" + f_name + "_NLP.txt"
 
     file = open(output_file, "w")
 
