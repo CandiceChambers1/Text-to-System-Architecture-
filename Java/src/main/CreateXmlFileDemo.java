@@ -6,7 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
-//import javax.gen.sysml.models.xml.transform.TransformerFactory;
+//import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
@@ -294,13 +294,13 @@ public class CreateXmlFileDemo {
         generateDiagram(doc,content,generateXMI_ID("other"),xmiPackageID);
         generateFooter(doc,rootElement);
 
-        // write the content into gen.sysml.models.xml file
+        // write the content into gen.sysml.xml file
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         DOMSource source = new DOMSource(doc);
         String name= filename;
-        StreamResult result = new StreamResult(new File("src/gen.sysml.models.xml/" + name +".gen.sysml.models.xml"));
+        StreamResult result = new StreamResult(new File("src/gen/sysml/xml/" + name +".xml"));
         transformer.transform(source, result);
 
 //         Output to console for testing
